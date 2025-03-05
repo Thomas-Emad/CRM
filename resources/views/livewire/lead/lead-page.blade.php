@@ -90,7 +90,7 @@
                                 <span>{{ $lead->created_at?->format('Y-m-d') ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <span class="badge bg-success-transparent text-white"
+                                <span class="badge bg-success text-white"
                                     style="background-color: {{ $lead->status?->color }} !important;">
                                     {{ $lead->status?->name }}
                                 </span>

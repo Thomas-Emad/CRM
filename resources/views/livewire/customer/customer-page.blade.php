@@ -71,7 +71,7 @@
                                 <span>{{ $customer->created_at->format('Y-m-d') }}</span>
                             </td>
                             <td>
-                                <span class="badge bg-success-transparent text-white"
+                                <span class="badge bg-success text-white"
                                     style="background-color: {{ $customer->status->color }} !important;">
                                     {{ $customer->status->name }}
                                 </span>

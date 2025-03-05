@@ -164,7 +164,7 @@
                                             </p>
                                             <p class="mb-0 fs-12 lh-1 text-muted">
                                                 {{ $interactive->created_at->format('h:iA') }}
-                                                <span class="badge bg-primary-transparent text-white ms-2"
+                                                <span class="badge bg-primary text-white ms-2"
                                                     style="background-color: {{ $interactive->status->color }} !important;">
                                                     {{ $interactive->status->name }}
                                                 </span>

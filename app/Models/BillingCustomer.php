@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BillingCustomer extends Model
 {
@@ -13,4 +14,9 @@ class BillingCustomer extends Model
         'city',
         'zip_code',
     ];
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

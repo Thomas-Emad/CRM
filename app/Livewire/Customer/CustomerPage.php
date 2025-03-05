@@ -40,7 +40,7 @@ class CustomerPage extends Component
         return view('livewire.customer.customer-page', [
             'customers' => Lead::query()
                 ->with([
-                    'status:id,name',
+                    'status:id,name,color',
                     'group:id,name',
                 ])
                 ->where('name', 'like', "%$this->search%")

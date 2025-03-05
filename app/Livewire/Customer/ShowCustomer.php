@@ -18,6 +18,8 @@ class ShowCustomer extends Component
                 'group:id,name',
                 'currency:id,name',
                 'country:id,name',
+                'billings',
+                'billings.country:id,name'
             ])->findOrFail($this->id)
         ]);
     }

@@ -43,7 +43,7 @@
                                 <span>{{ str($status->name) }}</span>
                             </td>
                             <td>
-                                <span class="badge bg-success-transparent text-white"
+                                <span class="badge bg-success text-white"
                                     style="background-color: {{ $status->color }} !important;">
                                     {{ $status->color }}
                                 </span>
