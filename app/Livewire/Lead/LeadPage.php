@@ -47,8 +47,8 @@ class LeadPage extends Component
             'statuses' => Status::withCount('leads')->get(),
             'leads' => Lead::query()
                 ->with([
+                    'status:id,name,color',
                     'interactives:id,created_at',
-                    'status:id,name',
                     'assigned:id,name',
                     'source:id,name',
                     'country:id,name',

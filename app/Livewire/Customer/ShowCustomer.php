@@ -14,6 +14,8 @@ class ShowCustomer extends Component
     {
         return view('livewire.customer.show-customer', [
             'customer' => Lead::with([
+                'assigned:id,user',
+                'source:id,name',
                 'status:id,name',
                 'group:id,name',
                 'currency:id,name',

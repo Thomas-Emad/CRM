@@ -19,7 +19,7 @@
             <div>
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
-            <a class="btn btn-primary btn-wave inline-block align-items-center gap-2 ms-auto"
+            <a class="btn btn-primary btn-wave inline-flex align-items-center gap-2 ms-auto"
                 href="{{ route('status.operation', ['type' => 'create']) }}">
                 <i class="ti ti-plus fs-5"></i>
                 <span>New Status</span>

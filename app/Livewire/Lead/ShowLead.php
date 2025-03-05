@@ -52,6 +52,7 @@ class ShowLead extends Component
                 'source:id,name',
                 'country:id,name',
                 'interactives',
+                'interactives.status:id,name,color',
             ])
             ->where('id', $this->id)
             ->first();
