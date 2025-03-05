@@ -78,7 +78,7 @@
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn " href="{{ route('lead.show', ['id' => $customer->id]) }}">
+                                    <a class="btn " href="{{ route('customer.show', ['id' => $customer->id]) }}">
                                         <i class="ti ti-eye fs-4 text-primary"></i>
                                     </a>
                                     <a class="btn "
