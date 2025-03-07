@@ -20,7 +20,7 @@
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
             <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto"
-                href="{{ route('group.operation', ['type' => 'create']) }}">
+                href="{{ route('groups.create') }}">
                 <i class="ti ti-plus fs-5"></i>
                 <span>New group</span>
             </a>
@@ -43,12 +43,13 @@
                                 <span>{{ str($group->name)->limit(10) }}</span>
                             </td>
                             <td>
-                                <span>{{ str($group->description)->limit(10) }}</span>
+                                <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary"
+                                    data-bs-placement="top"
+                                    title="{{ $group->description }}">{{ str($group->description)->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn "
-                                        href="{{ route('group.operation', ['type' => 'update', 'id' => $group->id]) }}">
+                                    <a class="btn " href="{{ route('groups.edit', ['group' => $group->id]) }}">
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
@@ -66,10 +67,10 @@
                     @endforelse
                 </tbody>
             </table>
-
+            {{--
             <div class="p-2">
                 {{ $groups->links() }}
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -90,7 +91,7 @@
                 <div class="modal-body">
                     <div>
                         <label for="group-name" class="form-label">Name group</label>
-                        <input type="text" id="group-title" class="form-control disabled" wire:model="groupForm.name"
+                        <input type="text" id="group-title" class="form-control disabled" wire:model="groupName"
                             disabled placeholder="Enter group Name">
                     </div>
 

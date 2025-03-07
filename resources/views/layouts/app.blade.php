@@ -6,6 +6,8 @@
 <body>
 
     @include('layouts.loader')
+    @include('layouts.switcher')
+
 
     <div class="page">
         @include('layouts.header')
@@ -16,7 +18,7 @@
             <div class="container-fluid">
 
                 @yield('content')
-                {{ $slot }}
+                {{-- {{ $slot }} --}}
             </div>
         </div>
         <!-- End::app-content -->
@@ -31,13 +33,13 @@
     <!-- Apex Charts JS -->
     <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
-    {{-- @include('layouts.custom_switcherjs') --}}
+    @include('layouts.custom_switcherjs')
     @yield('scripts')
     @livewireScripts
 
 
     <!-- Custom JS -->
-    {{-- <script src="{{ asset('assets/js/custom.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 </body>
 
 </html>

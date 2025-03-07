@@ -7,7 +7,7 @@
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('status.index') }}">Status</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('statuses.index') }}">Status</a></li>
 
                     <li class="breadcrumb-item active d-inline-flex" aria-current="page"
                         x-text="$wire.type == 'create' ? 'Add New Status' : 'Update Status'"></li>
@@ -19,24 +19,24 @@
     <form class="card border p-2">
         <div>
             <label for="status-name" class="form-label">Name Status</label>
-            <input type="text" id="status-title" class="form-control" wire:model="statusForm.name"
+            <input type="text" id="status-title" class="form-control" wire:model="name"
                 placeholder="Enter Status Name">
-            @error('statusForm.name')
+            @error('name')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
 
         <div class="d-flex align-items-center gap-2 mt-3">
             <label class="form-label" for="status-color">Type Color</label>
-            <input class="form-control form-input-color" id="status-color" wire:model="statusForm.color" type="color"
+            <input class="form-control form-input-color" id="status-color" wire:model="color" type="color"
                 value="#136bd0">
         </div>
-        @error('statusForm.color')
+        @error('color')
             <span class="text-danger">{{ $message }}</span>
         @enderror
 
         <div class="mt-3 d-flex justify-content-end gap-2">
-            <a class="btn btn-secondary" href="{{ route('status.index') }}">Close</a>
+            <a class="btn btn-secondary" href="{{ route('statuses.index') }}">Close</a>
             @if ($type == 'create')
                 <button type="button" class="btn btn-primary" wire:click="save">Create</button>
             @else

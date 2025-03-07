@@ -20,7 +20,7 @@
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
             <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto"
-                href="{{ route('source.operation', ['type' => 'create']) }}">
+                href="{{ route('sources.create') }}">
                 <i class="ti ti-plus fs-5"></i>
                 <span>New Source</span>
             </a>
@@ -44,18 +44,20 @@
                                 <span>{{ str($source->name)->limit(10) }}</span>
                             </td>
                             <td>
-                                <span>{{ str($source->description)->limit(10) ?? 'N/A' }}</span>
+                                <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary"
+                                    data-bs-placement="top"
+                                    title="{{ $source->description }}">{{ str($source->description)->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <span>
+                                <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary"
+                                    data-bs-placement="top" title="{{ $source->website }}">
                                     <a href="{{ $source->website }}" class="text-primary"
                                         target="_blank">{{ str($source->website)->limit(20) }}</a>
                                 </span>
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn "
-                                        href="{{ route('source.operation', ['type' => 'update', 'id' => $source->id]) }}">
+                                    <a class="btn " href="{{ route('sources.edit', ['source' => $source->id]) }}">
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
@@ -74,9 +76,9 @@
                 </tbody>
             </table>
 
-            <div class="p-2">
+            {{-- <div class="p-2">
                 {{ $sources->links() }}
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -97,8 +99,8 @@
                 <div class="modal-body">
                     <div>
                         <label for="Source-name" class="form-label">Name Source</label>
-                        <input type="text" id="Source-title" class="form-control disabled"
-                            wire:model="sourceForm.name" disabled placeholder="Enter Source Name">
+                        <input type="text" id="Source-title" class="form-control disabled" wire:model="name" disabled
+                            placeholder="Enter Source Name">
                     </div>
 
                 </div>

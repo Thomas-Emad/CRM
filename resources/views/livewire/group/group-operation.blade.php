@@ -7,7 +7,7 @@
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('group.index') }}">group</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('groups.index') }}">group</a></li>
 
                     <li class="breadcrumb-item active d-inline-flex" aria-current="page"
                         x-text=" $wire.type == 'create' ? 'Add New group' : 'Update Group' "></li>
@@ -19,9 +19,9 @@
     <form class="card border p-2">
         <div class="mb-2">
             <label for="group-name" class="form-label">Name group</label>
-            <input type="text" id="group-title" class="form-control" wire:model="groupForm.name"
+            <input type="text" id="group-title" class="form-control" wire:model="name"
                 placeholder="Enter group Name">
-            @error('groupForm.name')
+            @error('name')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
@@ -29,14 +29,14 @@
             <label for="group-description" class="form-label">
                 description
             </label>
-            <textarea class="form-control " id="group-description" rows="3" wire:model="groupForm.description"
+            <textarea class="form-control " id="group-description" rows="3" wire:model="description"
                 placeholder="Enter description group"></textarea>
-            @error('groupForm.description')
+            @error('description')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
         <div class="mt-3 d-flex justify-content-end gap-2">
-            <a class="btn btn-secondary" href="{{ route('group.index') }}">Close</a>
+            <a class="btn btn-secondary" href="{{ route('groups.index') }}">Close</a>
             @if ($type == 'create')
                 <button type="button" class="btn btn-primary" wire:click="save">Create</button>
             @else

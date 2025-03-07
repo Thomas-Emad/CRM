@@ -2,49 +2,56 @@
 
 namespace App\Livewire\Source;
 
+use App\Interfaces\SourceRepositoryInterface;
 use Livewire\Component;
-use App\Models\Source;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
-use App\Livewire\Forms\SourceOperationsForm;
 
 #[Title('Sources')]
 class SourcePage extends Component
 {
-    public SourceOperationsForm $sourceForm;
-
     use WithPagination;
 
     public $search = '';
+    public $sourceId, $sourceName, $website, $description;
+
+    protected $sourceRepository;
+
+    public function boot(SourceRepositoryInterface $sourceRepository)
+    {
+        $this->sourceRepository = $sourceRepository;
+    }
 
     /**
-     * Displays the source details for the given ID.
+     * Displays the source form for the given ID.
      *
      * @param int $id
      */
     public function show($id)
     {
-        $this->sourceForm->get($id);
+        $source = $this->sourceRepository->get($id);
+        $this->sourceId = $source->id;
+        $this->sourceName = $source->name;
     }
 
     /**
-     * Deletes the source and closes the delete modal.
+     * Deletes the current source and closes the delete modal.
      */
     public function delete()
     {
-        $this->sourceForm->destroy();
-        $this->redirect(route('source.index'));
+        $this->sourceRepository->delete($this->sourceId);
+        $this->redirect(route('sources.index'));
     }
 
     /**
-     * Renders the source page with a paginated list of sources filtered by the search query.
+     * Renders the source page with paginated sources filtered by the search query.
      *
      * @return \Illuminate\View\View
      */
     public function render()
     {
         return view('livewire.source.source-page', [
-            'sources' => Source::select(['id', 'name', 'description', 'website'])->where('name', 'like', "%$this->search%")->paginate(10),
+            'sources' => $this->sourceRepository->all($this->search),
         ]);
     }
 }

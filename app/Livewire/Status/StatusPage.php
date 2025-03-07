@@ -2,20 +2,28 @@
 
 namespace App\Livewire\Status;
 
+use App\Interfaces\StatusRepositoryInterface;
 use Livewire\Component;
 use App\Models\Status;
 use Livewire\WithPagination;
 use Livewire\Attributes\Title;
-use App\Livewire\Forms\StatusOperationsForm;
 
 #[Title('Statuses')]
 class StatusPage extends Component
 {
-    public StatusOperationsForm $statusForm;
-
     use WithPagination;
 
     public $search = '';
+    public $statusId;
+    public $statusName;
+    public $statusColor;
+
+    protected $statusRepository;
+
+    public function boot(StatusRepositoryInterface $statusRepository)
+    {
+        $this->statusRepository = $statusRepository;
+    }
 
     /**
      * Displays the status form for the given ID.
@@ -24,7 +32,9 @@ class StatusPage extends Component
      */
     public function show($id)
     {
-        $this->statusForm->get($id);
+        $status = $this->statusRepository->get($id);
+        $this->statusId = $status->id;
+        $this->statusName = $status->name;
     }
 
     /**
@@ -32,8 +42,8 @@ class StatusPage extends Component
      */
     public function delete()
     {
-        $this->statusForm->destory();
-        $this->redirect(route('status.index'));
+        $this->statusRepository->delete($this->statusId);
+        $this->redirect(route('statuses.index'));
     }
 
     /**
@@ -44,7 +54,7 @@ class StatusPage extends Component
     public function render()
     {
         return view('livewire.status.status-page', [
-            'statuses' => Status::select(['id', 'name', 'color'])->where('name', 'like', "%$this->search%")->paginate(10),
+            'statuses' => $this->statusRepository->all($this->search),
         ]);
     }
 }

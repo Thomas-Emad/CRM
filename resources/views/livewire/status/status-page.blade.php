@@ -20,7 +20,7 @@
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
             <a class="btn btn-primary btn-wave inline-flex align-items-center gap-2 ms-auto"
-                href="{{ route('status.operation', ['type' => 'create']) }}">
+                href="{{ route('statuses.create') }}">
                 <i class="ti ti-plus fs-5"></i>
                 <span>New Status</span>
             </a>
@@ -50,8 +50,7 @@
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn "
-                                        href="{{ route('status.operation', ['type' => 'update', 'id' => $status->id]) }}">
+                                    <a class="btn " href="{{ route('statuses.edit', ['status' => $status->id]) }}">
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
@@ -70,9 +69,9 @@
                 </tbody>
             </table>
 
-            <div class="p-2">
+            {{-- <div class="p-2">
                 {{ $statuses->links() }}
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -93,8 +92,8 @@
                 <div class="modal-body">
                     <div>
                         <label for="status-name" class="form-label">Name Status</label>
-                        <input type="text" id="status-title" class="form-control disabled"
-                            wire:model="statusForm.name" disabled placeholder="Enter Status Name">
+                        <input type="text" id="status-title" class="form-control disabled" wire:model="statusName"
+                            disabled placeholder="Enter Status Name">
                     </div>
 
                 </div>

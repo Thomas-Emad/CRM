@@ -49,10 +49,12 @@
                         <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
                     </a>
                     <ul class="slide-menu child1">
-                        <li class="slide"><a href="{{ route('status.index') }}" class="side-menu__item">Status</a></li>
+                        <li class="slide"><a href="{{ route('statuses.index') }}" class="side-menu__item">Status</a>
+                        </li>
 
-                        <li class="slide"><a href="{{ route('source.index') }}" class="side-menu__item">Source</a></li>
-                        <li class="slide"><a href="{{ route('group.index') }}" class="side-menu__item">Group</a></li>
+                        <li class="slide"><a href="{{ route('sources.index') }}" class="side-menu__item">Source</a>
+                        </li>
+                        <li class="slide"><a href="{{ route('groups.index') }}" class="side-menu__item">Group</a></li>
                         <li class="slide"><a href="{{ route('lead.index') }}" class="side-menu__item">Leads</a></li>
                         <li class="slide"><a href="{{ route('customer.index') }}" class="side-menu__item">Customers</a>
                         </li>
