@@ -12,7 +12,7 @@
 <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <!-- Defaultmenu JS -->
-<script src="{{ asset('assets/js/defaultmenu.min.js') }}"></script>
+<script src="{{ asset('assets/js/defaultmenu.min.js') }}" data-navigate-once></script>
 
 <!-- Node Waves JS-->
 <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>

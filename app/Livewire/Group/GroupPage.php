@@ -5,10 +5,12 @@ namespace App\Livewire\Group;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use App\Interfaces\GroupRepositoryInterface;
+use Livewire\{WithPagination, WithoutUrlPagination};
 
 #[Title('Groups')]
 class GroupPage extends Component
 {
+    use WithPagination, WithoutUrlPagination;
     public $search = '';
     protected $groupRepository;
 

@@ -28,7 +28,7 @@ class SourceOperation extends Component
             'description' => $this->description,
             'website' => $this->website,
         ]);
-        $this->redirect(route('sources.index', absolute: true));
+        $this->redirect(route('sources.index'), navigate: true);
     }
 
     /**
@@ -42,7 +42,7 @@ class SourceOperation extends Component
             'description' => $this->description,
             'website' => $this->website,
         ]);
-        $this->redirect(route('sources.index', absolute: true));
+        $this->redirect(route('sources.index'), navigate: true);
     }
 
     /**

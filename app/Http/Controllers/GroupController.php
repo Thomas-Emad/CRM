@@ -2,8 +2,19 @@
 
 namespace App\Http\Controllers;
 
-class GroupController extends Controller
+use App\Enums\PermissionEnum;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class GroupController extends Controller  implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using(PermissionEnum::CRM_GROUP->value)),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

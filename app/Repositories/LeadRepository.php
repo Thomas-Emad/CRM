@@ -4,16 +4,16 @@ namespace App\Repositories;
 
 use App\Models\Lead;
 use App\Interfaces\LeadRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class LeadRepository implements LeadRepositoryInterface
 {
     /**
      * Retrieve all leads with their ID, name, and description.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator The collection of users.
      */
-    public function all(string $title = ''): Collection
+    public function all(string $title = ''): LengthAwarePaginator
     {
         return Lead::query()
             ->with([
@@ -25,7 +25,7 @@ class LeadRepository implements LeadRepositoryInterface
             ])
             ->where('name', 'like', "%$title%")
             ->orderBy('is_customer', 'desc')
-            ->get();
+            ->paginate(10);
     }
 
     /**

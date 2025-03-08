@@ -6,10 +6,13 @@ use App\Models\Status;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use App\Interfaces\LeadRepositoryInterface;
+use Livewire\{WithPagination, WithoutUrlPagination};
 
 #[Title('Leads')]
 class LeadPage extends Component
 {
+    use WithPagination, WithoutUrlPagination;
+
     public $search = '';
     protected $leadRepository;
 

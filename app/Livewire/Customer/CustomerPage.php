@@ -5,10 +5,13 @@ namespace App\Livewire\Customer;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use App\Interfaces\CustomerRepositoryInterface;
+use Livewire\{WithPagination, WithoutUrlPagination};
 
 #[Title('Customers')]
 class CustomerPage extends Component
 {
+    use WithPagination, WithoutUrlPagination;
+
     public $search = '';
     protected $customerRepository;
 

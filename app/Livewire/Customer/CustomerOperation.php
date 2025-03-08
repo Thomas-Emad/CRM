@@ -17,7 +17,7 @@ class CustomerOperation extends Component
     public function save()
     {
         $this->customer->store();
-        $this->redirect(route('customers.index', absolute: true));
+        $this->redirect(route('customers.index'), navigate: true);
     }
 
     /**
@@ -28,7 +28,7 @@ class CustomerOperation extends Component
     public function update()
     {
         $this->customer->update();
-        $this->redirect(route('customers.index', absolute: true));
+        $this->redirect(route('customers.index'), navigate: true);
     }
 
     public function render()

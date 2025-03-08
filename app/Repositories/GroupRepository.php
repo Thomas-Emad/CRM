@@ -4,19 +4,19 @@ namespace App\Repositories;
 
 use App\Models\Group;
 use App\Interfaces\GroupRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class GroupRepository implements GroupRepositoryInterface
 {
     /**
      * Retrieve all groups with their ID, name, and description.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator The collection of users.
      */
-    public function all(string $title = ''): Collection
+    public function all(string $title = ''): LengthAwarePaginator
     {
         return Group::select(['id', 'name', 'description'])
-            ->where('name', 'like', "%$title%")->get();
+            ->where('name', 'like', "%$title%")->paginate(10);
     }
 
     /**
@@ -36,7 +36,7 @@ class GroupRepository implements GroupRepositoryInterface
      * Stores a new group using the given attributes.
      *
      * @param array $attributes The attributes for creating the group.
-     * 
+     *
      * @return \App\Models\Group The group if it was successfully created.
      */
     public function store(array $attributes): Group

@@ -16,7 +16,7 @@ class StatusRepository implements StatusRepositoryInterface
      */
     public function all(string $title = ''): LengthAwarePaginator
     {
-        return Status::select(['id', 'name', 'color'])->where('name', 'like', "%$title%")->paginate(1);
+        return Status::select(['id', 'name', 'color'])->where('name', 'like', "%$title%")->paginate(10);
     }
 
     /**

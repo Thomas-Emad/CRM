@@ -10,7 +10,7 @@ use App\Interfaces\LeadRepositoryInterface;
 class LeadOperationsForm extends Form
 {
     public $id, $status_id,
-        $source_id, $assigned_id, $tags, $name, $address,
+        $source_id, $team_id, $assigned_id, $tags, $name, $address,
         $position, $city, $email, $company,
         $group_id, $website, $country_id, $phone,
         $zipCode, $leadValue, $description;

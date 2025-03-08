@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\{User, Status, Currency, Country};
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,13 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('123456'),
-        ]);
-
         $this->call([
+            PermissionsSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class,
             SourcesSeeder::class,
             StatusesSeeder::class,
             GroupsSeeder::class,

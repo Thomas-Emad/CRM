@@ -1,6 +1,15 @@
-@props(['id' => '', 'items' => [], 'name' => '', 'wireModel' => '', 'placeholder' => '', 'disabled' => false])
+@props([
+    'id' => '',
+    'items' => [],
+    'name' => '',
+    'wireModel' => '',
+    'placeholder' => '',
+    'disabled' => false,
+    'live' => false,
+])
 <label for="{{ $id }}" class="form-label">{{ $name }}</label>
-<select class="form-select" aria-label="{{ $placeholder }}" id="{{ $id }}" wire:model="{{ $wireModel }}">
+<select class="form-select" aria-label="{{ $placeholder }}" id="{{ $id }}"
+    @if (!$live) wire:model="{{ $wireModel }}" @else wire:model.live="{{ $wireModel }}" @endif>
     <option selected>{{ $placeholder }}
     </option>
     @foreach ($items as $item)

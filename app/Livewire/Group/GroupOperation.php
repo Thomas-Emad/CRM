@@ -28,7 +28,7 @@ class GroupOperation extends Component
             'name' => $this->name,
             'description' => $this->description,
         ]);
-        $this->redirect(route('groups.index', absolute: true));
+        $this->redirect(route('groups.index'), navigate: true);
     }
 
     /**
@@ -41,7 +41,7 @@ class GroupOperation extends Component
             'name' => $this->name,
             'description' => $this->description,
         ]);
-        $this->redirect(route('groups.index', absolute: true));
+        $this->redirect(route('groups.index'), navigate: true);
     }
 
     /**

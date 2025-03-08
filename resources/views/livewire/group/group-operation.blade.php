@@ -1,8 +1,8 @@
 <div>
     <x-page-header title="{{ $type == 'create' ? 'Add New Group' : 'Update Group' }}">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('groups.index') }}">Group</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('groups.index') }}" wire:navigate>Group</a></li>
     </x-page-header>
 
     <form class="card border p-2">

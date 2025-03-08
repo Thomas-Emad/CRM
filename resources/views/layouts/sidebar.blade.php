@@ -49,16 +49,34 @@
                         <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
                     </a>
                     <ul class="slide-menu child1">
-                        <li class="slide"><a href="{{ route('statuses.index') }}" class="side-menu__item">Status</a>
-                        </li>
-
-                        <li class="slide"><a href="{{ route('sources.index') }}" class="side-menu__item">Source</a>
-                        </li>
-                        <li class="slide"><a href="{{ route('groups.index') }}" class="side-menu__item">Group</a></li>
-                        <li class="slide"><a href="{{ route('leads.index') }}" class="side-menu__item">Leads</a></li>
-                        <li class="slide"><a href="{{ route('customers.index') }}"
-                                class="side-menu__item">Customers</a>
-                        </li>
+                        @can(\App\Enums\PermissionEnum::CRM_STATUS)
+                            <li class="slide"><a href="{{ route('statuses.index') }}" class="side-menu__item"
+                                    wire:navigate>Status</a>
+                            </li>
+                        @endcan
+                        @can(\App\Enums\PermissionEnum::CRM_SOURCE)
+                            <li class="slide"><a href="{{ route('sources.index') }}" class="side-menu__item"
+                                    wire:navigate>Source</a>
+                            </li>
+                        @endcan
+                        @can(\App\Enums\PermissionEnum::CRM_GROUP)
+                            <li class="slide"><a href="{{ route('groups.index') }}" class="side-menu__item"
+                                    wire:navigate>Group</a></li>
+                        @endcan
+                        @can(\App\Enums\PermissionEnum::CRM_LEAD)
+                            <li class="slide"><a href="{{ route('leads.index') }}" class="side-menu__item"
+                                    wire:navigate>Leads</a></li>
+                        @endcan
+                        @can(\App\Enums\PermissionEnum::CRM_CUSTOMER)
+                            <li class="slide"><a href="{{ route('customers.index') }}" wire:navigate
+                                    class="side-menu__item">Customers</a>
+                            </li>
+                        @endcan
+                        @can(\App\Enums\PermissionEnum::CRM_TEAM)
+                            <li class="slide"><a href="{{ route('teams.index') }}" class="side-menu__item"
+                                    wire:navigate>Teams</a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
                 <!-- End::slide -->

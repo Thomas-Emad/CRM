@@ -11,7 +11,7 @@ class InteractiveRepository implements InteractiveRepositoryInterface
     /**
      * Retrieve all leads with their ID, name, and description.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator The collection of users.
      */
     public function all(string $title = ''): Collection
     {

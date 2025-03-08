@@ -1,8 +1,8 @@
 <div>
     <x-page-header title="{{ $type == 'create' ? 'Add New Interactive' : 'Update Interactive' }}">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('customers.index') }}">Customers</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('customers.index') }}" wire:navigate>Customers</a></li>
     </x-page-header>
 
     <div class=" border p-2 row">

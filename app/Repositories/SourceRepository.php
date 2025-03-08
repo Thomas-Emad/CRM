@@ -4,18 +4,18 @@ namespace App\Repositories;
 
 use App\Models\source;
 use App\Interfaces\SourceRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class SourceRepository implements SourceRepositoryInterface
 {
     /**
      * Retrieve all sourcees with their ID, name, and color.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator The collection of users.
      */
-    public function all(string $title = ''): Collection
+    public function all(string $title = ''): LengthAwarePaginator
     {
-        return source::select(['id', 'name', 'website', 'description'])->where('name', 'like', "%$title%")->get();
+        return source::select(['id', 'name', 'website', 'description'])->where('name', 'like', "%$title%")->paginate(10);
     }
 
     /**

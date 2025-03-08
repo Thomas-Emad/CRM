@@ -32,7 +32,7 @@ class InteractiveOperation extends Component
     {
         $this->interactiveForm->lead_id = $this->id;
         $this->interactiveForm->store();
-        $this->redirect(route('leads.show', ['lead' => $this->id], absolute: true));
+        $this->redirect(route('leads.show', ['lead' => $this->id]), navigate: true);
     }
 
     /**
@@ -45,7 +45,7 @@ class InteractiveOperation extends Component
         $this->interactiveForm->lead_id = $this->id;
 
         $this->interactiveForm->update();
-        $this->redirect(route('leads.show', ['lead' => $this->id], absolute: true));
+        $this->redirect(route('leads.show', ['lead' => $this->id]), navigate: true);
     }
 
     public function render()

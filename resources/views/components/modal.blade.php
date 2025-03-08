@@ -1,7 +1,7 @@
-@props(['id' => '', 'title' => '', 'content' => '', 'footer' => ''])
+@props(['id' => '', 'title' => '', 'content' => '', 'footer' => '', 'size' => 'md'])
 <div class="modal fade" id="{{ $id }}" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="{{ $id }}Label" aria-hidden="true" wire:ignore.self>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-{{ $size }}">
         <form class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title" id="{{ $id }}Label">

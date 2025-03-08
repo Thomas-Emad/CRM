@@ -27,7 +27,7 @@ class StatusOperation extends Component
             'name' => $this->name,
             'color' => $this->color,
         ]);
-        $this->redirect(route('statuses.index', absolute: true));
+        $this->redirect(route('statuses.index'), navigate: true);
     }
 
     /**
@@ -40,7 +40,7 @@ class StatusOperation extends Component
             'name' => $this->name,
             'color' => $this->color,
         ]);
-        $this->redirect(route('statuses.index', absolute: true));
+        $this->redirect(route('statuses.index'), navigate: true);
     }
 
     /**

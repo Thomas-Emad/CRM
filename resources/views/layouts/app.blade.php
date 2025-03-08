@@ -5,7 +5,7 @@
 
 <body>
 
-    @include('layouts.loader')
+    {{-- @include('layouts.loader') --}}
     @include('layouts.switcher')
 
 
@@ -29,16 +29,13 @@
 
     @include('layouts.commonjs')
 
-    <!-- Apex Charts JS -->
-    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-
     @include('layouts.custom_switcherjs')
     @yield('scripts')
     @livewireScripts
 
 
     <!-- Custom JS -->
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}" data-navigate-once></script>
 </body>
 
 </html>

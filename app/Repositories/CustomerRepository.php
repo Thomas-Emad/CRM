@@ -3,17 +3,17 @@
 namespace App\Repositories;
 
 use App\Models\Lead;
-use Illuminate\Database\Eloquent\Collection;
 use App\Interfaces\CustomerRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
     /**
      * Retrieve all lead with their ID, name, and description.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator The collection of users.
      */
-    public function all(string $title = ''): Collection
+    public function all(string $title = ''): LengthAwarePaginator
     {
         return Lead::query()
             ->with([
@@ -22,7 +22,7 @@ class CustomerRepository implements CustomerRepositoryInterface
             ])
             ->where('name', 'like', "%$title%")
             ->where('is_customer', true)
-            ->get();
+            ->paginate(10);
     }
 
     /**
@@ -35,7 +35,7 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function get(int $id): ?Lead
     {
         return Lead::with([
-            'assigned:id,user',
+            'assigned:id,name',
             'source:id,name',
             'status:id,name',
             'group:id,name',

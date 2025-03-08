@@ -1,8 +1,8 @@
 <div>
     <x-page-header title="{{ $type == 'create' ? 'Add New Lead' : 'Update Lead' }}">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('leads.index') }}">Lead</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('leads.index') }}" wire:navigate>Lead</a></li>
     </x-page-header>
 
     <div class=" border p-2 row">
@@ -15,10 +15,18 @@
                 placeholder="Please Select Source" />
         </div>
         <div class="col-12 col-md-4 p-2">
-            <x-select-form id="assigned" name="Assigned" :items="$users" wireModel="lead.assigned_id"
+            <x-select-form id="group" name="Group" :items="$groups" wireModel="lead.group_id"
+                placeholder="Please Select Group" />
+        </div>
+        <div class="col-12 col-md-6 p-2">
+            <x-select-form id="assigned" name="Team" :items="$teams" wireModel="lead.team_id" :live="true"
+                placeholder="Please Select Team" />
+        </div>
+        <div class="col-12 col-md-6 p-2">
+            <x-select-form id="assigned" name="Assigned" :items="$employees" wireModel="lead.assigned_id"
                 placeholder="Please Select Assigned" />
         </div>
-        <div class="col-12">
+        <div class="col-12  col-md-4 p-2">
             <x-input-form type="text" id="tag-input" name="Tag Name" wireModel="lead.tags"
                 placeholder="Please Write Tags" />
         </div>
@@ -45,10 +53,6 @@
         <div class=" col-12 col-md-4 p-2">
             <x-input-form type="text" id="company" name="Company" wireModel="lead.company"
                 placeholder="Please Write company" />
-        </div>
-        <div class="col-12 col-md-4 p-2">
-            <x-select-form id="group" name="Group" :items="$groups" wireModel="lead.group_id"
-                placeholder="Please Select Group" />
         </div>
         <div class=" col-12 col-md-4 p-2">
             <x-input-form type="text" id="website" name="Website" wireModel="lead.website"

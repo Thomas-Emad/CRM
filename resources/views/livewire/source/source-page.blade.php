@@ -1,7 +1,7 @@
 <div x-data="{ id: null, title: null }">
     <x-page-header title="Sources">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
     </x-page-header>
 
     <div class="border p-2">
@@ -10,7 +10,7 @@
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
             <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
-                href="{{ route('sources.create') }}">
+                href="{{ route('sources.create') }}" wire:navigate>
                 <i class="ti ti-plus fs-5"></i>
                 <span>New Source</span>
             </a>
@@ -41,13 +41,14 @@
                             <td>
                                 <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary"
                                     data-bs-placement="top" title="{{ $source->website }}">
-                                    <a href="{{ $source->website }}" class="text-primary"
+                                    <a href="{{ $source->website }}" class="text-primary" wire:navigate
                                         target="_blank">{{ str($source->website)->limit(20) }}</a>
                                 </span>
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn " href="{{ route('sources.edit', ['source' => $source->id]) }}">
+                                    <a class="btn " href="{{ route('sources.edit', ['source' => $source->id]) }}"
+                                        wire:navigate>
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
@@ -66,6 +67,10 @@
                     @endforelse
                 </tbody>
             </table>
+
+            <div class="d-flex justify-content-end mt-3">
+                {{ $sources->links() }}
+            </div>
         </div>
     </div>
 

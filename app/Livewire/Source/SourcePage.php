@@ -5,10 +5,13 @@ namespace App\Livewire\Source;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use App\Interfaces\SourceRepositoryInterface;
+use Livewire\{WithPagination, WithoutUrlPagination};
 
 #[Title('Sources')]
 class SourcePage extends Component
 {
+    use WithPagination, WithoutUrlPagination;
+
     public $search = '';
     protected $sourceRepository;
 

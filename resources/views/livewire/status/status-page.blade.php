@@ -1,8 +1,8 @@
 <div x-data="{ deleteId: null, deleteTitle: null }">
 
     <x-page-header title="Statuses">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
     </x-page-header>
 
     <div class="border p-2">
@@ -11,7 +11,7 @@
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
             <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
-                href="{{ route('statuses.create') }}">
+                href="{{ route('statuses.create') }}" wire:navigate>
                 <i class="ti ti-plus fs-5"></i>
                 <span>New Status</span>
             </a>
@@ -41,7 +41,8 @@
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn " href="{{ route('statuses.edit', ['status' => $status->id]) }}">
+                                    <a class="btn " href="{{ route('statuses.edit', ['status' => $status->id]) }}"
+                                        wire:navigate>
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"

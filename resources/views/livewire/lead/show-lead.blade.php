@@ -1,8 +1,8 @@
 <div x-data="{ id: null, title: null }">
     <x-page-header title="Show Lead">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('leads.index') }}">Lead</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('leads.index') }}" wire:navigate>Lead</a></li>
     </x-page-header>
 
     <div class="border p-2 row">
@@ -124,7 +124,7 @@
                     </div>
                     <div class="d-flex gap-2 align-items-center">
                         <a href="{{ route('leads.interactive', ['id' => $lead->id, 'type' => 'create']) }}"
-                            class="btn btn-primary">
+                            wire:navigate class="btn btn-primary">
                             <i class="ti ti-plus "></i>
                         </a>
                         <button type="button" class="btn bg-primary-transparent" data-bs-toggle="modal"
@@ -161,7 +161,7 @@
                                             </p>
                                         </div>
                                         <div>
-                                            <a class="btn bg-primary-transparent"
+                                            <a class="btn bg-primary-transparent" wire:navigate
                                                 href="{{ route('leads.interactive', ['id' => $lead->id, 'type' => 'update', 'interactive' => $interactive->id]) }}">
                                                 <i class="ti ti-pencil fs-4 text-primary"></i>
                                             </a>

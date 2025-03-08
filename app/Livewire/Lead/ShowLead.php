@@ -34,7 +34,7 @@ class ShowLead extends Component
     public function deleteInteractive($id)
     {
         $this->interactiveForm->destroy($id);
-        $this->redirect(route('leads.show', ['lead' => $this->lead->id], absolute: true));
+        $this->redirect(route('leads.show', ['lead' => $this->lead->id]), navigate: true);
     }
 
     /**
@@ -43,7 +43,7 @@ class ShowLead extends Component
     public function convertToCustomer($id)
     {
         $this->leadForm->convertToCustomer($id);
-        $this->redirect(route('leads.index', absolute: true));
+        $this->redirect(route('leads.index'), navigate: true);
     }
 
     public function render()

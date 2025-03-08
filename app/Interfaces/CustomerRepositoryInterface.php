@@ -3,11 +3,11 @@
 namespace App\Interfaces;
 
 use App\Models\Lead;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface CustomerRepositoryInterface
 {
-    public function all(): Collection;
+    public function all(): LengthAwarePaginator;
     public function get(int $id): ?Lead;
     public function store(array $attributes): Lead;
     public function update(int $id, array $attributes): Lead;
