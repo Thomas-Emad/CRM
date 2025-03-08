@@ -16,7 +16,6 @@
         <!-- Start::app-content -->
         <div class="main-content app-content">
             <div class="container-fluid">
-
                 @yield('content')
             </div>
         </div>
