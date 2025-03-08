@@ -2,17 +2,13 @@
 
 namespace App\Livewire\Status;
 
-use App\Interfaces\StatusRepositoryInterface;
 use Livewire\Component;
-use App\Models\Status;
-use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use App\Interfaces\StatusRepositoryInterface;
 
 #[Title('Statuses')]
 class StatusPage extends Component
 {
-    use WithPagination;
-
     public $search = '';
     public $statusId;
     public $statusName;

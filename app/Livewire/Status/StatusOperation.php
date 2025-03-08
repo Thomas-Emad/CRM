@@ -9,9 +9,8 @@ use App\Interfaces\StatusRepositoryInterface;
 #[Title('Status Operation')]
 class StatusOperation extends Component
 {
-    public $id, $type, $name, $color;
-
     protected $statusRepository;
+    public $id, $type, $name, $color;
 
     public function boot(StatusRepositoryInterface $statusRepository)
     {
@@ -67,7 +66,6 @@ class StatusOperation extends Component
     {
         return $this->statusRepository->rules();
     }
-
 
     /**
      * Renders the Status operation view and populates the form if ID is provided.

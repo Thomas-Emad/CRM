@@ -5,17 +5,13 @@ namespace App\Livewire\Lead;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use App\Livewire\Forms\LeadOperationsForm;
-use App\Models\Country;
-use App\Models\Group;
-use App\Models\Source;
-use App\Models\Status;
-use App\Models\User;
+use App\Models\{User, Country, Group, Source, Status};
 
 #[Title('Lead Operation')]
 class LeadOperation extends Component
 {
-    public LeadOperationsForm $lead;
     public $id, $type;
+    public LeadOperationsForm $lead;
 
     /**
      * Save a new lead and redirect to the lead index page.
@@ -25,7 +21,7 @@ class LeadOperation extends Component
     public function save()
     {
         $this->lead->store();
-        $this->redirect(route('lead.index', absolute: true));
+        $this->redirect(route('leads.index', absolute: true));
     }
 
     /**
@@ -36,7 +32,7 @@ class LeadOperation extends Component
     public function update()
     {
         $this->lead->update();
-        $this->redirect(route('lead.index', absolute: true));
+        $this->redirect(route('leads.index', absolute: true));
     }
 
     public function render()

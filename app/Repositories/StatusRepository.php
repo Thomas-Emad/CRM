@@ -37,7 +37,6 @@ class StatusRepository implements StatusRepositoryInterface
      *
      * @return bool True if the status was successfully created, otherwise false.
      */
-
     public function store(array $attributes): Status
     {
         return Status::create($attributes);

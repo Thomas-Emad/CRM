@@ -1,19 +1,10 @@
 <div>
-    <!-- Page Header -->
-    <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-        <h1 class="page-title fw-medium fs-24 mb-0">Source</h1>
-        <div class="ms-md-1 ms-0">
-            <nav>
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
 
-                    <li class="breadcrumb-item active d-inline-flex" aria-current="page">Source</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header Close -->
+    <x-page-header title="Sources">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+    </x-page-header>
+
     <div class="border p-2">
         <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
             <div>
@@ -75,41 +66,28 @@
                     @endforelse
                 </tbody>
             </table>
-
-            {{-- <div class="p-2">
-                {{ $sources->links() }}
-            </div> --}}
         </div>
     </div>
 
     <!-- Start::delete-Source -->
-    <div class="modal fade" id="deleteSourceModal" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="deleteSourceModalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog">
-            <form class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="deleteSourceModalLabel">
-                        <i class="ti ti-trash text-danger me-1"></i>
-                        <span>
-                            Are you sure you want to delete this Source?!
-                        </span>
-                    </h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <label for="Source-name" class="form-label">Name Source</label>
-                        <input type="text" id="Source-title" class="form-control disabled" wire:model="name" disabled
-                            placeholder="Enter Source Name">
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <x-modal id="deleteStatusModal">
+        <x-slot:title>
+            <i class="ti ti-trash text-danger me-1"></i>
+            <span>
+                Are you sure you want to delete this Source?!
+            </span>
+        </x-slot:title>
+        <x-slot:content>
+            <div>
+                <label for="Source-name" class="form-label">Name Source</label>
+                <input type="text" id="Source-title" class="form-control disabled" wire:model="sourceName" disabled
+                    placeholder="Enter Source Name">
+            </div>
+        </x-slot:content>
+        <x-slot:footer>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
+        </x-slot:footer>
+    </x-modal>
     <!-- End::delete-Source -->
 </div>

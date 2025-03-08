@@ -1,199 +1,82 @@
 <div>
-    <!-- Page Header -->
-    <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-        <h1 class="page-title fw-medium fs-24 mb-0" x-text="$wire.type == 'create' ? 'Add New Lead' : 'Update Lead'">New
-            Lead</h1>
-        <div class="ms-md-1 ms-0">
-            <nav>
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('source.index') }}">Lead</a></li>
+    <x-page-header title="{{ $type == 'create' ? 'Add New Lead' : 'Update Lead' }}">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('leads.index') }}">Lead</a></li>
+    </x-page-header>
 
-                    <li class="breadcrumb-item active d-inline-flex" aria-current="page"
-                        x-text="$wire.type == 'create' ? 'Add New Lead' : 'Update Lead'">
-                    </li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header Close -->
     <div class=" border p-2 row">
         <div class=" col-12 col-md-4 p-2">
-            <label for="status" class="form-label">Status</label>
-            <select class="form-select" aria-label="Please Select" id="status" wire:model="lead.status_id">
-                <option selected>Please Select
-                </option>
-                @foreach ($statuses as $status)
-                    <option value="{{ $status->id }}" wire:key="{{ $status->id }}">{{ $status->name }}</option>
-                @endforeach
-            </select>
-            @error('lead.status_id')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-select-form id="status" name="Status" :items="$statuses" wireModel="lead.status_id"
+                placeholder="Please Select Status" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="source" class="form-label">Source</label>
-            <select class="form-select" aria-label="Please Select" id="source" wire:model="lead.source_id">
-                <option selected>Please Select
-                </option>
-                @foreach ($sources as $source)
-                    <option value="{{ $source->id }}" wire:key="{{ $source->id }}">{{ $source->name }}</option>
-                @endforeach
-            </select>
-            @error('lead.source_id')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-select-form id="source" name="Source" :items="$sources" wireModel="lead.source_id"
+                placeholder="Please Select Source" />
         </div>
-        <div class=" col-12 col-md-4 p-2">
-            <label for="assigned" class="form-label">Assigned</label>
-            <select class="form-select" aria-label="Please Select" id="assigned" wire:model="lead.assigned_id">
-                <option selected>Please Select
-                </option>
-                @foreach ($users as $user)
-                    <option value="{{ $user->id }}" wire:key="{{ $user->id }}">{{ $user->name }}</option>
-                @endforeach
-            </select>
-            @error('lead.assigned_id')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+        <div class="col-12 col-md-4 p-2">
+            <x-select-form id="assigned" name="Assigned" :items="$users" wireModel="lead.assigned_id"
+                placeholder="Please Select Assigned" />
         </div>
         <div class="col-12">
-            <label for="tags" class="form-label">Tags</label>
-            <input type="text" id="tags" class="form-control" wire:model="lead.tags"
-                placeholder="Please Write Tags">
-            @error('lead.tags')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="tag-input" name="Tag Name" wireModel="lead.tags"
+                placeholder="Please Write Tags" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" id="name" class="form-control" wire:model="lead.name"
-                placeholder="Please Write name">
-            @error('lead.name')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="name" name="Name" wireModel="lead.name"
+                placeholder="Please Write Name" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="address" class="form-label">Address</label>
-            <input type="text" id="address" class="form-control" wire:model="lead.address"
-                placeholder="Please Write Address">
-            @error('lead.address')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="address" name="Address" wireModel="lead.address"
+                placeholder="Please Write Address" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="position" class="form-label">Position</label>
-            <input type="text" id="position" class="form-control" wire:model="lead.position"
-                placeholder="Please Write position">
-            @error('lead.position')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="position" name="Position" wireModel="lead.position"
+                placeholder="Please Write Position" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="city" class="form-label">City</label>
-            <input type="text" id="city" class="form-control" wire:model="lead.city"
-                placeholder="Please Write city">
-            @error('lead.city')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="city" name="City" wireModel="lead.city"
+                placeholder="Please Write city" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="email" class="form-label">Email</label>
-            <input type="text" id="email" class="form-control" wire:model="lead.email"
-                placeholder="Please Write email">
-            @error('lead.email')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="email" id="email" name="Email" wireModel="lead.email"
+                placeholder="Please Write email" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="company" class="form-label">Company</label>
-            <input type="text" id="company" class="form-control" wire:model="lead.company"
-                placeholder="Please Write company">
-            @error('lead.company')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="company" name="Company" wireModel="lead.company"
+                placeholder="Please Write company" />
+        </div>
+        <div class="col-12 col-md-4 p-2">
+            <x-select-form id="group" name="Group" :items="$groups" wireModel="lead.group_id"
+                placeholder="Please Select Group" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="group" class="form-label">Group</label>
-            <select class="form-select" aria-label="Please Select" id="group" wire:model="lead.group_id">
-                <option selected>Please Select
-                </option>
-                @foreach ($groups as $group)
-                    <option value="{{ $group->id }}" wire:key="{{ $group->id }}"> {{ $group->name }}
-                    </option>
-                @endforeach
-            </select>
-            @error('lead.group_id')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="website" name="Website" wireModel="lead.website"
+                placeholder="Please Write website" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="website" class="form-label">Website</label>
-            <input type="text" id="website" class="form-control" wire:model="lead.website"
-                placeholder="Please Write website">
-            @error('lead.website')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-select-form id="country" name="Country" :items="$countries" wireModel="lead.country_id"
+                placeholder="Please Select Country" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="country" class="form-label">Country</label>
-            <select class="form-select" aria-label="Please Select" id="country" wire:model="lead.country_id">
-                <option selected>Please Select
-                </option>
-                @foreach ($countries as $country)
-                    <option value="{{ $country->id }}" wire:key="{{ $country->id }}">{{ $country->name }}
-                    </option>
-                @endforeach
-            </select>
-            @error('lead.country_id')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="phone" name="Phone" wireModel="lead.phone"
+                placeholder="Please Write Phone" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="phone" class="form-label">Phone</label>
-            <input type="text" id="phone" class="form-control" wire:model="lead.phone"
-                placeholder="Please Write phone">
-            @error('lead.phone')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="text" id="zipCode" name="Zip Code" wireModel="lead.zipCode"
+                placeholder="Please Write Zip Code" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <label for="zipCode" class="form-label">Zip Code</label>
-            <input type="text" id="zipCode" class="form-control" wire:model="lead.zipCode"
-                placeholder="Please Write Zip Code">
-            @error('lead.zipCode')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class=" col-12 col-md-4 p-2">
-            <label for="leadValue" class="form-label">Lead Value</label>
-            <input type="number" id="leadValue" class="form-control" wire:model="lead.leadValue"
-                placeholder="$0.0">
-            @error('lead.leadValue')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-input-form type="number" id="leadValue" name="Lead Value" wireModel="lead.leadValue"
+                placeholder="Please Write Lead Value" />
         </div>
 
         <div class="col-12 p-2">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="text-area3" rows="3" wire:model="lead.description"
-                placeholder="Please Write Description"></textarea>
-
-            @error('lead.description')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
+            <x-textarea-form id="description" name="Description" wireModel="lead.description"
+                placeholder="Please Write Description" />
         </div>
 
-        <div class="col-12 p-2 d-flex justify-content-end gap-2">
-            @if ($type == 'create')
-                <button type="submit" class="btn btn-primary btn-lg" wire:click="save"
-                    x-show="$wire.type == 'create">Save</button>
-            @else
-                <button type="submit" class="btn btn-primary btn-lg" wire:click="update"
-                    x-show="$wire.type == 'update">Update</button>
-            @endif
-            <a type="submit" class="btn btn-danger btn-lg" href="{{ route('lead.index') }}">Cancel</a>
-        </div>
+        <x-buttons-operation type="{{ $type }}" routeCancel="{{ route('leads.index') }}" wireSave="save"
+            wireUpdate="update" />
     </div>
 </div>

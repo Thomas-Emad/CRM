@@ -2,20 +2,23 @@
 
 namespace App\Livewire\Lead;
 
-use App\Livewire\Forms\LeadOperationsForm;
-use Livewire\Component;
-use App\Models\Lead;
 use App\Models\Status;
+use Livewire\Component;
 use Livewire\Attributes\Title;
-use Livewire\WithPagination;
+use App\Livewire\Forms\LeadOperationsForm;
+use App\Interfaces\LeadRepositoryInterface;
 
 #[Title('Leads')]
 class LeadPage extends Component
 {
-    use WithPagination;
+    public $search = '';
+    protected $leadRepository;
     public LeadOperationsForm $lead;
 
-    public $search = '';
+    public function boot(LeadRepositoryInterface $leadRepository)
+    {
+        $this->leadRepository = $leadRepository;
+    }
 
     /**
      * Displays the lead details for the given ID.
@@ -33,7 +36,7 @@ class LeadPage extends Component
     public function delete()
     {
         $this->lead->destory();
-        $this->redirect(route('lead.index'));
+        $this->redirect(route('leads.index'));
     }
 
     /**
@@ -45,17 +48,7 @@ class LeadPage extends Component
     {
         return view('livewire.lead.lead-page', [
             'statuses' => Status::withCount('leads')->get(),
-            'leads' => Lead::query()
-                ->with([
-                    'status:id,name,color',
-                    'interactives:id,created_at',
-                    'assigned:id,name',
-                    'source:id,name',
-                    'country:id,name',
-                ])
-                ->where('name', 'like', "%$this->search%")
-                ->orderBy('is_customer', 'desc')
-                ->paginate(10),
+            'leads' => $this->leadRepository->all($this->search),
         ]);
     }
 }

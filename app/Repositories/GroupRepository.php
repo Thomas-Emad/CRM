@@ -15,7 +15,8 @@ class GroupRepository implements GroupRepositoryInterface
      */
     public function all(string $title = ''): Collection
     {
-        return Group::select(['id', 'name', 'description'])->where('name', 'like', "%$title%")->get();
+        return Group::select(['id', 'name', 'description'])
+            ->where('name', 'like', "%$title%")->get();
     }
 
     /**
@@ -30,14 +31,14 @@ class GroupRepository implements GroupRepositoryInterface
         return Group::select(['id', 'name', 'description'])->findOrFail($id);
     }
 
+
     /**
      * Stores a new group using the given attributes.
      *
      * @param array $attributes The attributes for creating the group.
-     *
-     * @return bool True if the group was successfully created, otherwise false.
+     * 
+     * @return \App\Models\Group The group if it was successfully created.
      */
-
     public function store(array $attributes): Group
     {
         return Group::create($attributes);
@@ -69,7 +70,6 @@ class GroupRepository implements GroupRepositoryInterface
         $group = Group::findOrFail($id);
         return  $group->delete();
     }
-
 
     /**
      * The validation rules for the group.

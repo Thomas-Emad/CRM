@@ -9,9 +9,8 @@ use App\Interfaces\SourceRepositoryInterface;
 #[Title('Source Operation')]
 class SourceOperation extends Component
 {
-    public $id, $type, $name, $description, $website;
-
     protected $sourceRepository;
+    public $id, $type, $name, $description, $website;
 
     public function boot(SourceRepositoryInterface $sourceRepository)
     {
@@ -71,7 +70,6 @@ class SourceOperation extends Component
     {
         return $this->sourceRepository->rules();
     }
-
 
     /**
      * Renders the Source operation view and populates the form if ID is provided.

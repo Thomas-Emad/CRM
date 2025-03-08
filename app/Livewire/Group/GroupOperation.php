@@ -68,7 +68,6 @@ class GroupOperation extends Component
         return $this->groupRepository->rules();
     }
 
-
     /**
      * Renders the Group operation view and populates the form if ID is provided.
      *

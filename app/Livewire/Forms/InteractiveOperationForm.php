@@ -2,36 +2,32 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Interactive;
-use App\Models\Lead;
+use App\Interfaces\InteractiveRepositoryInterface;
 use Livewire\Form;
 
 class InteractiveOperationForm extends Form
 {
+    protected $interactiveRepository;
     public $id, $lead_id, $title, $content, $type, $status_id;
 
-    protected $rules = [
-        'lead_id' => 'required|exists:leads,id',
-        'title' => 'required|string|min:3',
-        'content' => 'required|string|max:2000',
-        'type' => 'required|string',
-        'status_id' => 'required|exists:statuses,id',
-    ];
+    public function boot(InteractiveRepositoryInterface $interactiveRepository)
+    {
+        $this->interactiveRepository = $interactiveRepository;
+    }
+
+    public function rules(): array
+    {
+        return $this->interactiveRepository->rules();
+    }
 
     /**
      * Get the validation attributes for the form.
      *
      * @return array The mapping of field names to user-friendly labels.
      */
-    protected function validationAttributes()
+    protected function validationAttributes(): array
     {
-        return [
-            'status_id' => 'status',
-            'source_id' => 'source',
-            'assigned_id' => 'assigned',
-            'group_id' => 'group',
-            'country_id' => 'country',
-        ];
+        return $this->interactiveRepository->attributes();
     }
 
     /**
@@ -42,10 +38,7 @@ class InteractiveOperationForm extends Form
     public function store()
     {
         $vaildatedData = $this->validate();
-        Interactive::create(array_merge($vaildatedData, [
-            'lead_id' => $this->lead_id,
-            'user_id' => auth()->id(),
-        ]));
+        $this->interactiveRepository->store($this->lead_id,  $vaildatedData);
         $this->reset();
     }
 
@@ -57,7 +50,7 @@ class InteractiveOperationForm extends Form
      */
     public function get($id)
     {
-        $Interactive = Interactive::findOrFail($id);
+        $Interactive = $this->interactiveRepository->get($id);
         $this->id = $Interactive->id;
         $this->title = $Interactive->title;
         $this->content = $Interactive->content;
@@ -73,8 +66,7 @@ class InteractiveOperationForm extends Form
     public function update()
     {
         $vaildatedData = $this->validate();
-        $Interactive = Interactive::findOrFail($this->id);
-        $Interactive->update($vaildatedData);
+        $this->interactiveRepository->update($this->id, $vaildatedData);
         $this->reset();
     }
 
@@ -85,8 +77,7 @@ class InteractiveOperationForm extends Form
      */
     public function destroy()
     {
-        $Interactive = Interactive::findOrFail($this->id);
-        $Interactive->delete();
+        $this->interactiveRepository->delete($this->id);
         $this->reset();
     }
 }

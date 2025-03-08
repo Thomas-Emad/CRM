@@ -2,19 +2,22 @@
 
 namespace App\Livewire\Customer;
 
-use App\Livewire\Forms\CustomerOperationsForm;
 use Livewire\Component;
-use App\Models\Lead;
-use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use App\Livewire\Forms\CustomerOperationsForm;
+use App\Interfaces\CustomerRepositoryInterface;
 
 #[Title('Customers')]
 class CustomerPage extends Component
 {
-    use WithPagination;
+    public $search = '';
+    protected $customerRepository;
     public CustomerOperationsForm $customer;
 
-    public $search = '';
+    public function boot(CustomerRepositoryInterface $customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
 
     /**
      * Displays the Customer details for the given ID.
@@ -32,20 +35,13 @@ class CustomerPage extends Component
     public function delete()
     {
         $this->customer->destroy();
-        $this->redirect(route('customer.index'));
+        $this->redirect(route('customers.index'));
     }
 
     public function render()
     {
         return view('livewire.customer.customer-page', [
-            'customers' => Lead::query()
-                ->with([
-                    'status:id,name,color',
-                    'group:id,name',
-                ])
-                ->where('name', 'like', "%$this->search%")
-                ->where('is_customer', true)
-                ->paginate(10),
+            'customers' => $this->customerRepository->all($this->search),
         ]);
     }
 }

@@ -1,19 +1,10 @@
 <div>
-    <!-- Page Header -->
-    <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-        <h1 class="page-title fw-medium fs-24 mb-0">Status</h1>
-        <div class="ms-md-1 ms-0">
-            <nav>
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
 
-                    <li class="breadcrumb-item active d-inline-flex" aria-current="page">Status</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header Close -->
+    <x-page-header title="Statuses">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+    </x-page-header>
+
     <div class="border p-2">
         <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
             <div>
@@ -69,40 +60,29 @@
                 </tbody>
             </table>
 
-            {{-- <div class="p-2">
-                {{ $statuses->links() }}
-            </div> --}}
         </div>
     </div>
 
     <!-- Start::delete-status -->
-    <div class="modal fade" id="deleteStatusModal" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="deleteStatusModalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog">
-            <form class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="deleteStatusModalLabel">
-                        <i class="ti ti-trash text-danger me-1"></i>
-                        <span>
-                            Are you sure you want to delete this status?!
-                        </span>
-                    </h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <label for="status-name" class="form-label">Name Status</label>
-                        <input type="text" id="status-title" class="form-control disabled" wire:model="statusName"
-                            disabled placeholder="Enter Status Name">
-                    </div>
+    <x-modal id="deleteStatusModal">
+        <x-slot:title>
+            <i class="ti ti-trash text-danger me-1"></i>
+            <span>
+                Are you sure you want to delete this status?!
+            </span>
+        </x-slot:title>
+        <x-slot:content>
+            <div>
+                <label for="status-name" class="form-label">Name Status</label>
+                <input type="text" id="status-title" class="form-control disabled" wire:model="statusName" disabled
+                    placeholder="Enter Status Name">
+            </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
-                </div>
-            </form>
-        </div>
-    </div>
+        </x-slot:content>
+        <x-slot:footer>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
+        </x-slot:footer>
+    </x-modal>
     <!-- End::delete-status -->
 </div>

@@ -1,19 +1,9 @@
 <div>
-    <!-- Page Header -->
-    <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-        <h1 class="page-title fw-medium fs-24 mb-0">Customers</h1>
-        <div class="ms-md-1 ms-0">
-            <nav>
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+    <x-page-header title="Customers">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+    </x-page-header>
 
-                    <li class="breadcrumb-item active d-inline-flex" aria-current="page">customers</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header Close -->
     <div class="border p-2">
         <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
             <div class="d-flex gap-2">
@@ -27,7 +17,7 @@
                     <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
                 </div>
                 <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto"
-                    href="{{ route('customer.operation', ['type' => 'create']) }}">
+                    href="{{ route('customers.create') }}">
                     <i class="ti ti-plus fs-5"></i>
                     <span>New Customer</span>
                 </a>
@@ -78,11 +68,12 @@
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn " href="{{ route('customer.show', ['id' => $customer->id]) }}">
+                                    <a class="btn "
+                                        href="{{ route('customers.show', ['customer' => $customer->id]) }}">
                                         <i class="ti ti-eye fs-4 text-primary"></i>
                                     </a>
                                     <a class="btn "
-                                        href="{{ route('customer.operation', ['type' => 'update', 'id' => $customer->id]) }}">
+                                        href="{{ route('customers.edit', ['customer' => $customer->id]) }}">
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
@@ -99,41 +90,28 @@
                     @endforelse
                 </tbody>
             </table>
-
-            <div class="p-2">
-                {{ $customers->links() }}
-            </div>
         </div>
     </div>
 
     <!-- Start::delete-lead -->
-    <div class="modal fade" id="DeleteLeadModal" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="DeleteLeadModalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog">
-            <form class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="DeleteLeadModalLabel">
-                        <i class="ti ti-trash text-danger me-1"></i>
-                        <span>
-                            Are you sure you want to delete this Customer?!
-                        </span>
-                    </h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <label for="customer-name" class="form-label">Customer Name</label>
-                        <input type="text" id="lead-title" class="form-control disabled" wire:model="customer.name"
-                            disabled placeholder="Enter Customer Name">
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <x-modal id="DeleteLeadModal">
+        <x-slot:title>
+            <i class="ti ti-trash text-danger me-1"></i>
+            <span>
+                Are you sure you want to delete this Customer?!
+            </span>
+        </x-slot:title>
+        <x-slot:content>
+            <div>
+                <label for="customer-name" class="form-label">Customer Name</label>
+                <input type="text" id="lead-title" class="form-control disabled" wire:model="customer.name" disabled
+                    placeholder="Enter Customer Name">
+            </div>
+        </x-slot:content>
+        <x-slot:footer>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
+        </x-slot:footer>
+    </x-modal>
     <!-- End::delete-lead -->
 </div>

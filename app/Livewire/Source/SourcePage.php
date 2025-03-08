@@ -2,20 +2,16 @@
 
 namespace App\Livewire\Source;
 
-use App\Interfaces\SourceRepositoryInterface;
 use Livewire\Component;
-use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use App\Interfaces\SourceRepositoryInterface;
 
 #[Title('Sources')]
 class SourcePage extends Component
 {
-    use WithPagination;
-
     public $search = '';
-    public $sourceId, $sourceName, $website, $description;
-
     protected $sourceRepository;
+    public $sourceId, $sourceName, $website, $description;
 
     public function boot(SourceRepositoryInterface $sourceRepository)
     {

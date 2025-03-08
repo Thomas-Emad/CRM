@@ -2,16 +2,13 @@
 
 namespace App\Livewire\Group;
 
-use App\Interfaces\GroupRepositoryInterface;
 use Livewire\Component;
-use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use App\Interfaces\GroupRepositoryInterface;
 
 #[Title('Groups')]
 class GroupPage extends Component
 {
-    use WithPagination;
-
     public $search = '';
     public $groupId, $groupName, $description;
 

@@ -18,7 +18,6 @@
             <div class="container-fluid">
 
                 @yield('content')
-                {{-- {{ $slot }} --}}
             </div>
         </div>
         <!-- End::app-content -->

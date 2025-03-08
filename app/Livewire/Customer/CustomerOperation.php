@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Customer;
 
-use App\Livewire\Forms\CustomerOperationsForm;
 use Livewire\Component;
 use App\Models\{Group, Country, Currency};
+use App\Livewire\Forms\CustomerOperationsForm;
 
-class CustomerOperations extends Component
+class CustomerOperation extends Component
 {
     public CustomerOperationsForm $customer;
     public $id, $type;
@@ -17,7 +17,7 @@ class CustomerOperations extends Component
     public function save()
     {
         $this->customer->store();
-        $this->redirect(route('customer.index', absolute: true));
+        $this->redirect(route('customers.index', absolute: true));
     }
 
     /**
@@ -28,7 +28,7 @@ class CustomerOperations extends Component
     public function update()
     {
         $this->customer->update();
-        $this->redirect(route('customer.index', absolute: true));
+        $this->redirect(route('customers.index', absolute: true));
     }
 
     public function render()
@@ -36,7 +36,7 @@ class CustomerOperations extends Component
         if ($this->id) {
             $this->customer->get($this->id);
         }
-        return view('livewire.customer.customer-operations', [
+        return view('livewire.customer.customer-operation', [
             'types' => $this->type,
             'groups' => Group::get(['id', 'name']),
             'countries' => Country::get(['id', 'name']),

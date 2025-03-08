@@ -3,8 +3,8 @@
 namespace App\Livewire\Forms;
 
 use Livewire\Form;
-use App\Models\Lead;
 use Livewire\Attributes\Title;
+use App\Interfaces\LeadRepositoryInterface;
 
 #[Title('Lead Operations Form')]
 class LeadOperationsForm extends Form
@@ -17,35 +17,21 @@ class LeadOperationsForm extends Form
 
     public $currentStatus;
 
-    protected $rules = [
-        'status_id' => 'required|exists:statuses,id',
-        'source_id' => 'required|exists:sources,id',
-        'assigned_id' => 'required|exists:users,id',
-        'tags' => 'nullable|string',
-        'name' => 'required|string|max:255',
-        'address' => 'nullable|string|max:255',
-        'position' => 'nullable|string|max:255',
-        'city' => 'nullable|string|max:255',
-        'email' => 'nullable|email|max:255',
-        'company' => 'nullable|string|max:255',
-        'group_id' => 'nullable|exists:groups,id',
-        'website' => 'nullable|string|url',
-        'country_id' => 'required|exists:countries,id',
-        'phone' => 'required|string|max:255',
-        'zipCode' => 'nullable|string|max:255',
-        'leadValue' => 'nullable|numeric',
-        'description' => 'nullable|string|max:2000',
-    ];
+    protected $leadRepository;
+
+    public function boot(LeadRepositoryInterface $leadRepository)
+    {
+        $this->leadRepository = $leadRepository;
+    }
+
+    protected function rules()
+    {
+        return $this->leadRepository->rules();
+    }
 
     protected function validationAttributes()
     {
-        return [
-            'status_id' => 'status',
-            'source_id' => 'source',
-            'assigned_id' => 'assigned',
-            'group_id' => 'group',
-            'country_id' => 'country',
-        ];
+        return $this->leadRepository->attributes();
     }
 
     /**
@@ -57,7 +43,7 @@ class LeadOperationsForm extends Form
     public function store()
     {
         $vaildatedData = $this->validate();
-        Lead::create($vaildatedData);
+        $this->leadRepository->store($vaildatedData);
         $this->reset();
     }
 
@@ -71,7 +57,7 @@ class LeadOperationsForm extends Form
      */
     public function get($id)
     {
-        $lead = Lead::findOrFail($id);
+        $lead = $this->leadRepository->get($id);
         $this->id = $lead->id;
         $this->status_id = $lead->status_id;
         $this->source_id = $lead->source_id;
@@ -101,10 +87,7 @@ class LeadOperationsForm extends Form
     public function update()
     {
         $vaildatedData = $this->validate();
-
-        $lead = Lead::findOrFail($this->id);
-        $lead->update($vaildatedData);
-
+        $this->leadRepository->update($this->id, $vaildatedData);
         $this->reset();
     }
 
@@ -116,8 +99,7 @@ class LeadOperationsForm extends Form
      */
     public function destory()
     {
-        $lead = Lead::findOrFail($this->id);
-        $lead->delete();
+        $this->leadRepository->delete($this->id);
         $this->reset();
     }
 
@@ -130,10 +112,6 @@ class LeadOperationsForm extends Form
      */
     public function convertToCustomer($id)
     {
-        $Interactive = Lead::findOrFail($id);
-        $Interactive->update([
-            'is_customer' => true,
-            'status_id' => $this->currentStatus
-        ]);
+        $this->leadRepository->convertToCustomer($id, $this->currentStatus);
     }
 }

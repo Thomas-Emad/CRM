@@ -3,26 +3,22 @@
 namespace App\Livewire\Customer;
 
 use Livewire\Component;
-use App\Models\Lead;
+use App\Interfaces\CustomerRepositoryInterface;
 
 class ShowCustomer extends Component
 {
-
     public $id;
+    protected $customerRepository;
+
+    public function boot(CustomerRepositoryInterface $customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
 
     public function render()
     {
         return view('livewire.customer.show-customer', [
-            'customer' => Lead::with([
-                'assigned:id,user',
-                'source:id,name',
-                'status:id,name',
-                'group:id,name',
-                'currency:id,name',
-                'country:id,name',
-                'billings',
-                'billings.country:id,name'
-            ])->findOrFail($this->id)
+            'customer' => $this->customerRepository->get($this->id),
         ]);
     }
 }

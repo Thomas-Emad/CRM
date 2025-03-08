@@ -10,8 +10,8 @@ interface StatusRepositoryInterface
 {
     public function all(): Collection;
     public function get(int $id): ?Status;
-    public function delete(int $id): ?bool;
     public function store(array $attributes): Status;
     public function update(int $id, array $attributes): bool;
+    public function delete(int $id): ?bool;
     public function rules(): array;
 }

@@ -1,24 +1,12 @@
 <div>
-    <!-- Page Header -->
-    <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-        <h1 class="page-title fw-medium fs-24 mb-0">Show Details</h1>
-        <div class="ms-md-1 ms-0">
-            <nav>
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('source.index') }}">Lead</a></li>
+    <x-page-header title="Show Lead">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('leads.index') }}">Lead</a></li>
+    </x-page-header>
 
-                    <li class="breadcrumb-item active d-inline-flex" aria-current="page">
-                        Show Details
-                    </li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header Close -->
     <div class="border p-2 row">
-        <div class="col-12 col-md-7 p-2">
+        <div class="col-12 col-xl-7 p-2">
             <div class="p-2 shadow-sm border">
                 <h2 class="fs-4">Details About Lead</h2>
                 <div class="row">
@@ -128,14 +116,14 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-5 p-2">
+        <div class="col-12 col-xl-5 p-2">
             <div class="card custom-card">
                 <div class="card-header justify-content-between">
                     <div class="card-title">
                         Interactives
                     </div>
                     <div class="d-flex gap-2 align-items-center">
-                        <a href="{{ route('lead.interactive', ['id' => $lead->id, 'type' => 'create']) }}"
+                        <a href="{{ route('leads.interactive', ['id' => $lead->id, 'type' => 'create']) }}"
                             class="btn btn-primary">
                             <i class="ti ti-plus "></i>
                         </a>
@@ -157,10 +145,11 @@
                                         <span
                                             class="d-block fs-12 text-muted">{{ $interactive->created_at->format('y-d') }}</span>
                                     </div>
-                                    <div class="d-flex flex-wrap flex-fill align-items-center justify-content-between">
+                                    <div
+                                        class="d-flex flex-wrap flex-fill align-items-center justify-content-between gap-2">
                                         <div>
                                             <p class="mb-1 text-truncate timeline-widget-content text-wrap">
-                                                {{ str($interactive->title)->limit(30) }}
+                                                {{ str($interactive->title)->limit(30) . ' - ' . $interactive->type }}
                                             </p>
                                             <p class="mb-0 fs-12 lh-1 text-muted">
                                                 {{ $interactive->created_at->format('h:iA') }}
@@ -171,9 +160,9 @@
 
                                             </p>
                                         </div>
-                                        <div class="dropdown">
+                                        <div>
                                             <a class="btn bg-primary-transparent"
-                                                href="{{ route('lead.interactive', ['id' => $lead->id, 'type' => 'update', 'interactive' => $interactive->id]) }}">
+                                                href="{{ route('leads.interactive', ['id' => $lead->id, 'type' => 'update', 'interactive' => $interactive->id]) }}">
                                                 <i class="ti ti-pencil fs-4 text-primary"></i>
                                             </a>
                                             <button type="button" class="btn bg-danger-transparent"
@@ -197,76 +186,50 @@
         </div>
     </div>
 
-
     <!-- Start::ConvertToCustomer -->
-    <div class="modal fade" id="ConvertToCustomer" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="ConvertToCustomerLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog">
-            <form class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="ConvertToCustomerLabel">
-                        <i class="ti ti-exchange  text-text-primary-emphasis"></i>
-                        <span>
-                            Are your sure want convert this Lead to Customers?!
-                        </span>
-                    </h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <label for="lead-title" class="form-label">Lead Title</label>
-                        <input type="text" id="lead-title" class="form-control disabled"
-                            value="{{ $lead?->name ?? 'N/A' }}" disabled placeholder="Enter Lead Title">
-                    </div>
-                    <label for="status" class="form-label">Status</label>
-                    <select class="form-select" aria-label="Please Select" id="status"
-                        wire:model="leadForm.currentStatus">
-                        <option selected>Please Select
-                        </option>
-                        @foreach ($statuses as $status)
-                            <option value="{{ $status->id }}" wire:key="{{ $status->id }}">{{ $status->name }}
-                            </option>
-                        @endforeach
-                    </select>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success"
-                        wire:click="convertToCustomer({{ $lead->id }})">Convert</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <x-modal id="ConvertToCustomer">
+        <x-slot:title>
+            <i class="ti ti-exchange  text-text-primary-emphasis"></i>
+            <span>
+                Are your sure want convert this Lead to Customers?!
+            </span>
+        </x-slot:title>
+        <x-slot:content>
+            <div>
+                <label for="lead-title" class="form-label">Lead Title</label>
+                <input type="text" id="lead-title" class="form-control disabled"
+                    value="{{ $lead?->name ?? 'N/A' }}" disabled placeholder="Enter Lead Title">
+            </div>
+            <x-select-form id="lead-title" name="Status" :items="$statuses" wireModel="leadForm.currentStatus"
+                placeholder="Please Select" />
+        </x-slot:content>
+        <x-slot:footer>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success"
+                wire:click="convertToCustomer({{ $lead->id }})">Convert</button>
+        </x-slot:footer>
+    </x-modal>
     <!-- End::ConvertToCustomer -->
-    <!-- Start::delete-lead -->
-    <div class="modal fade" id="DeleteLeadModal" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="DeleteLeadModalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog">
-            <form class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="DeleteLeadModalLabel">
-                        <i class="ti ti-trash text-danger me-1"></i>
-                        <span>
-                            Are you sure you want to delete this Interactive?!
-                        </span>
-                    </h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <label for="interactiveForm-name" class="form-label">Interative Title</label>
-                        <input type="text" id="interactiveForm-title" class="form-control disabled"
-                            wire:model="interactiveForm.title" disabled placeholder="Enter interactive Name">
-                    </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="deleteInteractive">Delete</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Start::delete-lead -->
+    <x-modal id="DeleteLeadModal">
+        <x-slot:title>
+            <i class="ti ti-trash text-danger me-1"></i>
+            <span>
+                Are you sure you want to delete this Interactive?!
+            </span>
+        </x-slot:title>
+        <x-slot:content>
+            <div>
+                <label for="interactiveForm-name" class="form-label">Interative Title</label>
+                <input type="text" id="interactiveForm-title" class="form-control disabled"
+                    wire:model="interactiveForm.title" disabled placeholder="Enter interactive Name">
+            </div>
+        </x-slot:content>
+        <x-slot:footer>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" wire:click="deleteInteractive">Delete</button>
+        </x-slot:footer>
+    </x-modal>
     <!-- End::delete-lead -->
 </div>

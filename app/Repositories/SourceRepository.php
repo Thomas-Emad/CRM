@@ -37,7 +37,6 @@ class SourceRepository implements SourceRepositoryInterface
      *
      * @return bool True if the source was successfully created, otherwise false.
      */
-
     public function store(array $attributes): source
     {
         return source::create($attributes);

@@ -1,24 +1,12 @@
 <div>
-    <!-- Page Header -->
-    <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
-        <h1 class="page-title fw-medium fs-24 mb-0">Show Details</h1>
-        <div class="ms-md-1 ms-0">
-            <nav>
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('source.index') }}">customer</a></li>
 
-                    <li class="breadcrumb-item active d-inline-flex" aria-current="page">
-                        Show Details
-                    </li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header Close -->
+    <x-page-header title="Show Customer">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('customers.index') }}">Customers</a></li>
+    </x-page-header>
+
     <div class="border p-2">
-
         <div class="card-body">
             <ul class="nav nav-pills mb-3 nav-justified tab-style-5 d-sm-flex d-block" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -164,7 +152,7 @@
                 <div class="tab-pane text-muted" id="pills-billing" role="tabpanel"
                     aria-labelledby="pills-billing-tab" tabindex="0">
                     <div class="row">
-                        @foreach ($customer->billings as $key => $billing)
+                        @forelse ($customer->billings as $key => $billing)
                             <div class="row mb-2">
                                 <h2 class="fs-4">Billing Address ({{ $key + 1 }})</h2>
                                 <div class="col-12 col-md-6 p-2">
@@ -194,7 +182,9 @@
                                         placeholder="Please enter zip code">
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <p class="italic text-center">This customer has no Billing Address.</p>
+                        @endforelse
 
                     </div>
                 </div>

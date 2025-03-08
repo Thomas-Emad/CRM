@@ -32,7 +32,7 @@ class InteractiveOperation extends Component
     {
         $this->interactiveForm->lead_id = $this->id;
         $this->interactiveForm->store();
-        $this->redirect(route('lead.show', ['id' => $this->id], absolute: true));
+        $this->redirect(route('leads.show', ['lead' => $this->id], absolute: true));
     }
 
     /**
@@ -45,13 +45,14 @@ class InteractiveOperation extends Component
         $this->interactiveForm->lead_id = $this->id;
 
         $this->interactiveForm->update();
-        $this->redirect(route('lead.show', ['id' => $this->id], absolute: true));
+        $this->redirect(route('leads.show', ['lead' => $this->id], absolute: true));
     }
 
     public function render()
     {
+
         if ($this->interactive) {
-            $this->interactiveForm->get($this->id);
+            ($this->interactiveForm->get($this->interactive));
         }
         return view('livewire.lead.interactive.interactive-operation', [
             'statuses' => Status::get(['id', 'name']),
