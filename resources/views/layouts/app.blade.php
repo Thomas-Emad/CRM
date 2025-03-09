@@ -11,7 +11,10 @@
 
     <div class="page">
         @include('layouts.header')
-        @include('layouts.sidebar')
+
+        @persist('player')
+            @include('layouts.sidebar')
+        @endpersist
 
         <!-- Start::app-content -->
         <div class="main-content app-content">
@@ -26,15 +29,17 @@
 
     </div>
 
-    @include('layouts.commonjs')
 
-    @include('layouts.custom_switcherjs')
-    @yield('scripts')
     @livewireScripts
 
 
+    @include('layouts.commonjs')
+
+    @include('layouts.custom_switcherjs')
     <!-- Custom JS -->
     <script src="{{ asset('assets/js/custom.js') }}" data-navigate-once></script>
+
+    @yield('scripts')
 </body>
 
 </html>
