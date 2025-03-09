@@ -5,7 +5,6 @@ namespace App\Livewire\Lead;
 use App\Models\Status;
 use Livewire\Component;
 use Livewire\Attributes\Title;
-use App\Livewire\Forms\LeadOperationsForm;
 use App\Interfaces\LeadRepositoryInterface;
 
 #[Title('Leads')]
@@ -13,7 +12,6 @@ class LeadPage extends Component
 {
     public $search = '';
     protected $leadRepository;
-    public LeadOperationsForm $lead;
 
     public function boot(LeadRepositoryInterface $leadRepository)
     {
@@ -21,21 +19,11 @@ class LeadPage extends Component
     }
 
     /**
-     * Displays the lead details for the given ID.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-        $this->lead->get($id);
-    }
-
-    /**
      * Deletes the Lead and closes the delete modal.
      */
-    public function delete()
+    public function delete($id)
     {
-        $this->lead->destory();
+        $this->leadRepository->delete($id);
         $this->redirect(route('leads.index'));
     }
 
@@ -47,7 +35,7 @@ class LeadPage extends Component
     public function render()
     {
         return view('livewire.lead.lead-page', [
-            'statuses' => Status::withCount('leads')->get(),
+            'statuses' => Status::withCount('leads')->orderBy('leads_count', 'desc')->limit(3)->get(),
             'leads' => $this->leadRepository->all($this->search),
         ]);
     }

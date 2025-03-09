@@ -1,5 +1,4 @@
-<div>
-
+<div x-data="{ id: null, title: null }">
     <x-page-header title="Sources">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
@@ -10,7 +9,7 @@
             <div>
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
-            <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto"
+            <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
                 href="{{ route('sources.create') }}">
                 <i class="ti ti-plus fs-5"></i>
                 <span>New Source</span>
@@ -52,7 +51,8 @@
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
-                                        data-bs-target="#deleteSourceModal" wire:click="show({{ $source->id }})">
+                                        data-bs-target="#deleteSourceModal"
+                                        x-on:click="id = {{ $source->id }}; title = '{{ $source->name }}'">
                                         <i class="ti ti-trash fs-4 text-danger"></i>
                                     </button>
                                 </div>
@@ -70,7 +70,7 @@
     </div>
 
     <!-- Start::delete-Source -->
-    <x-modal id="deleteStatusModal">
+    <x-modal id="deleteSourceModal">
         <x-slot:title>
             <i class="ti ti-trash text-danger me-1"></i>
             <span>
@@ -80,13 +80,13 @@
         <x-slot:content>
             <div>
                 <label for="Source-name" class="form-label">Name Source</label>
-                <input type="text" id="Source-title" class="form-control disabled" wire:model="sourceName" disabled
+                <input type="text" id="Source-title" class="form-control disabled" x-model="title" disabled
                     placeholder="Enter Source Name">
             </div>
         </x-slot:content>
         <x-slot:footer>
             <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
+            <button type="button" class="btn btn-danger" wire:click="delete(id)">Delete</button>
         </x-slot:footer>
     </x-modal>
     <!-- End::delete-Source -->

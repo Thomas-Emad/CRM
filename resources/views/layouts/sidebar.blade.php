@@ -56,7 +56,8 @@
                         </li>
                         <li class="slide"><a href="{{ route('groups.index') }}" class="side-menu__item">Group</a></li>
                         <li class="slide"><a href="{{ route('leads.index') }}" class="side-menu__item">Leads</a></li>
-                        <li class="slide"><a href="{{ route('customers.index') }}" class="side-menu__item">Customers</a>
+                        <li class="slide"><a href="{{ route('customers.index') }}"
+                                class="side-menu__item">Customers</a>
                         </li>
                     </ul>
                 </li>

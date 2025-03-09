@@ -20,20 +20,13 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456'),
         ]);
 
-        Status::create([
-            'name' => fake()->name(),
-            'color' => fake()->hexColor(),
-        ]);
-
-        Country::create([
-            'name' =>  fake()->country(),
-            'code' =>  fake()->countryCode(),
-        ]);
-
-        Currency::create([
-            'name' => fake()->currencyCode(),
-            'code' => 'BR',
-            'symbol' => 'R$',
+        $this->call([
+            SourcesSeeder::class,
+            StatusesSeeder::class,
+            GroupsSeeder::class,
+            CurrenciesSeeder::class,
+            CountriesSeeder::class,
+            LeadsSeeder::class
         ]);
     }
 }

@@ -127,14 +127,14 @@ class CustomerService
      * If the $billingId is not set, this method will create a new billing customer for the given lead.
      *
      * @param int $leadId The ID of the lead to update or create a billing customer for.
-     * @param int $billingId The ID of the billing customer to update. If not set, a new billing customer will be created.
+     * @param $billingId The ID of the billing customer to update. If not set, a new billing customer will be created.
      * @param string $city The city of the billing customer.
      * @param int $country_id The ID of the country of the billing customer.
      * @param string $street The street of the billing customer.
      * @param string $zip_code The zip code of the billing customer.
      * @return \App\Models\BillingCustomer|bool The updated or created billing customer if successful, otherwise false.
      */
-    private function updateOrCreateBilling(int $leadId, int $billingId,  $city,  $country_id,   $street,   $zip_code): BillingCustomer|bool
+    private function updateOrCreateBilling(int $leadId, $billingId,  $city,  $country_id,   $street,   $zip_code): BillingCustomer|bool
     {
         if (
             isset($city) ||

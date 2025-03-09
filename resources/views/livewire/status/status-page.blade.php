@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ deleteId: null, deleteTitle: null }">
 
     <x-page-header title="Statuses">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -10,7 +10,7 @@
             <div>
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
-            <a class="btn btn-primary btn-wave inline-flex align-items-center gap-2 ms-auto"
+            <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
                 href="{{ route('statuses.create') }}">
                 <i class="ti ti-plus fs-5"></i>
                 <span>New Status</span>
@@ -45,7 +45,8 @@
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
-                                        data-bs-target="#deleteStatusModal" wire:click="show({{ $status->id }})">
+                                        data-bs-target="#deleteStatusModal"
+                                        x-on:click="deleteId = {{ $status->id }}; deleteTitle = '{{ $status->name }}'">
                                         <i class="ti ti-trash fs-4 text-danger"></i>
                                     </button>
                                 </div>
@@ -74,14 +75,14 @@
         <x-slot:content>
             <div>
                 <label for="status-name" class="form-label">Name Status</label>
-                <input type="text" id="status-title" class="form-control disabled" wire:model="statusName" disabled
+                <input type="text" id="status-title" class="form-control disabled" x-model="deleteTitle" disabled
                     placeholder="Enter Status Name">
             </div>
 
         </x-slot:content>
         <x-slot:footer>
             <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
+            <button type="button" class="btn btn-danger" wire:click="delete(deleteId)">Delete</button>
         </x-slot:footer>
     </x-modal>
     <!-- End::delete-status -->

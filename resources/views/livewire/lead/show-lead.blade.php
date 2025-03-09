@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ id: null, title: null }">
     <x-page-header title="Show Lead">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
@@ -137,7 +137,7 @@
                     <ul class="list-unstyled timeline-widget timeline-2 mb-0 my-3 overflow-x-auto"
                         style="max-height: 500px">
                         @forelse ($lead->interactives as $interactive)
-                            <li class="timeline-widget-list" wire:key="{{ $interactive->id }}">
+                            <li class="timeline-widget-list" wire:key="interactive-{{ $interactive->id }}">
                                 <div class="d-flex align-items-top">
                                     <div class="me-5 text-center">
                                         <span
@@ -167,7 +167,7 @@
                                             </a>
                                             <button type="button" class="btn bg-danger-transparent"
                                                 data-bs-toggle="modal" data-bs-target="#DeleteLeadModal"
-                                                wire:click="showInteractive({{ $interactive->id }})">
+                                                x-on:click="id = {{ $interactive->id }}; title = '{{ $interactive->title }}'">
                                                 <i class="ti ti-trash fs-4 text-danger"></i>
                                             </button>
                                         </div>
@@ -222,13 +222,13 @@
         <x-slot:content>
             <div>
                 <label for="interactiveForm-name" class="form-label">Interative Title</label>
-                <input type="text" id="interactiveForm-title" class="form-control disabled"
-                    wire:model="interactiveForm.title" disabled placeholder="Enter interactive Name">
+                <input type="text" id="interactiveForm-title" class="form-control disabled" x-model="title"
+                    disabled placeholder="Enter interactive Name">
             </div>
         </x-slot:content>
         <x-slot:footer>
             <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" wire:click="deleteInteractive">Delete</button>
+            <button type="button" class="btn btn-danger" wire:click="deleteInteractive(id)">Delete</button>
         </x-slot:footer>
     </x-modal>
     <!-- End::delete-lead -->

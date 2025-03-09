@@ -1,14 +1,14 @@
-<div>
+<div x-data="{ id: null, title: null }">
     <x-page-header title="Leads">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
     </x-page-header>
 
     <div class="border p-2">
-        <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
-            <div class="d-flex gap-2">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+            <div class="d-flex flex-wrap gap-2">
                 @foreach ($statuses as $status)
-                    <div class="card shadow-sm border ps-3 pe-3 pt-2 pb-2 fs-6"
+                    <div class="bg-white shadow-sm border rounded ps-3 pe-3 pt-2 pb-2 fs-6"
                         style="color: {{ $status->color }} !important;">
                         {{ $status->leads_count . ' ' . $status->name }}
                     </div>
@@ -19,7 +19,7 @@
                 <div>
                     <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
                 </div>
-                <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto"
+                <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
                     href="{{ route('leads.create') }}">
                     <i class="ti ti-plus fs-5"></i>
                     <span>New Lead</span>
@@ -94,7 +94,8 @@
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
-                                        data-bs-target="#DeleteLeadModal" wire:click="show({{ $lead->id }})">
+                                        data-bs-target="#DeleteLeadModal"
+                                        x-on:click="id = {{ $lead->id }}; title = '{{ $lead->name }}'">
                                         <i class="ti ti-trash fs-4 text-danger"></i>
                                     </button>
                                 </div>
@@ -121,14 +122,14 @@
         <x-slot:content>
             <div>
                 <label for="lead-name" class="form-label">Name lead</label>
-                <input type="text" id="lead-title" class="form-control disabled" wire:model="lead.name" disabled
+                <input type="text" id="lead-title" class="form-control disabled" x-model="title" disabled
                     placeholder="Enter lead Name">
             </div>
 
         </x-slot:content>
         <x-slot:footer>
             <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
+            <button type="button" class="btn btn-danger" wire:click="delete(id)">Delete</button>
         </x-slot:footer>
     </x-modal>
     <!-- End::delete-lead -->

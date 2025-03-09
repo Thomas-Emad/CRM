@@ -4,7 +4,6 @@ namespace App\Livewire\Customer;
 
 use Livewire\Component;
 use Livewire\Attributes\Title;
-use App\Livewire\Forms\CustomerOperationsForm;
 use App\Interfaces\CustomerRepositoryInterface;
 
 #[Title('Customers')]
@@ -12,7 +11,6 @@ class CustomerPage extends Component
 {
     public $search = '';
     protected $customerRepository;
-    public CustomerOperationsForm $customer;
 
     public function boot(CustomerRepositoryInterface $customerRepository)
     {
@@ -20,21 +18,11 @@ class CustomerPage extends Component
     }
 
     /**
-     * Displays the Customer details for the given ID.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-        $this->customer->get($id);
-    }
-
-    /**
      * Deletes the Customer and closes the delete modal.
      */
-    public function delete()
+    public function delete($id)
     {
-        $this->customer->destroy();
+        $this->customerRepository->delete($id);
         $this->redirect(route('customers.index'));
     }
 

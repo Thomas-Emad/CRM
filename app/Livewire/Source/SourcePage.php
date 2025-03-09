@@ -11,7 +11,6 @@ class SourcePage extends Component
 {
     public $search = '';
     protected $sourceRepository;
-    public $sourceId, $sourceName, $website, $description;
 
     public function boot(SourceRepositoryInterface $sourceRepository)
     {
@@ -19,23 +18,11 @@ class SourcePage extends Component
     }
 
     /**
-     * Displays the source form for the given ID.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-        $source = $this->sourceRepository->get($id);
-        $this->sourceId = $source->id;
-        $this->sourceName = $source->name;
-    }
-
-    /**
      * Deletes the current source and closes the delete modal.
      */
-    public function delete()
+    public function delete($id)
     {
-        $this->sourceRepository->delete($this->sourceId);
+        $this->sourceRepository->delete($id);
         $this->redirect(route('sources.index'));
     }
 

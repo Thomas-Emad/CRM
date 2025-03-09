@@ -1,5 +1,4 @@
-<div>
-
+<div x-data="{ id: null, title: null }">
     <x-page-header title="groups">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('home') }}">CRM</a></li>
@@ -10,7 +9,7 @@
             <div>
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
-            <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto"
+            <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
                 href="{{ route('groups.create') }}">
                 <i class="ti ti-plus fs-5"></i>
                 <span>New group</span>
@@ -44,7 +43,8 @@
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
-                                        data-bs-target="#DeleteGroupModal" wire:click="show({{ $group->id }})">
+                                        data-bs-target="#DeleteGroupModal"
+                                        x-on:click="id = {{ $group->id }}; title = '{{ $group->name }}' ">
                                         <i class="ti ti-trash fs-4 text-danger"></i>
                                     </button>
                                 </div>
@@ -72,13 +72,13 @@
         <x-slot:content>
             <div>
                 <label for="group-name" class="form-label">Name group</label>
-                <input type="text" id="group-title" class="form-control disabled" wire:model="groupName" disabled
+                <input type="text" id="group-title" class="form-control disabled" x-model="title" disabled
                     placeholder="Enter group Name">
             </div>
         </x-slot:content>
         <x-slot:footer>
             <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" wire:click="delete">Delete</button>
+            <button type="button" class="btn btn-danger" wire:click="delete(id)">Delete</button>
         </x-slot:footer>
     </x-modal>
     <!-- End::delete-group -->

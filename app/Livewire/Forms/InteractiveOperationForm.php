@@ -75,9 +75,9 @@ class InteractiveOperationForm extends Form
      *
      * @return void
      */
-    public function destroy()
+    public function destroy($id)
     {
-        $this->interactiveRepository->delete($this->id);
+        $this->interactiveRepository->delete($id);
         $this->reset();
     }
 }

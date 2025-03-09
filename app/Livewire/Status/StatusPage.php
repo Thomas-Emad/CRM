@@ -10,10 +10,6 @@ use App\Interfaces\StatusRepositoryInterface;
 class StatusPage extends Component
 {
     public $search = '';
-    public $statusId;
-    public $statusName;
-    public $statusColor;
-
     protected $statusRepository;
 
     public function boot(StatusRepositoryInterface $statusRepository)
@@ -22,23 +18,11 @@ class StatusPage extends Component
     }
 
     /**
-     * Displays the status form for the given ID.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-        $status = $this->statusRepository->get($id);
-        $this->statusId = $status->id;
-        $this->statusName = $status->name;
-    }
-
-    /**
      * Deletes the current status and closes the delete modal.
      */
-    public function delete()
+    public function delete($deleteId)
     {
-        $this->statusRepository->delete($this->statusId);
+        $this->statusRepository->delete($deleteId);
         $this->redirect(route('statuses.index'));
     }
 

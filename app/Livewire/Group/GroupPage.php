@@ -10,8 +10,6 @@ use App\Interfaces\GroupRepositoryInterface;
 class GroupPage extends Component
 {
     public $search = '';
-    public $groupId, $groupName, $description;
-
     protected $groupRepository;
 
     public function boot(GroupRepositoryInterface $groupRepository)
@@ -20,23 +18,11 @@ class GroupPage extends Component
     }
 
     /**
-     * Displays the group form for the given ID.
-     *
-     * @param int $id
-     */
-    public function show($id)
-    {
-        $group = $this->groupRepository->get($id);
-        $this->groupId = $group->id;
-        $this->groupName = $group->name;
-    }
-
-    /**
      * Deletes the current group and closes the delete modal.
      */
-    public function delete()
+    public function delete($id)
     {
-        $this->groupRepository->delete($this->groupId);
+        $this->groupRepository->delete($id);
         $this->redirect(route('groups.index'));
     }
 

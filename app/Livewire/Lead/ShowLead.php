@@ -29,21 +29,11 @@ class ShowLead extends Component
     }
 
     /**
-     * Displays the interactive details for the given ID.
-     *
-     * @param int $id
-     */
-    public function showInteractive($id)
-    {
-        $this->interactiveForm->get($id);
-    }
-
-    /**
      * Deletes the interactive and closes the delete modal.
      */
-    public function deleteInteractive()
+    public function deleteInteractive($id)
     {
-        $this->interactiveForm->destroy();
+        $this->interactiveForm->destroy($id);
         $this->redirect(route('leads.show', ['lead' => $this->lead->id], absolute: true));
     }
 
