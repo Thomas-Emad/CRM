@@ -61,6 +61,9 @@
                 </tbody>
             </table>
 
+            <div class="d-flex justify-content-end mt-3">
+                {{ $statuses->links() }}
+            </div>
         </div>
     </div>
 

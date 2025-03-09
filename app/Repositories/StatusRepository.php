@@ -3,19 +3,20 @@
 namespace App\Repositories;
 
 use App\Models\Status;
-use App\Interfaces\StatusRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use App\Interfaces\StatusRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class StatusRepository implements StatusRepositoryInterface
 {
     /**
      * Retrieve all statuses with their ID, name, and color.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function all(string $title = ''): Collection
+    public function all(string $title = ''): LengthAwarePaginator
     {
-        return Status::select(['id', 'name', 'color'])->where('name', 'like', "%$title%")->get();
+        return Status::select(['id', 'name', 'color'])->where('name', 'like', "%$title%")->paginate(1);
     }
 
     /**

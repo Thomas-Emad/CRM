@@ -3,12 +3,13 @@
 namespace App\Interfaces;
 
 
-use Illuminate\Database\Eloquent\Collection;
 use App\Models\Status;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface StatusRepositoryInterface
 {
-    public function all(): Collection;
+    public function all(string $title): LengthAwarePaginator;
     public function get(int $id): ?Status;
     public function store(array $attributes): Status;
     public function update(int $id, array $attributes): bool;

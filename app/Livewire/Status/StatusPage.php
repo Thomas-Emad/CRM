@@ -3,12 +3,15 @@
 namespace App\Livewire\Status;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use Livewire\Attributes\Title;
+use Livewire\WithoutUrlPagination;
 use App\Interfaces\StatusRepositoryInterface;
 
 #[Title('Statuses')]
 class StatusPage extends Component
 {
+    use WithPagination, WithoutUrlPagination;
     public $search = '';
     protected $statusRepository;
 
