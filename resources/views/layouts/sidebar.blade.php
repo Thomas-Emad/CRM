@@ -4,12 +4,15 @@
     <!-- Start::main-sidebar-header -->
     <div class="main-sidebar-header">
         <a href="index.html" class="header-logo">
-            <img src="../assets/img/brand-logos/desktop-logo.png" alt="logo" class="main-logo desktop-logo">
-            <img src="../assets/img/brand-logos/toggle-logo.png" alt="logo" class="main-logo toggle-logo">
-            <img src="../assets/img/brand-logos/desktop-dark.png" alt="logo" class="main-logo desktop-dark">
-            <img src="../assets/img/brand-logos/toggle-dark.png" alt="logo" class="main-logo toggle-dark">
-            <img src="../assets/img/brand-logos/desktop-white.png" alt="logo" class="desktop-white">
-            <img src="../assets/img/brand-logos/toggle-white.png" alt="logo" class="toggle-white">
+            <img src="{{ asset('assets/img/brand-logos/desktop-logo.png') }}" alt="logo"
+                class="main-logo desktop-logo">
+            <img src="{{ asset('assets/img/brand-logos/toggle-logo.png') }}" alt="logo" class="main-logo toggle-logo">
+            <img src="{{ asset('assets/img/brand-logos/desktop-dark.png') }}" alt="logo"
+                class="main-logo desktop-dark">
+            <img src="{{ asset('assets/img/brand-logos/toggle-dark.png') }}" alt="logo"
+                class="main-logo toggle-dark">
+            <img src="{{ asset('assets/img/brand-logos/desktop-white.png') }}" alt="logo" class="desktop-white">
+            <img src="{{ asset('assets/img/brand-logos/toggle-white.png') }}" alt="logo" class="toggle-white">
         </a>
     </div>
     <!-- End::main-sidebar-header -->

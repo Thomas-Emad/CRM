@@ -10,7 +10,7 @@ class Status extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'color'];
+    protected $fillable = ['name', 'color', 'is_default'];
 
     public function leads(): HasMany
     {

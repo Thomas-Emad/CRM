@@ -9,7 +9,7 @@
 <script src="{{ asset('assets/libs/@popperjs/core/umd/popper.min.js') }}"></script>
 
 <!-- Bootstrap JS -->
-<script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}" data-navigate-once></script>
 
 <!-- Defaultmenu JS -->
 <script src="{{ asset('assets/js/defaultmenu.min.js') }}" data-navigate-once></script>

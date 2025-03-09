@@ -45,11 +45,13 @@
                                         wire:navigate>
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
-                                    <button type="button" class="btn " data-bs-toggle="modal"
-                                        data-bs-target="#deleteStatusModal"
-                                        x-on:click="deleteId = {{ $status->id }}; deleteTitle = '{{ $status->name }}'">
-                                        <i class="ti ti-trash fs-4 text-danger"></i>
-                                    </button>
+                                    @if (!$status->is_default)
+                                        <button type="button" class="btn " data-bs-toggle="modal"
+                                            data-bs-target="#deleteStatusModal"
+                                            x-on:click="deleteId = {{ $status->id }}; deleteTitle = '{{ $status->name }}'">
+                                            <i class="ti ti-trash fs-4 text-danger"></i>
+                                        </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

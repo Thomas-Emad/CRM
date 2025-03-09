@@ -16,7 +16,7 @@ class StatusRepository implements StatusRepositoryInterface
      */
     public function all(string $title = ''): LengthAwarePaginator
     {
-        return Status::select(['id', 'name', 'color'])->where('name', 'like', "%$title%")->paginate(10);
+        return Status::select(['id', 'name', 'color', 'is_default'])->where('name', 'like', "%$title%")->paginate(10);
     }
 
     /**
@@ -28,7 +28,7 @@ class StatusRepository implements StatusRepositoryInterface
      */
     public function get(int $id): ?Status
     {
-        return Status::select(['id', 'name', 'color'])->findOrFail($id);
+        return Status::select(['id', 'name', 'color', 'is_default'])->findOrFail($id);
     }
 
     /**
@@ -66,7 +66,7 @@ class StatusRepository implements StatusRepositoryInterface
      */
     public function delete(int $id): bool
     {
-        $status = Status::findOrFail($id);
+        $status = Status::where('is_default', false)->findOrFail($id);
         return  $status->delete();
     }
 
