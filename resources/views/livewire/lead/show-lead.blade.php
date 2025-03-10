@@ -6,9 +6,15 @@
     </x-page-header>
 
     <div class="border p-2 row">
-        <div class="col-12 col-xl-7 p-2">
+        <div class="col-12 p-2">
             <div class="p-2 shadow-sm border">
-                <h2 class="fs-4">Details About Lead</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="fs-4">Details About Lead</h2>
+                    <button type="button" class="btn bg-primary-transparent" data-bs-toggle="modal"
+                        data-bs-target="#ConvertToCustomer">
+                        <i class="ti ti-exchange  text-text-primary-emphasis"></i>
+                    </button>
+                </div>
                 <div class="row">
                     <div class="col-12 col-md-6 p-2">
                         <label for="name" class="form-label">Name</label>
@@ -116,71 +122,95 @@
             </div>
         </div>
 
-        <div class="col-12 col-xl-5 p-2">
+        <div class="col-12 p-2">
             <div class="card custom-card">
                 <div class="card-header justify-content-between">
                     <div class="card-title">
-                        Interactives
+                        Activities
                     </div>
                     <div class="d-flex gap-2 align-items-center">
-                        <a href="{{ route('leads.interactive', ['id' => $lead->id, 'type' => 'create']) }}"
-                            wire:navigate class="btn btn-primary">
+                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                            class="btn btn-primary">
                             <i class="ti ti-plus "></i>
-                        </a>
-                        <button type="button" class="btn bg-primary-transparent" data-bs-toggle="modal"
-                            data-bs-target="#ConvertToCustomer">
-                            <i class="ti ti-exchange  text-text-primary-emphasis"></i>
+                            <span>
+                                Add New Activity
+                            </span>
                         </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0);" wire:navigate>Task</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" wire:navigate>Meeting</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{{ route('leads.activities.calls.create', $lead->id) }}"
+                                    wire:navigate>Call</a></li>
+                        </ul>
+
                     </div>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled timeline-widget timeline-2 mb-0 my-3 overflow-x-auto"
-                        style="max-height: 500px">
-                        @forelse ($lead->interactives as $interactive)
-                            <li class="timeline-widget-list" wire:key="interactive-{{ $interactive->id }}">
-                                <div class="d-flex align-items-top">
-                                    <div class="me-5 text-center">
-                                        <span
-                                            class="d-block fs-14 fw-semibold">{{ $interactive->created_at->format('d') }}</span>
-                                        <span
-                                            class="d-block fs-12 text-muted">{{ $interactive->created_at->format('y-d') }}</span>
-                                    </div>
-                                    <div
-                                        class="d-flex flex-wrap flex-fill align-items-center justify-content-between gap-2">
-                                        <div>
-                                            <p class="mb-1 text-truncate timeline-widget-content text-wrap">
-                                                {{ str($interactive->title)->limit(30) . ' - ' . $interactive->type }}
-                                            </p>
-                                            <p class="mb-0 fs-12 lh-1 text-muted">
-                                                {{ $interactive->created_at->format('h:iA') }}
-                                                <span class="badge bg-primary text-white ms-2"
-                                                    style="background-color: {{ $interactive->status->color }} !important;">
-                                                    {{ $interactive->status->name }}
-                                                </span>
-
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <a class="btn bg-primary-transparent" wire:navigate
-                                                href="{{ route('leads.interactive', ['id' => $lead->id, 'type' => 'update', 'interactive' => $interactive->id]) }}">
-                                                <i class="ti ti-pencil fs-4 text-primary"></i>
-                                            </a>
-                                            <button type="button" class="btn bg-danger-transparent"
-                                                data-bs-toggle="modal" data-bs-target="#DeleteLeadModal"
-                                                x-on:click="id = {{ $interactive->id }}; title = '{{ $interactive->title }}'">
-                                                <i class="ti ti-trash fs-4 text-danger"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        @empty
-                            <li>
-                                <p class="text-secondary-emphasis  fst-italic text-center">There is no Interactive here
-                                </p>
-                            </li>
-                        @endforelse
+                    <ul class="nav nav-pills mb-3 nav-justified tab-style-5 d-sm-flex d-block" id="pills-tab"
+                        role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-calls-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-calls" type="button" role="tab"
+                                aria-controls="pills-calls" aria-selected="true">Calls</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-meetings-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-meetings" type="button" role="tab"
+                                aria-controls="pills-meetings" aria-selected="false">Meetings</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-tasks-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-tasks" type="button" role="tab"
+                                aria-controls="pills-tasks" aria-selected="false">Tasks</button>
+                        </li>
                     </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane show active text-muted" id="pills-calls" role="tabpanel"
+                            aria-labelledby="pills-calls-tab" tabindex="0">
+                            {{ $activities }}
+                            <x-table>
+                                <x-slot:thead>
+                                    <th scope="col">S.No</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Assigned</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Notes</th>
+                                    <th scope="col">Call Date</th>
+                                    <th scope="col">Action</th>
+                                </x-slot:thead>
+
+                                <x-slot:tbody>
+                                    @forelse ($activities as $key => $item)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $item->title ?? 'N/A' }}</td>
+                                            <td>{{ $item->assigned->name ?? 'N/A' }}</td>
+                                            <td>{{ $item->title ?? 'N/A' }}</td>
+                                            <td>{{ $item->notes ?? 'N/A' }}</td>
+                                            <td>{{ $item->activityable->call_date ?? 'N/A' }}</td>
+                                            <td>{{ 'action' }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr colspan="6">
+                                            <p>No call found for this lead</p>
+                                        </tr>
+                                    @endforelse
+                                </x-slot:tbody>
+                                <x-slot:pagination>
+                                    {{-- {{ $activities->links() }} --}}
+                                </x-slot:pagination>
+                            </x-table>
+                        </div>
+                        <div class="tab-pane show active text-muted" id="pills-meetings" role="tabpanel"
+                            aria-labelledby="pills-meetings-tab" tabindex="0">
+
+                        </div>
+                        <div class="tab-pane show active text-muted" id="pills-tasks" role="tabpanel"
+                            aria-labelledby="pills-tasks-tab" tabindex="0">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

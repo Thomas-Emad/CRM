@@ -9,7 +9,8 @@ use App\Repositories\{
     LeadRepository,
     CustomerRepository,
     InteractiveRepository,
-    TeamRepository
+    TeamRepository,
+    Activities\CallRepository
 };
 use App\Interfaces\{
     StatusRepositoryInterface,
@@ -18,7 +19,8 @@ use App\Interfaces\{
     LeadRepositoryInterface,
     CustomerRepositoryInterface,
     InteractiveRepositoryInterface,
-    TeamRepositoryInterface
+    TeamRepositoryInterface,
+    Activities\CallRepositoryInterface
 };
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +38,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CustomerRepositoryInterface::class, CustomerRepository::class);
         $this->app->bind(InteractiveRepositoryInterface::class, InteractiveRepository::class);
         $this->app->bind(TeamRepositoryInterface::class, TeamRepository::class);
+        $this->app->bind(CallRepositoryInterface::class, CallRepository::class);
     }
 
     /**

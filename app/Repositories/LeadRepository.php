@@ -22,6 +22,7 @@ class LeadRepository implements LeadRepositoryInterface
                 'assigned:id,name',
                 'source:id,name',
                 'country:id,name',
+                'activities'
             ])
             ->where('name', 'like', "%$title%")
             ->orderBy('is_customer', 'desc')

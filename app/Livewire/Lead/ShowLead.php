@@ -49,6 +49,7 @@ class ShowLead extends Component
     public function render()
     {
         return view('livewire.lead.show-lead', [
+            'activities' => $this->lead->activities()->get(),
             'lead' => $this->lead,
             'statuses' => Status::get(),
         ]);

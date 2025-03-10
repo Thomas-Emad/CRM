@@ -38,6 +38,11 @@ class Lead extends Model
         return $this->hasMany(Interactive::class);
     }
 
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class);
+    }
+
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class);
