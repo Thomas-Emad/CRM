@@ -31,10 +31,10 @@ class NoteRepository implements NoteRepositoryInterface
      *
      * @return void
      */
-    public function store(array $attributes): void
+    public function store($model, $modelId, array $attributes): void
     {
-        $lead = Lead::findOrFail($attributes['lead_id']);
-        $lead->notes()->create([
+        $modelContent = $model::findOrFail($modelId);
+        $modelContent->notes()->create([
             'lead_id' => $attributes['lead_id'],
             'creator_id' => Auth::id(),
             'content' => $attributes['content'],

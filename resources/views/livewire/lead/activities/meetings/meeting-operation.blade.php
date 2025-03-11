@@ -13,40 +13,38 @@
                 :disabled="true" placeholder="Please Write customerName" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <x-select-form id="status" name="Assigne" :items="$users" wireModel="assigned_id"
-                placeholder="Please Assigne Call With User" />
-        </div>
-        <div class=" col-12 col-md-4 p-2">
-            <x-select-form id="status" name="Calling Type" :items="$typeCalling" wireModel="typeCall"
-                placeholder="Please Select Status" />
-        </div>
-        <div class=" col-12 col-md-4 p-2">
-            <x-input-form type="datetime-local" id="date_calling" name="Calling Time" wireModel="date_calling"
-                placeholder="Please Write Call Value" />
-        </div>
-        <div class=" col-12 col-md-4 p-2">
             <x-input-form type="text" id="title" name="Title" wireModel="title"
                 placeholder="Please Write Title" />
         </div>
 
-        <div class=" col-12 col-md-4 p-2" x-show="$wire.typeCall == 'incoming'">
-            <x-input-form type="number" id="reminder" name="reminder" wireModel="reminder"
-                placeholder="Please Write Reminder time Before Start" />
+        <div class=" col-12 col-md-4 p-2">
+            <x-select-form id="status" name="Assigne" :items="$users" wireModel="assigned_id"
+                placeholder="Please Assigne Call With User" />
+        </div>
+
+        <div class=" col-12 col-md-4 p-2">
+            <x-input-form type="datetime-local" id="start" name="start" wireModel="start"
+                placeholder="Please Write Start Time" />
         </div>
         <div class=" col-12 col-md-4 p-2">
-            <x-select-form id="status" name="Calling Reason" :items="$callReason" wireModel="reason_id"
-                placeholder="Please Calling Reason" />
+            <x-input-form type="datetime-local" id="end" name="end" wireModel="end"
+                placeholder="Please Write End Time" />
         </div>
-        <div x-show="$wire.typeCall == 'outgoing'" class="row">
-            <div class=" col-12 col-md-4 p-2">
-                <x-input-form type="number" id="duration" name="duration" wireModel="duration"
-                    placeholder="Please Write Duration Call" />
-            </div>
-
-            <div class=" col-12 col-md-4 p-2">
-                <x-select-form id="status" name="Calling Response" :items="$callResponse" wireModel="response_id"
-                    placeholder="Please Select Calling Response" />
-            </div>
+        <div class=" col-12 col-md-4 p-2">
+            <x-select-form id="status" name="Calling Type" :items="$typeMeeting" wireModel="online"
+                placeholder="Please Select Status" />
+        </div>
+        <div class=" col-12 col-md-4 p-2" x-show="$wire.online == 0">
+            <x-input-form type="text" id="location" name="location" wireModel="location"
+                placeholder="Please Write location" />
+        </div>
+        <div class=" col-12 col-md-4 p-2" x-show="$wire.online == 1">
+            <x-input-form type="text" id="link" name="link" wireModel="link"
+                placeholder="Please Write Link" />
+        </div>
+        <div class=" col-12 col-md-4 p-2">
+            <x-input-form type="number" id="link" name="reminder" wireModel="reminder"
+                placeholder="Please Write reminder Before Meeting By Miniutes" />
         </div>
 
         <div class="col-12 p-2">

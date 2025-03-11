@@ -22,19 +22,23 @@ class NotesOperationform extends Form
     }
 
     /**
-     * Stores a new note for a lead.
+     * Store method to save the new note
      *
      * This method validates the form data, creates a new note in the database
      * using the validated data, and then resets the form for the next input.
      *
+     * @param string $model        The model type to store the note for
+     * @param int    $modelId      The ID of the model to store the note for
+     *
      * @return void
      */
-    public function store()
+    public function store($model, $modelId)
     {
         $vaildatedData = $this->validate();
-        $this->noteRepository->store(array_merge($vaildatedData, [
+        $this->noteRepository->store($model, $modelId, array_merge($vaildatedData, [
             'creator_id' => auth()->id(),
         ]));
+
         $this->reset();
     }
 

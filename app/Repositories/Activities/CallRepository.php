@@ -57,7 +57,7 @@ class CallRepository implements CallRepositoryInterface
     {
         return Note::with([
             'creator:id,name',
-        ])->where('lead_id', $id)->get();
+        ])->where('lead_id', $id)->where('noteable_type', 'App\Models\Call')->get();
     }
 
     /**
@@ -179,7 +179,7 @@ class CallRepository implements CallRepositoryInterface
             'assigned_id' => 'required|exists:users,id',
             'typeCall' => 'required|string|max:255',
             'date_calling' => 'required|date',
-            'title' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
             'reminder' => 'nullable|string|max:255',
             'duration' => 'nullable|string|max:255',
             'reason_id' => 'nullable|exists:call_reasons,id',

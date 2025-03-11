@@ -17,16 +17,21 @@
                 <div class="d-flex justify-content-between">
                     <h6 class="fw-semibold">Details</h6>
                     <div>
-                        <a class="btn btn-outline-warning btn-wave btn"
-                            href="{{ route('leads.activities.calls.edit', ['lead' => $activity->lead_id, 'call' => $activity->id]) }}"
-                            wire:navigate>
-                            <i class="ti ti-pencil"></i>
-                        </a>
-                        <button type="button" class="btn btn-outline-danger btn-wave  btn" data-bs-toggle="modal"
-                            data-bs-target="#DeleteActivityModal"
-                            x-on:click="id = {{ $activity->id }}; title = '{{ $activity->title }}';">
-                            <i class="ti ti-trash"></i>
-                        </button>
+                        @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_DELETE->value)
+                            <a class="btn btn-outline-warning btn-wave btn"
+                                href="{{ route('leads.activities.calls.edit', ['lead' => $activity->lead_id, 'call' => $activity->id]) }}"
+                                wire:navigate>
+                                <i class="ti ti-pencil"></i>
+                            </a>
+                        @endcan
+
+                        @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_DELETE->value)
+                            <button type="button" class="btn btn-outline-danger btn-wave  btn" data-bs-toggle="modal"
+                                data-bs-target="#DeleteActivityModal"
+                                x-on:click="id = {{ $activity->id }}; title = '{{ $activity->title }}';">
+                                <i class="ti ti-trash"></i>
+                            </button>
+                        @endcan
                     </div>
                 </div>
                 <div class="table-responsive mb-3 text-muted">
@@ -204,24 +209,27 @@
                 </div>
             </div>
         </x-slot:sidebar>
-        <x-slot:modals>
-            <!-- Start::DeleteNoteModal -->
-            <x-modal id="DeleteNoteModal">
-                <x-slot:title>
-                    <i class="ti ti-trash text-danger me-1"></i>
-                    <span>
-                        Are you sure you want to delete this Note?!
-                    </span>
-                </x-slot:title>
-                <x-slot:content>
-                    <p>Are you sure you want to delete this note</p>
-                </x-slot:content>
-                <x-slot:footer>
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="deleteNote(noteId)">Delete</button>
-                </x-slot:footer>
-            </x-modal>
-            <!-- End::DeleteNoteModal -->
-        </x-slot:modals>
+
+        @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_DELETE->value)
+            <x-slot:modals>
+                <!-- Start::DeleteNoteModal -->
+                <x-modal id="DeleteNoteModal">
+                    <x-slot:title>
+                        <i class="ti ti-trash text-danger me-1"></i>
+                        <span>
+                            Are you sure you want to delete this Note?!
+                        </span>
+                    </x-slot:title>
+                    <x-slot:content>
+                        <p>Are you sure you want to delete this note</p>
+                    </x-slot:content>
+                    <x-slot:footer>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" wire:click="deleteNote(noteId)">Delete</button>
+                    </x-slot:footer>
+                </x-modal>
+                <!-- End::DeleteNoteModal -->
+            </x-slot:modals>
+        @endcan
     </x-activity-layout>
 </div>

@@ -32,4 +32,9 @@ class Call extends Model
     {
         return $this->belongsTo(CallResponse::class);
     }
+
+    public function notes()
+    {
+        return $this->morphMany(Note::class, 'noteable');
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\Activities\MeetingRepositoryInterface;
 use App\Models\{Meeting, Activity, Note};
+use App\Enums\ActivityTypeEnum;
 
 class MeetingRepository implements MeetingRepositoryInterface
 {
@@ -37,7 +38,7 @@ class MeetingRepository implements MeetingRepositoryInterface
     {
         return Note::with([
             'creator:id,name',
-        ])->where('lead_id', $id)->get();
+        ])->where('lead_id', $id)->where('noteable_type', 'App\Models\Meeting')->get();
     }
 
     /**
@@ -49,7 +50,13 @@ class MeetingRepository implements MeetingRepositoryInterface
      */
     public function store(array $attributes): void
     {
-        $meeting = Meeting::create($attributes);
+        $meeting = Meeting::create([
+            'start' => $attributes['start'],
+            'end' => $attributes['end'],
+            'online' => $attributes['online'],
+            'link' => $attributes['online'] == true ? $attributes['link'] : null,
+            'location' => $attributes['online'] == false ? $attributes['location'] : null,
+        ]);
 
         Activity::create([
             'lead_id' => $attributes['lead_id'],
@@ -60,6 +67,7 @@ class MeetingRepository implements MeetingRepositoryInterface
             'notes' => $attributes['notes'],
             'activityable_type' => Meeting::class,
             'activityable_id' => $meeting->id,
+            'type' => ActivityTypeEnum::Meetings->value,
         ]);
     }
 
@@ -75,7 +83,13 @@ class MeetingRepository implements MeetingRepositoryInterface
     {
         $activity = Activity::with(['activityable'])->findOrFail($id);
         $activity->update($attributes);
-        $activity->activityable()->update($attributes);
+        $activity->activityable()->update([
+            'start' => $attributes['start'],
+            'end' => $attributes['end'],
+            'online' => $attributes['online'],
+            'link' => $attributes['online'] == true ? $attributes['link'] : null,
+            'location' => $attributes['online'] == false ? $attributes['location'] : null,
+        ]);
         return $activity;
     }
 
@@ -100,6 +114,7 @@ class MeetingRepository implements MeetingRepositoryInterface
     public function rules(): array
     {
         return [
+            'title' => 'required|string|max:255',
             'lead_id' => 'required|exists:leads,id',
             'assigned_id' => 'required|exists:users,id',
             'start' => 'required|string|max:255',
@@ -107,6 +122,8 @@ class MeetingRepository implements MeetingRepositoryInterface
             'online' => 'nullable|boolean',
             'link' => 'nullable|url|max:255',
             'location' => 'nullable|string|max:255',
+            'reminder' => 'nullable|string|max:255',
+            'notes' => 'nullable|string|max:2000',
         ];
     }
 
@@ -124,6 +141,39 @@ class MeetingRepository implements MeetingRepositoryInterface
         return [
             'lead_id' => 'lead',
             'assigned_id' => 'assigned',
+            'start' => "Meeting start date",
+            'end' => "Meeting end date"
         ];
+    }
+
+    /**
+     * Retrieves the types of meetings.
+     *
+     * @return \Illuminate\Support\Collection An array of objects containing the id and name of the meeting types.
+     */
+    public function typeMeeting(): Collection
+    {
+        return collect([
+            ['id' => 0, 'name' => "Offline"],
+            ['id' => 1, 'name' => "Online"],
+        ])->map(function ($item) {
+            return (object) $item;
+        });
+    }
+
+
+    /**
+     * Retrieves all meetings for a given lead.
+     *
+     * @param int $id The lead's id.
+     * @return \Illuminate\Support\Collection A collection of activities that are meetings, eager loaded with the lead and activityable object.
+     */
+    public function getMeetings(int $id): Collection
+    {
+        return Activity::with([
+            'lead:id,name',
+            'activityable',
+        ])->where('type', ActivityTypeEnum::Meetings->value)
+            ->where('lead_id', $id)->get();
     }
 }

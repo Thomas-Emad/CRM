@@ -27,9 +27,9 @@
                                         <ul class="nav nav-pills nav-justified tab-style-5 d-sm-flex d-block"
                                             id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link border " id="pills-customer-tab"
-                                                    data-bs-toggle="pill" data-bs-target="#customer-tab-pane"
-                                                    type="button" role="tab" aria-controls="customer-tab-pane"
+                                                <button class="nav-link border " id="customer-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#customer-tab-pane" type="button" role="tab"
+                                                    aria-controls="customer-tab-pane"
                                                     aria-selected="false">Customer</button>
                                             </li>
                                             {{ $tabsHeader }}
@@ -112,29 +112,32 @@
                                         {{ $tabsContent }}
                                         <div class="tab-pane fade p-0 border-0" id="notes-tab-pane" role="tabpanel"
                                             aria-labelledby="followers-tab-pane" tabindex="0">
-                                            <div class="card custom-card">
-                                                <div class="card-body">
-                                                    <div class="d-sm-flex align-items-center lh-1">
-                                                        <div class="me-3">
-                                                            <span class="avatar avatar-md avatar-rounded">
-                                                                <span
-                                                                    class="bg-secondary w-100 h-100 rounded-circle"></span>
-                                                            </span>
-                                                        </div>
-                                                        <div class="flex-fill me-sm-2 mt-1 mt-sm-0">
-                                                            <div class="input-group ">
-                                                                <x-textarea-form id="content" name="Content"
-                                                                    :withoutLabel="true" wireModel="noteForm.content"
-                                                                    placeholder="Please Write your Notes" />
-                                                                <div>
-                                                                    <button class="btn btn-primary ms-2" type="button"
-                                                                        wire:click="storeNote">Store</button>
+                                            @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_NOTE->value)
+                                                <div class="card custom-card">
+                                                    <div class="card-body">
+                                                        <div class="d-sm-flex align-items-center lh-1">
+                                                            <div class="me-3">
+                                                                <span class="avatar avatar-md avatar-rounded">
+                                                                    <span
+                                                                        class="bg-secondary w-100 h-100 rounded-circle"></span>
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-fill me-sm-2 mt-1 mt-sm-0">
+                                                                <div class="input-group ">
+                                                                    <x-textarea-form id="content" name="Content"
+                                                                        :withoutLabel="true" wireModel="noteForm.content"
+                                                                        placeholder="Please Write your Notes" />
+                                                                    <div>
+                                                                        <button class="btn btn-primary ms-2" type="button"
+                                                                            wire:click="storeNote">Store</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endcan
+
                                             @forelse ($notes as $item)
                                                 <div class="card custom-card p-2">
                                                     <div class="me-3 d-flex justify-content-between">
@@ -149,13 +152,15 @@
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <button type="button"
-                                                                class="btn btn-outline-danger btn-wave"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#DeleteNoteModal"
-                                                                x-on:click="noteId = {{ $item->id }}">
-                                                                <i class="ti ti-trash"></i>
-                                                            </button>
+                                                            @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_NOTE->value)
+                                                                <button type="button"
+                                                                    class="btn btn-outline-danger btn-wave"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#DeleteNoteModal"
+                                                                    x-on:click="noteId = {{ $item->id }}">
+                                                                    <i class="ti ti-trash"></i>
+                                                                </button>
+                                                            @endcan
                                                         </div>
                                                     </div>
                                                     <div class="flex-fill mt-1">

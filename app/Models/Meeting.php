@@ -21,4 +21,9 @@ class Meeting extends Model
     {
         return $this->morphOne(Activity::class, 'activityable');
     }
+
+    public function notes()
+    {
+        return $this->morphMany(Note::class, 'noteable');
+    }
 }

@@ -9,7 +9,7 @@ use App\Interfaces\Activities\MeetingRepositoryInterface;
 class MeetingOperation extends Component
 {
     public $type, $id, $lead_id, $customerName, $lead;
-    public $assigned_id, $title, $start, $end, $online, $link, $location, $notes;
+    public $assigned_id, $title, $reminder, $start, $end, $online, $link, $location, $notes;
     protected $meetingRepository;
 
     public function boot(MeetingRepositoryInterface $meetingRepository)
@@ -51,12 +51,14 @@ class MeetingOperation extends Component
     {
         $meeting = $this->meetingRepository->get($id);
         $this->id = $meeting->id;
+        $this->reminder = $meeting->reminder;
         $this->assigned_id = $meeting->assigned_id;
-        $this->start = $meeting->activityable->type;
-        $this->end = $meeting->activityable->meeting_date;
+        $this->start = $meeting->activityable->start;
+        $this->end = $meeting->activityable->end;
         $this->title = $meeting->title;
-        $this->online = $meeting->activityable->reminder;
-        $this->location = $meeting->activityable->duration_meeting;
+        $this->online = $meeting->activityable->online;
+        $this->location = $meeting->activityable->location;
+        $this->link = $meeting->activityable->link;
         $this->notes = $meeting->notes;
     }
 
@@ -100,6 +102,7 @@ class MeetingOperation extends Component
             'lead' => $this->lead,
             'type' => $this->type,
             'users' => User::get(),
+            'typeMeeting' => $this->meetingRepository->typeMeeting()
         ]);
     }
 }

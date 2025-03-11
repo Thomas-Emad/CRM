@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Enums\PermissionEnum;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
@@ -15,7 +14,11 @@ class PermissionsSeeder extends Seeder
         PermissionEnum::CRM_SOURCE->value,
         PermissionEnum::CRM_LEAD->value,
         PermissionEnum::CRM_CUSTOMER->value,
-        PermissionEnum::CRM_TEAM->value
+        PermissionEnum::CRM_TEAM->value,
+        PermissionEnum::CRM_ACTIVIY_SHOW->value,
+        PermissionEnum::CRM_ACTIVIY_OPERATION->value,
+        PermissionEnum::CRM_ACTIVIY_DELETE->value,
+        PermissionEnum::CRM_ACTIVIY_NOTE->value,
     ];
 
     /**

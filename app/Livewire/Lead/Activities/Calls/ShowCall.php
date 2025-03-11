@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Lead\Activities\Calls;
 
+use App\Models\Call;
 use Livewire\Component;
 use App\Livewire\Forms\NotesOperationform;
 use App\Interfaces\Activities\CallRepositoryInterface;
@@ -26,7 +27,7 @@ class ShowCall extends Component
     public function storeNote()
     {
         $this->noteForm->lead_id = $this->activity->lead_id;
-        $this->noteForm->store();
+        $this->noteForm->store(Call::class, $this->activity->activityable->id);
     }
 
 
