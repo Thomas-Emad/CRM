@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Lead;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,13 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('meetings', function (Blueprint $table) {
+        Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->timestamp("start");
-            $table->timestamp("end");
-            $table->boolean('online')->default(false);
-            $table->string("link")->nullable();
-            $table->string("location")->nullable();
+            $table->foreignId('creator_id')->constrained('users', 'id')->noActionOnDelete();
+            $table->foreignIdFor(Lead::class);
+            $table->text('content')->nullable();
+            $table->morphs('noteable');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('meetings');
+        Schema::dropIfExists('notes');
     }
 };

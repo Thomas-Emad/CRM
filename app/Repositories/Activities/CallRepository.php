@@ -7,17 +7,65 @@ use App\Enums\ActivityTypeEnum;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\Activities\CallRepositoryInterface;
-use App\Models\{Call, CallReason, CallResponse, Activity};
+use App\Models\{Call, CallReason, CallResponse, Activity, Note};
 
 class CallRepository implements CallRepositoryInterface
 {
     /**
+     * Retrieves a call by its ID.
+     *
+     * @param int $id The ID of the call to retrieve.
+     *
+     * @return \App\Models\Activity|null The call if found, otherwise null.
+     */
+    public function get(int $id): ?Activity
+    {
+        return Activity::with([
+            'lead:id,name',
+            'assigned:id,name',
+            'creator:id,name',
+            'activityable',
+            'activityable.callReason',
+            'activityable.callResponse',
+        ])->findOrFail($id);
+    }
+
+    /**
+     * Retrieves all calls of a lead.
+     *
+     * @param int $id The ID of the lead to retrieve the calls of.
+     *
+     * @return \Illuminate\Support\Collection A collection of calls.
+     */
+    public function getCalls(int $id): Collection
+    {
+        return Activity::with([
+            'lead:id,name',
+            'activityable',
+        ])->where('type', ActivityTypeEnum::Calls->value)
+            ->where('lead_id', $id)->get();
+    }
+
+    /**
+     * Retrieves all notes of a lead.
+     *
+     * @param int $id The ID of the lead to retrieve the notes from.
+     *
+     * @return \Illuminate\Support\Collection A collection of notes.
+     */
+    public function getNotes(int $id): Collection
+    {
+        return Note::with([
+            'creator:id,name',
+        ])->where('lead_id', $id)->get();
+    }
+
+    /**
      * Stores a new call.
      *
-     * This method creates a new call using the given attributes and creates an activity log entry
-     * for the new call.
+     * @param array $attributes The attributes to store a new call with.
      *
-     * @param array $attributes The attributes for creating the lead.
+     * @return void
      */
     public function store(array $attributes): void
     {
@@ -43,33 +91,50 @@ class CallRepository implements CallRepositoryInterface
     }
 
     /**
-     * Updates a lead by its ID.
+     * Updates a activity by its ID.
      *
-     * @param int $id The ID of the lead to update.
+     * @param int $id The ID of the activity to update.
      * @param array $attributes The attributes to update with.
      *
-     * @return \App\Models\Call The lead if updated, otherwise null.
+     * @return \App\Models\Activity The activity if updated, otherwise null.
      */
-    public function update(int $id, array $attributes): Call
+    public function update(int $id, array $attributes): Activity
     {
-        $lead = Call::findorFail($id);
-        $lead->update($attributes);
-        return $lead;
+        $activity = Activity::with(['activityable'])->findOrFail($id);
+        $activity->update([
+            'assigned_id' => $attributes['assigned_id'],
+            'reminder' => $attributes['reminder'],
+            'title' => $attributes['title'],
+            'notes' => $attributes['notes'],
+        ]);
+        $activity->activityable()->update([
+            'call_reason_id' => $attributes['reason_id'],
+            'call_response_id' => $attributes['response_id'],
+            'call_date' => $attributes['date_calling'],
+            'duration_call' => $attributes['duration'],
+            'type' => $attributes['typeCall'],
+        ]);
+        return $activity;
     }
 
     /**
-     * Deletes a lead by its ID.
+     * Deletes a call by its ID.
      *
-     * @param int $id The ID of the lead to delete.
+     * @param int $id The ID of the call to delete.
      *
-     * @return bool True if the lead was deleted, otherwise false.
+     * @return bool True if the call was deleted, otherwise false.
      */
     public function delete(int $id): bool
     {
-        $lead = Call::findOrFail($id);
+        $lead = Activity::findOrFail($id);
         return  $lead->delete();
     }
 
+    /**
+     * Retrieves the types of calls.
+     *
+     * @return \Illuminate\Support\Collection An array of objects containing the id and name of the types of calls.
+     */
     public function typeCalling(): Collection
     {
         return collect([
@@ -81,11 +146,21 @@ class CallRepository implements CallRepositoryInterface
         });
     }
 
+    /**
+     * Retrieves the reasons for a call.
+     *
+     * @return \Illuminate\Support\Collection An array of objects containing the id and name of the reasons for a call.
+     */
     public function callReason(): Collection
     {
         return CallReason::get(['id', 'name']);
     }
 
+    /**
+     * Retrieves the responses for a call.
+     *
+     * @return \Illuminate\Support\Collection An array of objects containing the id and name of the responses for a call.
+     */
     public function callResponse(): Collection
     {
         return CallResponse::get(['id', 'name']);
@@ -108,7 +183,7 @@ class CallRepository implements CallRepositoryInterface
             'reminder' => 'nullable|string|max:255',
             'duration' => 'nullable|string|max:255',
             'reason_id' => 'nullable|exists:call_reasons,id',
-            'response_id' => 'nullable|exists:call_response,id',
+            'response_id' => 'nullable|exists:call_responses,id',
             'notes' => 'nullable|string|max:2000',
         ];
     }
@@ -126,7 +201,6 @@ class CallRepository implements CallRepositoryInterface
     {
         return [
             'lead_id' => 'lead',
-            'source_id' => 'source',
             'assigned_id' => 'assigned',
             'reason_id' => 'reason call',
             'response_id' => 'response call',

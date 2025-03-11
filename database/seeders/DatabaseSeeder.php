@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             GroupsSeeder::class,
             CurrenciesSeeder::class,
             CountriesSeeder::class,
-            LeadsSeeder::class
+            LeadsSeeder::class,
+            CallReasonSeeder::class,
+            CallResponseSeeder::class,
         ]);
     }
 }

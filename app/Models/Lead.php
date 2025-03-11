@@ -77,4 +77,9 @@ class Lead extends Model
     {
         return $this->belongsTo(Currency::class,);
     }
+
+    public function notes()
+    {
+        return $this->morphMany(Note::class, 'noteable');
+    }
 }

@@ -3,9 +3,9 @@
 namespace App\Livewire\Lead\Activities\Calls;
 
 use App\Models\User;
+use App\Models\Lead;
 use Livewire\Component;
 use App\Interfaces\Activities\CallRepositoryInterface;
-use App\Models\Lead;
 
 class CallOperation extends Component
 {
@@ -53,13 +53,13 @@ class CallOperation extends Component
         $call = $this->callRepository->get($id);
         $this->id = $call->id;
         $this->assigned_id = $call->assigned_id;
-        $this->typeCall = $call->type_call;
-        $this->date_calling = $call->date_calling;
+        $this->typeCall = $call->activityable->type;
+        $this->date_calling = $call->activityable->call_date;
         $this->title = $call->title;
-        $this->reminder = $call->reminder;
-        $this->duration = $call->duration;
-        $this->reason_id = $call->reason_id;
-        $this->response_id = $call->response_id;
+        $this->reminder = $call->activityable->reminder;
+        $this->duration = $call->activityable->duration_call;
+        $this->reason_id = $call->activityable->call_reason_id;
+        $this->response_id = $call->activityable->call_response_id;
         $this->notes = $call->notes;
     }
 
@@ -73,7 +73,7 @@ class CallOperation extends Component
     {
         $vaildatedData = $this->validate();
         $this->callRepository->update($this->id, $vaildatedData);
-        $this->reset();
+        $this->redirect(route('leads.show', ['lead' => $this->lead_id]), navigate: true);
     }
 
     /**
@@ -85,7 +85,7 @@ class CallOperation extends Component
     public function destory()
     {
         $this->callRepository->delete($this->id);
-        $this->reset();
+        $this->redirect(route('leads.show', ['lead' => $this->lead_id]), navigate: true);
     }
 
     public function mount()
@@ -98,7 +98,9 @@ class CallOperation extends Component
 
     public function render()
     {
-
+        if ($this->id) {
+            $this->get($this->id);
+        }
         return view('livewire.lead.activities.calls.call-operation', [
             'lead' => $this->lead,
             'type' => $this->type,

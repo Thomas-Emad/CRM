@@ -1,3 +1,4 @@
+@props(['thead' => '', 'tbody' => '', 'pagination' => ''])
 <div class="table-responsive">
     <table class="table text-nowrap table-striped table-hover">
         <thead>

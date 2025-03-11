@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Activity extends Model
 {
     protected $fillable = [
         'lead_id',
-        'assigned_to',
+        'assigned_id',
         'creator_id',
         'reminder',
         'type',
@@ -18,6 +19,14 @@ class Activity extends Model
         'activityable_id'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($activiy) {
+            $activiy->activityable->delete();
+        });
+    }
 
 
     public function activityable()
@@ -25,13 +34,18 @@ class Activity extends Model
         return $this->morphTo();
     }
 
-    public function call()
+    public function lead()
     {
-        return $this->belongsTo(Call::class);
+        return $this->belongsTo(Lead::class);
     }
 
     public function assigned()
     {
-        return $this->belongsTo(User::class, 'assigned_id');
+        return $this->belongsTo(User::class,  'assigned_id');
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class,  'creator_id');
     }
 }

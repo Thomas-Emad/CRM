@@ -4,5 +4,5 @@
 
 @section('content')
     <livewire:lead.activities.calls.call-operation type="{{ $type }}" lead_id="{{ $lead ?? null }}"
-        id="{{ $id ?? null }}" />
+        id="{{ $call ?? null }}" />
 @endsection

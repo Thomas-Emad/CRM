@@ -46,6 +46,10 @@ class LeadRepository implements LeadRepositoryInterface
             'country:id,name',
             'interactives',
             'interactives.status:id,name,color',
+            'activities',
+            'activities.assigned:id,name',
+            'activities.activityable',
+
         ])->findOrFail($id);
     }
 

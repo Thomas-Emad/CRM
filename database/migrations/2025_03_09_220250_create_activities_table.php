@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('reminder')->nullable();
             $table->enum('type', [ActivityTypeEnum::Calls->value, ActivityTypeEnum::Meetings->value, ActivityTypeEnum::Task->value])->nullable();
             $table->morphs('activityable');
-            $table->integer('title')->nullable();
+            $table->string('title')->nullable();
             $table->text('notes')->nullable();
 
             $table->timestamps();

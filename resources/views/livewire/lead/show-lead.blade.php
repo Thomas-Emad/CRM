@@ -138,7 +138,9 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="javascript:void(0);" wire:navigate>Task</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0);" wire:navigate>Meeting</a></li>
+                            <li><a class="dropdown-item"
+                                    href="{{ route('leads.activities.meetings.create', $lead->id) }}"
+                                    wire:navigate>Meeting</a></li>
                             <li><a class="dropdown-item"
                                     href="{{ route('leads.activities.calls.create', $lead->id) }}"
                                     wire:navigate>Call</a></li>
@@ -166,9 +168,8 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane show active text-muted" id="pills-calls" role="tabpanel"
+                        <div class="tab-pane show active" id="pills-calls" role="tabpanel"
                             aria-labelledby="pills-calls-tab" tabindex="0">
-                            {{ $activities }}
                             <x-table>
                                 <x-slot:thead>
                                     <th scope="col">S.No</th>
@@ -187,19 +188,32 @@
                                             <td>{{ $item->title ?? 'N/A' }}</td>
                                             <td>{{ $item->assigned->name ?? 'N/A' }}</td>
                                             <td>{{ $item->title ?? 'N/A' }}</td>
-                                            <td>{{ $item->notes ?? 'N/A' }}</td>
+                                            <td title="{{ $item->notes }}">
+                                                {{ str($item->notes)->limit(20) ?? 'N/A' }}</td>
                                             <td>{{ $item->activityable->call_date ?? 'N/A' }}</td>
-                                            <td>{{ 'action' }}</td>
+                                            <td>
+                                                <div>
+                                                    <a class="btn "
+                                                        href="{{ route('leads.activities.calls.show', ['lead' => $lead->id, 'activity' => $item->id]) }}"
+                                                        wire:navigate>
+                                                        <i class="ti ti-eye fs-4 text-primary"></i>
+                                                    </a>
+                                                    <a class="btn "
+                                                        href="{{ route('leads.activities.calls.edit', ['lead' => $lead->id, 'call' => $item->id]) }}"
+                                                        wire:navigate>
+                                                        <i class="ti ti-pencil fs-4 text-primary"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @empty
-                                        <tr colspan="6">
-                                            <p>No call found for this lead</p>
+                                        <tr>
+                                            <td colspan="7">
+                                                <p class="text-center">No call found for this lead</p>
+                                            </td>
                                         </tr>
                                     @endforelse
                                 </x-slot:tbody>
-                                <x-slot:pagination>
-                                    {{-- {{ $activities->links() }} --}}
-                                </x-slot:pagination>
                             </x-table>
                         </div>
                         <div class="tab-pane show active text-muted" id="pills-meetings" role="tabpanel"

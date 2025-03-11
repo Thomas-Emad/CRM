@@ -16,6 +16,8 @@ class Call extends Model
         'type',
     ];
 
+
+
     public function activity(): MorphOne
     {
         return $this->morphOne(Activity::class, 'activityable');
