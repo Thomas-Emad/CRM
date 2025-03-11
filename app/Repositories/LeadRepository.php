@@ -49,8 +49,8 @@ class LeadRepository implements LeadRepositoryInterface
             'activities',
             'activities.assigned:id,name',
             'activities.activityable',
-            'notes',
-            'notes.creator:id,name'
+            'allNotes',
+            'allNotes.creator:id,name',
         ])->findOrFail($id);
     }
 

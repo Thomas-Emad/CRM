@@ -138,35 +138,16 @@
                             <th scope="col">S.No</th>
                             <th scope="col">Creator</th>
                             <th scope="col">Content</th>
-                            <th scope="col">Connected With</th>
                             <th scope="col">Since</th>
                             <th scope="col">Action</th>
                         </x-slot:thead>
                         <x-slot:tbody>
-                            @forelse ($notes as $key => $item)
+                            @forelse ($lead->allNotes as $key => $item)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $item->creator->name ?? 'N/A' }}</td>
                                     <td title="{{ $item->content }}">
                                         {{ str($item->content)->limit(20) ?? 'N/A' }}</td>
-
-                                    <td>
-                                        @if ($item->noteable_type == 'App\Models\Meeting')
-                                            <a class="btn text-primary"
-                                                href="{{ route('leads.activities.calls.show', ['lead' => $lead->id, 'activity' => $item->id]) }}"
-                                                wire:navigate>
-                                                Show Meeting
-                                            </a>
-                                        @elseif ($item->noteable_type == 'App\Models\Lead')
-                                            This Lead
-                                        @elseif ($item->noteable_type == 'App\Models\Call')
-                                            <a class="btn text-primary"
-                                                href="{{ route('leads.activities.calls.show', ['lead' => $lead->id, 'activity' => $item->id]) }}"
-                                                wire:navigate>
-                                                Show Call
-                                            </a>
-                                        @endif
-                                    </td>
                                     <td>{{ $item->created_at->since() }}</td>
                                     <td>
                                         @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_NOTE->value)

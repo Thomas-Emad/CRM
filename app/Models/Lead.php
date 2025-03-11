@@ -82,4 +82,9 @@ class Lead extends Model
     {
         return $this->morphMany(Note::class, 'noteable');
     }
+
+    public function allNotes()
+    {
+        return $this->hasMany(Note::class, 'lead_id',  'id');
+    }
 }
