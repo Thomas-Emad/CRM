@@ -3,5 +3,5 @@
 @section('title', 'Show Call')
 
 @section('content')
-    <livewire:lead.activities.calls.show-call id="{{ $activity ?? null }}" />
+    <livewire:lead.activities.calls.show-call id="{{ $activity ?? null }}" lead="{{ $lead ?? null }}" />
 @endsection

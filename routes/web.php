@@ -13,14 +13,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('groups', GroupController::class)->only(['index', 'create', 'edit']);
     Route::resource('leads', LeadController::class)->only(['index', 'create', 'edit', 'show']);
 
+    // All Calls / Activities
+    Route::get('calls', [CallController::class, 'index'])->name('leads.activities.calls.index');
     Route::group(['prefix' => 'leads/{lead}/activities/calls', 'as' => 'leads.activities.calls.', 'controller' => CallController::class], function () {
         Route::get('/', 'create')->name('create');
-        Route::get('{call}/edit', 'edit')->name('edit');
+        Route::get('{activity}/edit', 'edit')->name('edit');
         Route::get('{activity}/show', 'show')->name('show');
     });
+
+    // All Meeting / Activities
     Route::group(['prefix' => 'leads/{lead}/activities/meetings', 'as' => 'leads.activities.meetings.', 'controller' => MeetingController::class], function () {
         Route::get('/', 'create')->name('create');
-        Route::get('{meeting}/edit', 'edit')->name('edit');
+        Route::get('{activity}/edit', 'edit')->name('edit');
         Route::get('{activity}/show', 'show')->name('show');
     });
 

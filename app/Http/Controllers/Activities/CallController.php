@@ -20,7 +20,7 @@ class CallController extends Controller  implements HasMiddleware
 
     public function index()
     {
-        return view('pages.lead.activities.calls');
+        return view('pages.activities.calls');
     }
 
     /**
@@ -35,15 +35,15 @@ class CallController extends Controller  implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($lead, $call)
+    public function edit($lead, $activity)
     {
         $type = 'edit';
-        return view('pages.lead.activities.calls.operation', compact('type', 'lead', 'call'));
+        return view('pages.lead.activities.calls.operation', compact('type', 'activity', 'lead'));
     }
 
     public function show($lead, $activity)
     {
         $type = 'create';
-        return view('pages.lead.activities.calls.show', compact('activity'));
+        return view('pages.lead.activities.calls.show', compact('lead', 'activity'));
     }
 }

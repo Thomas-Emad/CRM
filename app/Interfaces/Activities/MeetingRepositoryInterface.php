@@ -14,4 +14,6 @@ interface MeetingRepositoryInterface
     public function delete(int $id): bool;
     public function rules(): array;
     public function attributes(): array;
+    public function typeMeeting(): Collection;
+    public function getMeetings(int $id): Collection;
 }

@@ -5,85 +5,67 @@ namespace App\Livewire\Lead\Activities\Meetings;
 use App\Models\{User, Lead};
 use Livewire\Component;
 use App\Interfaces\Activities\MeetingRepositoryInterface;
+use App\Livewire\Forms\MeetingsOperationform;
 
 class MeetingOperation extends Component
 {
-    public $type, $id, $lead_id, $customerName, $lead;
+    public $type, $customerName, $lead,  $lead_id, $id;
     public $assigned_id, $title, $reminder, $start, $end, $online, $link, $location, $notes;
+    public MeetingsOperationform $meetingForm;
     protected $meetingRepository;
+
 
     public function boot(MeetingRepositoryInterface $meetingRepository)
     {
         $this->meetingRepository = $meetingRepository;
     }
 
-    protected function rules()
-    {
-        return $this->meetingRepository->rules();
-    }
-
-    protected function validationAttributes()
-    {
-        return $this->meetingRepository->attributes();
-    }
-
     /**
-     * Store method to save the new meeting
+     * Saves the current meeting form and redirects to the lead show page.
      *
-     * This method validates the form data, creates a new meeting in the database
-     * using the validated data, and then resets the form for the next input.
+     * @return void
      */
     public function save()
     {
-        $vaildatedData = $this->validate();
-        $this->meetingRepository->store($vaildatedData);
+        $this->meetingForm->lead_id = $this->lead_id;
+
+        $this->meetingForm->save();
         $this->redirect(route('leads.show', ['lead' => $this->lead_id]), navigate: true);
     }
 
     /**
-     * Get method to retrieve the details of an existing meeting
+     * Retrieve a meeting from the database by its ID and populate the
+     * component's properties with the meeting's details.
      *
-     * This method fetches the meeting by its ID from the database and populates
-     *
-     * @param int $id The ID of the meeting to be retrieved.
+     * @param  int  $id
+     * @return void
      */
     public function get($id)
     {
-        $meeting = $this->meetingRepository->get($id);
-        $this->id = $meeting->id;
-        $this->reminder = $meeting->reminder;
-        $this->assigned_id = $meeting->assigned_id;
-        $this->start = $meeting->activityable->start;
-        $this->end = $meeting->activityable->end;
-        $this->title = $meeting->title;
-        $this->online = $meeting->activityable->online;
-        $this->location = $meeting->activityable->location;
-        $this->link = $meeting->activityable->link;
-        $this->notes = $meeting->notes;
+        $this->meetingForm->get($id);
     }
 
     /**
-     * Update method to modify an existing meeting
+     * Update an existing meeting for a lead and redirect to the lead show page.
      *
-     * This method validates the form data, finds the meeting by its ID, and updates
-     * the meeting's details with the validated data. It then resets the form for the next input.
+     * @return void
      */
     public function update()
     {
-        $vaildatedData = $this->validate();
-        $this->meetingRepository->update($this->id, $vaildatedData);
+        $this->meetingForm->lead_id = $this->lead_id;
+        $this->meetingForm->update();
         $this->redirect(route('leads.show', ['lead' => $this->lead_id]), navigate: true);
     }
 
     /**
-     * Destroy method to delete an existing meeting
+     * Deletes the meeting identified by the current component's ID and
+     * redirects to the lead show page.
      *
-     * This method finds the meeting by its ID, deletes it from the database, and
-     * resets the form after deletion.
+     * @return void
      */
     public function destory()
     {
-        $this->meetingRepository->delete($this->id);
+        $this->meetingForm->destory();
         $this->redirect(route('leads.show', ['lead' => $this->lead_id]), navigate: true);
     }
 

@@ -16,7 +16,6 @@ class ShowLead extends Component
     public LeadOperationsForm $leadForm;
     public NotesOperationform $noteForm;
     public InteractiveOperationForm $interactiveForm;
-
     protected $leadRepository;
 
     public function boot(LeadRepositoryInterface $leadRepository)

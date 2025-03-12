@@ -19,7 +19,7 @@
                     <div>
                         @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_DELETE->value)
                             <a class="btn btn-outline-warning btn-wave btn"
-                                href="{{ route('leads.activities.calls.edit', ['lead' => $activity->lead_id, 'call' => $activity->id]) }}"
+                                href="{{ route('leads.activities.calls.edit', ['lead' => $activity->lead_id, 'activity' => $activity->id]) }}"
                                 wire:navigate>
                                 <i class="ti ti-pencil"></i>
                             </a>
@@ -189,7 +189,7 @@
                                         <div class="crm-timeline-content">
                                             <div>
                                                 <span class="fw-semibold">New Call &amp;</span><span><a
-                                                        href="{{ route('leads.activities.calls.edit', ['lead' => $item->lead->id, 'call' => $item->id]) }}"
+                                                        href="{{ route('leads.activities.calls.edit', ['lead' => $item->lead->id, 'activity' => $item->id]) }}"
                                                         class="text-primary fw-semibold">
                                                         {{ $item->title }}.</a></span>
                                             </div>

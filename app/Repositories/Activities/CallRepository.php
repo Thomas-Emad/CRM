@@ -7,10 +7,24 @@ use App\Enums\ActivityTypeEnum;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\Activities\CallRepositoryInterface;
-use App\Models\{Call, CallReason, CallResponse, Activity, Note};
+use App\Models\{Call, CallReason, CallResponse, Activity, Lead, Note};
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CallRepository implements CallRepositoryInterface
 {
+    public function all(string $search, string $type = "all"): LengthAwarePaginator
+    {
+        return Activity::with([
+            'lead:id,name',
+            'assigned:id,name',
+            'creator:id,name',
+            'activityable'
+        ])->where('type', ActivityTypeEnum::Calls->value)
+            ->filter($type)
+            ->paginate(10);
+    }
+
+
     /**
      * Retrieves a call by its ID.
      *
@@ -44,6 +58,16 @@ class CallRepository implements CallRepositoryInterface
             'activityable',
         ])->where('type', ActivityTypeEnum::Calls->value)
             ->where('lead_id', $id)->get();
+    }
+
+    /**
+     * Retrieves all leads.
+     *
+     * @return \Illuminate\Support\Collection A collection of leads containing their id and name.
+     */
+    public function getLeads(): Collection
+    {
+        return Lead::select('id', 'name')->get();
     }
 
     /**
@@ -180,8 +204,8 @@ class CallRepository implements CallRepositoryInterface
             'typeCall' => 'required|string|max:255',
             'date_calling' => 'required|date',
             'title' => 'required|string|max:255',
-            'reminder' => 'nullable|string|max:255',
-            'duration' => 'nullable|string|max:255',
+            'reminder' => 'nullable|integer|max:255',
+            'duration' => 'nullable|integer|max:255',
             'reason_id' => 'nullable|exists:call_reasons,id',
             'response_id' => 'nullable|exists:call_responses,id',
             'notes' => 'nullable|string|max:2000',

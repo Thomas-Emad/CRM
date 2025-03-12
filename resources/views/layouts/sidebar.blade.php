@@ -51,6 +51,10 @@
                         <i class="ri ri-arrow-right-s-line side-menu__angle"></i>
                     </a>
                     <ul class="slide-menu child1">
+                        @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_SHOW)
+                            <li class="slide"><a href="{{ route('leads.activities.calls.index') }}" class="side-menu__item"
+                                    wire:current="active" wire:navigate>Calls</a></li>
+                        @endcan
                         @can(\App\Enums\PermissionEnum::CRM_LEAD)
                             <li class="slide"><a href="{{ route('leads.index') }}" class="side-menu__item"
                                     wire:current="active" wire:navigate>Leads</a></li>

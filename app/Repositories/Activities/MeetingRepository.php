@@ -122,11 +122,10 @@ class MeetingRepository implements MeetingRepositoryInterface
             'online' => 'nullable|boolean',
             'link' => 'nullable|url|max:255',
             'location' => 'nullable|string|max:255',
-            'reminder' => 'nullable|string|max:255',
+            'reminder' => 'nullable|integer|max:255',
             'notes' => 'nullable|string|max:2000',
         ];
     }
-
 
     /**
      * Maps the attribute names to their related model property names.

@@ -9,7 +9,7 @@ use App\Interfaces\Activities\CallRepositoryInterface;
 
 class ShowCall extends Component
 {
-    public  $id, $activity;
+    public  $id, $lead, $activity;
     public NotesOperationform $noteForm;
     protected $callRepository;
 

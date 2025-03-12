@@ -19,7 +19,7 @@
                     <div>
                         @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_OPERATION->value)
                             <a class="btn btn-outline-warning btn-wave btn"
-                                href="{{ route('leads.activities.meetings.edit', ['lead' => $activity->lead_id, 'meeting' => $activity->id]) }}"
+                                href="{{ route('leads.activities.meetings.edit', ['lead' => $activity->lead_id, 'activity' => $activity->id]) }}"
                                 wire:navigate>
                                 <i class="ti ti-pencil"></i>
                             </a>
@@ -192,7 +192,7 @@
                                         <div class="crm-timeline-content">
                                             <div>
                                                 <span class="fw-semibold">New Meeting &amp;</span><span><a
-                                                        href="{{ route('leads.activities.meetings.edit', ['lead' => $item->lead->id, 'meeting' => $item->id]) }}"
+                                                        href="{{ route('leads.activities.meetings.edit', ['lead' => $item->lead->id, 'activity' => $item->id]) }}"
                                                         class="text-primary fw-semibold">
                                                         {{ $item->title }}.</a></span>
                                             </div>

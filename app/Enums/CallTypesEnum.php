@@ -16,4 +16,13 @@ enum CallTypesEnum: string
             self::Missing => 'Missing Call',
         };
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::InComing => 'bg-secondary-emphasis-transparent',
+            self::OutGoing => 'bg-success-transparent',
+            self::Missing => 'bg-danger-transparent',
+        };
+    }
 }

@@ -126,9 +126,9 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="fs-5">Notes</h3>
                     @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_NOTE->value)
-                        <button type="button" class="btn bg-primary-transparent" data-bs-toggle="modal"
+                        <button type="button" class="btn bg-success-transparent" data-bs-toggle="modal"
                             data-bs-target="#AddNoteModal">
-                            <i class="ti ti-plus  text-text-primary-emphasis"></i>
+                            <i class="ti ti-plus text-primary-emphasis"></i>
                         </button>
                     @endcan
                 </div>
@@ -252,7 +252,7 @@
                                                 @endcan
                                                 @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_OPERATION->value)
                                                     <a class="btn "
-                                                        href="{{ route('leads.activities.calls.edit', ['lead' => $lead->id, 'call' => $item->id]) }}"
+                                                        href="{{ route('leads.activities.calls.edit', ['lead' => $lead->id, 'activity' => $item->id]) }}"
                                                         wire:navigate>
                                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                                     </a>
@@ -315,7 +315,7 @@
                                                 @endcan
                                                 @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_OPERATION->value)
                                                     <a class="btn "
-                                                        href="{{ route('leads.activities.meetings.edit', ['lead' => $lead->id, 'meeting' => $item->id]) }}"
+                                                        href="{{ route('leads.activities.meetings.edit', ['lead' => $lead->id, 'activity' => $item->id]) }}"
                                                         wire:navigate>
                                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                                     </a>
@@ -431,4 +431,5 @@
         </x-slot:footer>
     </x-modal>
     <!-- End::delete-lead -->
+
 </div>

@@ -48,4 +48,23 @@ class Activity extends Model
     {
         return $this->belongsTo(User::class,  'creator_id');
     }
+
+    public function scopeFilter($query, $type)
+    {
+        return $this->filterBy($query, $type);
+    }
+
+    private function filterBy($query, $type)
+    {
+        return match ($type) {
+            'all' => $query,
+            'coming' => $query->whereHas('activityable', function ($query) {
+                $query->where('call_date', '>', now());
+            }),
+            'missing' => $query->whereHas('activityable', function ($query) {
+                $query->where('call_date', '<', now());
+            }),
+            default => $query,
+        };
+    }
 }
