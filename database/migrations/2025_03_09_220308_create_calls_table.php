@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('call_reason_id')->nullable()->constrained()->references('id')->on('call_reasons')->noActionOnDelete();
             $table->foreignId('call_response_id')->nullable()->constrained()->references('id')->on('call_responses')->noActionOnDelete();
             $table->timestamp('call_date');
-            $table->time("duration_call")->nullable();
+            $table->integer("duration_call")->nullable();
             $table->enum('type', [CallTypesEnum::InComing->value, CallTypesEnum::OutGoing->value, CallTypesEnum::Missing->value])->nullable();
             $table->timestamps();
         });

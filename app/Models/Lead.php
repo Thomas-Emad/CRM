@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -32,11 +32,6 @@ class Lead extends Model
         'country_id',
         'is_customer',
     ];
-
-    public function interactives(): HasMany
-    {
-        return $this->hasMany(Interactive::class);
-    }
 
     public function activities(): HasMany
     {

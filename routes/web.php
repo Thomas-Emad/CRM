@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // All Meeting / Activities
+    Route::get('meetings', [MeetingController::class, 'index'])->name('leads.activities.meetings.index');
     Route::group(['prefix' => 'leads/{lead}/activities/meetings', 'as' => 'leads.activities.meetings.', 'controller' => MeetingController::class], function () {
         Route::get('/', 'create')->name('create');
         Route::get('{activity}/edit', 'edit')->name('edit');

@@ -5,11 +5,26 @@ namespace App\Repositories\Activities;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\Activities\MeetingRepositoryInterface;
-use App\Models\{Meeting, Activity, Note};
+use App\Models\{Meeting, Activity, Note, Lead};
 use App\Enums\ActivityTypeEnum;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class MeetingRepository implements MeetingRepositoryInterface
 {
+  
+    public function all(string $search, string $type = "all"): LengthAwarePaginator
+    {
+        return Activity::with([
+            'lead:id,name',
+            'assigned:id,name',
+            'creator:id,name',
+            'activityable'
+        ])->where('type', ActivityTypeEnum::Meetings->value)
+            ->where('title', 'like', "%$search%")
+            ->filter('meeting', $type)
+            ->paginate(10);
+    }
+
     /**
      * Retrieves a meeting by its ID.
      *
@@ -40,6 +55,17 @@ class MeetingRepository implements MeetingRepositoryInterface
             'creator:id,name',
         ])->where('lead_id', $id)->where('noteable_type', 'App\Models\Meeting')->get();
     }
+
+    /**
+     * Retrieves all leads.
+     *
+     * @return \Illuminate\Support\Collection A collection of leads containing their id and name.
+     */
+    public function getLeads(): Collection
+    {
+        return Lead::select('id', 'name')->get();
+    }
+
 
     /**
      * Stores a new meeting.

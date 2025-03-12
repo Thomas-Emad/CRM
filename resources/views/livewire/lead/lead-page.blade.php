@@ -19,11 +19,13 @@
                 <div>
                     <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
                 </div>
-                <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
-                    wire:navigate href="{{ route('leads.create') }}">
-                    <i class="ti ti-plus fs-5"></i>
-                    <span>New Lead</span>
-                </a>
+                @can(App\Enums\PermissionEnum::CRM_LEAD_OPERATION->value)
+                    <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
+                        wire:navigate href="{{ route('leads.create') }}">
+                        <i class="ti ti-plus fs-5"></i>
+                        <span>New Lead</span>
+                    </a>
+                @endcan
             </div>
         </div>
         <div class="table-responsive">
@@ -39,7 +41,7 @@
                         <th scope="col">Tags</th>
                         <th scope="col">Assigned</th>
                         <th scope="col">Source</th>
-                        <th scope="col">Last Contact</th>
+                        <th scope="col">Last Activity</th>
                         <th scope="col">Created</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
@@ -74,7 +76,7 @@
                                 <span>{{ isset($lead->source) ? str($lead->source?->name)->limit(10) : 'N/A' }}</span>
                             </td>
                             <td>
-                                <span>{{ $lead->interactives()->latest()->first()?->created_at?->format('Y-m-d') ?? 'N/A' }}</span>
+                                <span>{{ $lead->activities()->latest()->first()?->created_at?->format('Y-m-d') ?? 'N/A' }}</span>
                             </td>
                             <td>
                                 <span>{{ $lead->created_at?->format('Y-m-d') ?? 'N/A' }}</span>
@@ -87,19 +89,24 @@
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn " href="{{ route('leads.show', ['lead' => $lead->id]) }}"
-                                        wire:navigate>
-                                        <i class="ti ti-eye fs-4 text-primary"></i>
-                                    </a>
-                                    <a class="btn " href="{{ route('leads.edit', ['lead' => $lead->id]) }}"
-                                        wire:navigate>
-                                        <i class="ti ti-pencil fs-4 text-primary"></i>
-                                    </a>
-                                    <button type="button" class="btn " data-bs-toggle="modal"
-                                        data-bs-target="#DeleteLeadModal"
-                                        x-on:click="id = {{ $lead->id }}; title = '{{ $lead->name }}'">
-                                        <i class="ti ti-trash fs-4 text-danger"></i>
-                                    </button>
+                                    @can(App\Enums\PermissionEnum::CRM_LEAD_OPERATION->value)
+                                        <a class="btn " href="{{ route('leads.show', ['lead' => $lead->id]) }}"
+                                            wire:navigate>
+                                            <i class="ti ti-eye fs-4 text-primary"></i>
+                                        </a>
+                                        <a class="btn " href="{{ route('leads.edit', ['lead' => $lead->id]) }}"
+                                            wire:navigate>
+                                            <i class="ti ti-pencil fs-4 text-primary"></i>
+                                        </a>
+                                    @endcan
+                                    @can(App\Enums\PermissionEnum::CRM_LEAD_DELETE->value)
+                                        <button type="button" class="btn " data-bs-toggle="modal"
+                                            data-bs-target="#DeleteLeadModal"
+                                            x-on:click="id = {{ $lead->id }}; title = '{{ $lead->name }}'">
+                                            <i class="ti ti-trash fs-4 text-danger"></i>
+                                        </button>
+                                    @endcan
+
                                 </div>
                             </td>
                         </tr>
@@ -117,26 +124,28 @@
         </div>
     </div>
 
-    <!-- Start::delete-lead -->
-    <x-modal id="DeleteLeadModal">
-        <x-slot:title>
-            <i class="ti ti-trash text-danger me-1"></i>
-            <span>
-                Are you sure you want to delete this lead?!
-            </span>
-        </x-slot:title>
-        <x-slot:content>
-            <div>
-                <label for="lead-name" class="form-label">Name lead</label>
-                <input type="text" id="lead-title" class="form-control disabled" x-model="title" disabled
-                    placeholder="Enter lead Name">
-            </div>
+    @can(App\Enums\PermissionEnum::CRM_LEAD_DELETE->value)
+        <!-- Start::delete-lead -->
+        <x-modal id="DeleteLeadModal">
+            <x-slot:title>
+                <i class="ti ti-trash text-danger me-1"></i>
+                <span>
+                    Are you sure you want to delete this lead?!
+                </span>
+            </x-slot:title>
+            <x-slot:content>
+                <div>
+                    <label for="lead-name" class="form-label">Name lead</label>
+                    <input type="text" id="lead-title" class="form-control disabled" x-model="title" disabled
+                        placeholder="Enter lead Name">
+                </div>
 
-        </x-slot:content>
-        <x-slot:footer>
-            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" wire:click="delete(id)">Delete</button>
-        </x-slot:footer>
-    </x-modal>
-    <!-- End::delete-lead -->
+            </x-slot:content>
+            <x-slot:footer>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" wire:click="delete(id)">Delete</button>
+            </x-slot:footer>
+        </x-modal>
+        <!-- End::delete-lead -->
+    @endcan
 </div>

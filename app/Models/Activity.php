@@ -49,21 +49,54 @@ class Activity extends Model
         return $this->belongsTo(User::class,  'creator_id');
     }
 
-    public function scopeFilter($query, $type)
+    public function scopefilter($query, $modal, $type)
     {
-        return $this->filterBy($query, $type);
+        return match ($modal) {
+            'call' => $this->filterCallsBy($query, $type),
+            'meeting' => $this->filterMeetingsBy($query, $type),
+        };
     }
 
-    private function filterBy($query, $type)
+    private function filterCallsBy($query, $type)
     {
         return match ($type) {
             'all' => $query,
-            'coming' => $query->whereHas('activityable', function ($query) {
-                $query->where('call_date', '>', now());
-            }),
-            'missing' => $query->whereHas('activityable', function ($query) {
-                $query->where('call_date', '<', now());
-            }),
+            'coming' => $query->whereHasMorph(
+                'activityable',
+                [Call::class],
+                function ($query) {
+                    $query->where('call_date', '>', now());
+                }
+            ),
+            'past' => $query->whereHasMorph(
+                'activityable',
+                [Call::class],
+                function ($query) {
+                    $query->where('call_date', '<', now());
+                }
+            ),
+            default => $query,
+        };
+    }
+
+    private function filterMeetingsBy($query, $type)
+    {
+        return match ($type) {
+            'all' => $query,
+            'coming' => $query->whereHasMorph(
+                'activityable',
+                [Meeting::class],
+                function ($query) {
+                    $query->where('start', '>', now());
+                }
+            ),
+            'past' => $query->whereHasMorph(
+                'activityable',
+                [Meeting::class],
+                function ($query) {
+                    $query->where('end', '<', now());
+                }
+            ),
             default => $query,
         };
     }

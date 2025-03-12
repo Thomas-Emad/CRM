@@ -6,7 +6,7 @@ use App\Models\Status;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use App\Interfaces\LeadRepositoryInterface;
-use App\Livewire\Forms\{InteractiveOperationForm, LeadOperationsForm, NotesOperationform};
+use App\Livewire\Forms\{LeadOperationsForm, NotesOperationform};
 use App\Models\Lead;
 
 #[Title('Show Lead')]
@@ -15,7 +15,6 @@ class ShowLead extends Component
     public $id, $lead;
     public LeadOperationsForm $leadForm;
     public NotesOperationform $noteForm;
-    public InteractiveOperationForm $interactiveForm;
     protected $leadRepository;
 
     public function boot(LeadRepositoryInterface $leadRepository)
@@ -56,16 +55,12 @@ class ShowLead extends Component
     }
 
     /**
-     * Deletes the interactive and closes the delete modal.
-     */
-    public function deleteInteractive($id)
-    {
-        $this->interactiveForm->destroy($id);
-        $this->redirect(route('leads.show', ['lead' => $this->lead->id]), navigate: true);
-    }
-
-    /**
-     * Deletes the interactive and closes the delete modal.
+     * Converts a lead to a customer by updating the `is_customer` and `status_id` then redirects to the leads index.
+     *
+     * @param int $id The lead's ID to convert.
+     *
+     * @return void
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the lead is not found.
      */
     public function convertToCustomer($id)
     {

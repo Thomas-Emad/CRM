@@ -8,7 +8,6 @@ use App\Repositories\{
     GroupRepository,
     LeadRepository,
     CustomerRepository,
-    InteractiveRepository,
     TeamRepository,
     Activities\CallRepository,
     Activities\NoteRepository,
@@ -20,7 +19,6 @@ use App\Interfaces\{
     GroupRepositoryInterface,
     LeadRepositoryInterface,
     CustomerRepositoryInterface,
-    InteractiveRepositoryInterface,
     TeamRepositoryInterface,
     Activities\CallRepositoryInterface,
     Activities\NoteRepositoryInterface,
@@ -40,7 +38,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(GroupRepositoryInterface::class, GroupRepository::class);
         $this->app->bind(LeadRepositoryInterface::class, LeadRepository::class);
         $this->app->bind(CustomerRepositoryInterface::class, CustomerRepository::class);
-        $this->app->bind(InteractiveRepositoryInterface::class, InteractiveRepository::class);
         $this->app->bind(TeamRepositoryInterface::class, TeamRepository::class);
         $this->app->bind(CallRepositoryInterface::class, CallRepository::class);
         $this->app->bind(NoteRepositoryInterface::class, NoteRepository::class);

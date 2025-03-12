@@ -26,7 +26,7 @@ class StatusPage extends Component
     public function delete($deleteId)
     {
         $this->statusRepository->delete($deleteId);
-        $this->redirect(route('statuses.index'));
+        $this->redirect(route('statuses.index'), navigate: true);
     }
 
     /**

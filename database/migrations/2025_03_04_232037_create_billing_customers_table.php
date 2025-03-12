@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('billing_customers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->nullable()->constrained()->NullOnDelete();
+            $table->foreignId('country_id')->nullable()->constrained()->noActionOnDelete();
             $table->foreignId('customer_id')->constrained('leads')->cascadeOnDelete();
             $table->string('street')->nullable();
             $table->string('city')->nullable();

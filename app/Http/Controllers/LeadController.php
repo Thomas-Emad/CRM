@@ -11,7 +11,8 @@ class LeadController extends Controller  implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using(PermissionEnum::CRM_LEAD->value)),
+            new Middleware('permission:' . PermissionEnum::CRM_LEAD_SHOW->value, only: ['index', 'show']),
+            new Middleware('permission:' . PermissionEnum::CRM_LEAD_OPERATION->value, only: ['create', 'edit']),
         ];
     }
 
@@ -48,13 +49,5 @@ class LeadController extends Controller  implements HasMiddleware
     public function show(string $id)
     {
         return view('pages.lead.show', compact('id'));
-    }
-
-    /**
-     * Show interactive
-     */
-    public function interactive(string $id, string $type = 'create', $interactive = null)
-    {
-        return view('pages.lead.interactive', compact('id', 'type', 'interactive'));
     }
 }

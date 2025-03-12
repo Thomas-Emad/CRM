@@ -388,7 +388,6 @@
             </x-slot:footer>
         </x-modal>
         <!-- End::add-note -->
-
         <!-- Start::add-note -->
         <x-modal id="DeleteNoteModal">
             <x-slot:title>
@@ -409,27 +408,4 @@
         </x-modal>
         <!-- End::add-note -->
     @endcan
-
-    <!-- Start::delete-lead -->
-    <x-modal id="DeleteLeadModal">
-        <x-slot:title>
-            <i class="ti ti-trash text-danger me-1"></i>
-            <span>
-                Are you sure you want to delete this Interactive?!
-            </span>
-        </x-slot:title>
-        <x-slot:content>
-            <div>
-                <label for="interactiveForm-name" class="form-label">Interative Title</label>
-                <input type="text" id="interactiveForm-title" class="form-control disabled" x-model="title"
-                    disabled placeholder="Enter interactive Name">
-            </div>
-        </x-slot:content>
-        <x-slot:footer>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" wire:click="deleteInteractive(id)">Delete</button>
-        </x-slot:footer>
-    </x-modal>
-    <!-- End::delete-lead -->
-
 </div>

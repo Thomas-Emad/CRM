@@ -27,7 +27,7 @@ class LeadPage extends Component
     public function delete($id)
     {
         $this->leadRepository->delete($id);
-        $this->redirect(route('leads.index'));
+        $this->redirect(route('leads.index'), navigate: true);
     }
 
     /**

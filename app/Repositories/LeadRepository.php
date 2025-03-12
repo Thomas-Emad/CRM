@@ -18,11 +18,10 @@ class LeadRepository implements LeadRepositoryInterface
         return Lead::query()
             ->with([
                 'status:id,name,color',
-                'interactives:id,created_at',
                 'assigned:id,name',
                 'source:id,name',
                 'country:id,name',
-                'activities'
+                'activities:id,created_at'
             ])
             ->where('name', 'like', "%$title%")
             ->orderBy('is_customer', 'desc')
@@ -44,8 +43,6 @@ class LeadRepository implements LeadRepositoryInterface
             'assigned:id,name',
             'source:id,name',
             'country:id,name',
-            'interactives',
-            'interactives.status:id,name,color',
             'activities',
             'activities.assigned:id,name',
             'activities.activityable',

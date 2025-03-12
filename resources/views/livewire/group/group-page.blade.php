@@ -1,5 +1,5 @@
 <div x-data="{ id: null, title: null }">
-    <x-page-header title="groups">
+    <x-page-header title="Groups">
         <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
     </x-page-header>

@@ -14,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lead_id')->constrained()->references('id')->on('leads')->cascadeOnDelete();
-            $table->foreignId("assigned_id")->nullable()->constrained()->references('id')->on('users')->setNullOnDelete();
-            $table->foreignId("creator_id")->nullable()->constrained()->references('id')->on('users')->setNullOnDelete();
+            $table->foreignId('lead_id')->constrained()->references('id')->on('leads')->noActionOnDelete();
+            $table->foreignId("assigned_id")->nullable()->constrained()->references('id')->on('users')->noActionOnDelete();
+            $table->foreignId("creator_id")->nullable()->constrained()->references('id')->on('users')->noActionOnDelete();
             $table->integer('reminder')->nullable();
             $table->enum('type', [ActivityTypeEnum::Calls->value, ActivityTypeEnum::Meetings->value, ActivityTypeEnum::Task->value])->nullable();
             $table->morphs('activityable');

@@ -12,15 +12,27 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CallRepository implements CallRepositoryInterface
 {
+    /**
+     * Retrieves all calls.
+     *
+     * @param string $search The name or email of the lead to search for.
+     * @param string $type The type of call to retrieve. Defaults to "all".
+     *                      May be "all", "incoming", "outgoing", or "missed".
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator A paginator
+     *         containing the calls.
+     */
     public function all(string $search, string $type = "all"): LengthAwarePaginator
     {
         return Activity::with([
             'lead:id,name',
             'assigned:id,name',
             'creator:id,name',
-            'activityable'
+            'activityable',
+
         ])->where('type', ActivityTypeEnum::Calls->value)
-            ->filter($type)
+            ->where('title', 'like', "%$search%")
+            ->filter('call', $type)
             ->paginate(10);
     }
 

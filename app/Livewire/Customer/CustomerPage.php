@@ -26,7 +26,7 @@ class CustomerPage extends Component
     public function delete($id)
     {
         $this->customerRepository->delete($id);
-        $this->redirect(route('customers.index'));
+        $this->redirect(route('customers.index'), navigate: true);
     }
 
     public function render()

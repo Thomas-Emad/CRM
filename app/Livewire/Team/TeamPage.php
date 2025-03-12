@@ -25,7 +25,7 @@ class TeamPage extends Component
     public function delete($id)
     {
         $this->teamRepository->delete($id);
-        $this->redirect(route('teams.index'));
+        $this->redirect(route('teams.index'), navigate: true);
     }
 
     /**
