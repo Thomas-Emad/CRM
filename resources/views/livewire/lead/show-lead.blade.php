@@ -8,6 +8,229 @@
     <div class="border p-2 row">
         <div class="col-12 col-md-7 p-2">
             <div class="p-2 shadow-sm border">
+                <div class="card-body">
+                    <ul class="nav nav-tabs tab-style-2 nav-justified mb-3 d-sm-flex d-block" id="myTab1"
+                        role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="information-tab" data-bs-toggle="tab"
+                                data-bs-target="#information-tab-pane" type="button" role="tab"
+                                aria-controls="home-tab-pane" aria-selected="true"><i
+                                    class="ri-gift-line me-1 align-middle"></i>Main Information</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="contact-tab" data-bs-toggle="tab"
+                                data-bs-target="#contact-tab-pane" type="button" role="tab"
+                                aria-controls="profile-tab-pane" aria-selected="false"><i
+                                    class="ri-check-double-line me-1 align-middle"></i>Person Contact</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="lead-source-tab" data-bs-toggle="tab"
+                                data-bs-target="#lead-source-tab-pane" type="button" role="tab"
+                                aria-controls="contact-tab-pane" aria-selected="false"><i
+                                    class="ri-shopping-bag-3-line me-1 align-middle"></i>Lead Source</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="deal-type-tab" data-bs-toggle="tab"
+                                data-bs-target="#deal-type-tab-pane" type="button" role="tab"
+                                aria-selected="false"><i class="ri-truck-line me-1 align-middle"></i>Deal Type</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="internal-note-tab" data-bs-toggle="tab"
+                                data-bs-target="#internal-note-tab-pane" type="button" role="tab"
+                                aria-selected="false"><i class="ri-truck-line me-1 align-middle"></i>Internal
+                                Notes</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade text-muted" id="information-tab-pane" role="tabpanel"
+                            aria-labelledby="home-tab" tabindex="0">
+                            <ul class="ps-3 mb-0">
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="name" class="form-label">Lead Name</label>
+                                    <input type="text" id="name" class="form-control read-only"
+                                        value="{{ $lead->name }}" disabled placeholder="Please Write name">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="company" class="form-label">Company</label>
+                                    <input type="text" id="company" class="form-control read-only"
+                                        value="{{ $lead->company ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="parent_account" class="form-label">Parent Account</label>
+                                    <input type="text" id="parent_account" class="form-control read-only"
+                                        value="{{ $lead->parent_account ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="contractor" class="form-label">Contractor</label>
+                                    <input type="text" id="contractor" class="form-control read-only"
+                                        value="{{ $lead->contractor ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="developer" class="form-label">Developer</label>
+                                    <input type="text" id="developer" class="form-control read-only"
+                                        value="{{ $lead->developer ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="consultant" class="form-label">Consultant</label>
+                                    <input type="text" id="consultant" class="form-control read-only"
+                                        value="{{ $lead->consultant ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="investor" class="form-label">Investor/Owner</label>
+                                    <input type="text" id="investor" class="form-control read-only"
+                                        value="{{ $lead->investor ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="architect" class="form-label">Architect</label>
+                                    <input type="text" id="architect" class="form-control read-only"
+                                        value="{{ $lead->architect ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="industry" class="form-label">Industry</label>
+                                    <input type="text" id="industry" class="form-control read-only"
+                                        value="{{ $lead->industry ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" id="address" class="form-control read-only"
+                                        value="{{ $lead->address ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" id="city" class="form-control read-only"
+                                        value="{{ $lead->city ?? 'N/A' }}" disabled
+                                        placeholder="Please enter company">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="country_id" class="form-label">Country</label>
+                                    <input type="text" id="country_id" class="form-control read-only"
+                                        value="{{ $lead->country->name ?? 'N/A' }}" disabled
+                                        placeholder="Please select country">
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade show active text-muted" id="contact-tab-pane" role="tabpanel"
+                            aria-labelledby="profile-tab" tabindex="0">
+                            <div class="col-12 col-md-6 p-2">
+                                <label for="person_name" class="form-label">Person Name</label>
+                                <input type="text" id="person_name" class="form-control read-only"
+                                    value="{{ $lead->person_name ?? 'N/A' }}" disabled
+                                    placeholder="Please select country">
+                            </div>
+                            <div class="col-12 col-md-6 p-2">
+                                <label for="person_phone" class="form-label">Person Phone</label>
+                                <input type="text" id="person_phone" class="form-control read-only"
+                                    value="{{ $lead->person_phone ?? 'N/A' }}" disabled
+                                    placeholder="Please select country">
+                            </div>
+                            <div class="col-12 col-md-6 p-2">
+                                <label for="person_email" class="form-label">Person Email</label>
+                                <input type="text" id="person_email" class="form-control read-only"
+                                    value="{{ $lead->person_email ?? 'N/A' }}" disabled
+                                    placeholder="Please select country">
+                            </div>
+                            <div class="col-12 col-md-6 p-2">
+                                <label for="person_position" class="form-label">Person Position</label>
+                                <input type="text" id="person_position" class="form-control read-only"
+                                    value="{{ $lead->person_position ?? 'N/A' }}" disabled
+                                    placeholder="Please select country">
+                            </div>
+                        </div>
+                        <div class="tab-pane fade text-muted" id="lead-source-tab-pane" role="tabpanel"
+                            aria-labelledby="contact-tab" tabindex="0">
+                            <ul class="ps-3 mb-0">
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="status" class="form-label">Status</label>
+                                    <input type="text" id="status" class="form-control read-only"
+                                        value="{{ $lead->status->name ?? 'N/A' }}" disabled
+                                        placeholder="Please select status">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="section" class="form-label">Section</label>
+                                    <input type="text" id="section" class="form-control read-only"
+                                        value="{{ $lead->section ?? 'N/A' }}" disabled
+                                        placeholder="Please select status">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="unit" class="form-label">Lead Unit</label>
+                                    <input type="text" id="unit" class="form-control read-only"
+                                        value="{{ $lead->unit->name ?? 'N/A' }}" disabled
+                                        placeholder="Please select status">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="team" class="form-label">Team</label>
+                                    <input type="text" id="team" class="form-control read-only"
+                                        value="{{ $lead->team->name ?? 'N/A' }}" disabled
+                                        placeholder="Please select status">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="assigned" class="form-label">Assigned</label>
+                                    <input type="text" id="assigned" class="form-control read-only"
+                                        value="{{ $lead->assigned->name ?? 'N/A' }}" disabled
+                                        placeholder="Please select status">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="lead_value" class="form-label">Estimated Budget Range</label>
+                                    <input type="text" id="lead_value" class="form-control read-only"
+                                        value="{{ $lead->lead_value ?? 'N/A' }}" disabled
+                                        placeholder="Please select status">
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade text-muted" id="deal-type-tab-pane" role="tabpanel"
+                            tabindex="0">
+                            <ul class="list-unstyled mb-0">
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="priority" class="form-label">Priority</label>
+                                    <input type="text" id="priority" class="form-control read-only"
+                                        value="{{ $lead->priority ?? 'N/A' }}" disabled
+                                        placeholder="Please select priority">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="decision_makers" class="form-label">Decision Makers</label>
+                                    <input type="text" id="decision_makers" class="form-control read-only"
+                                        value="{{ $lead->decision_makers ?? 'N/A' }}" disabled
+                                        placeholder="Please select decision_makers">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="next_step" class="form-label">Next Step</label>
+                                    <input type="text" id="next_step" class="form-control read-only"
+                                        value="{{ $lead->next_step ?? 'N/A' }}" disabled
+                                        placeholder="Please select next_step">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="next_step_date" class="form-label">Next Step Date</label>
+                                    <input type="text" id="next_step_date" class="form-control read-only"
+                                        value="{{ $lead->next_step_date ?? 'N/A' }}" disabled
+                                        placeholder="Please select next_step">
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="description" class="form-label">Step Description</label>
+                                    <textarea class="form-control" id="text-area3" rows="3" disabled placeholder="Please Write Description">{{ $lead->step_description ?? 'N/A' }}</textarea>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade text-muted" id="internal-note-tab-pane" role="tabpanel"
+                            tabindex="0">
+                            <ul class="list-unstyled mb-0">
+                                <li>A Latin professor at Hampden-Sydney College in Virginia, looked up one
+                                    of the more obscure Latin words, consectetur, from a Lorem Ipsum
+                                    passage, and going through the cites of the word in classical
+                                    literature.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="fs-4">Details About Lead</h2>
                     <button type="button" class="btn bg-primary-transparent" data-bs-toggle="modal"
@@ -16,11 +239,7 @@
                     </button>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" class="form-control read-only" value="{{ $lead->name }}"
-                            disabled placeholder="Please Write name">
-                    </div>
+
 
                     <div class="col-12 col-md-6 p-2">
                         <label for="status_id" class="form-label">Status</label>

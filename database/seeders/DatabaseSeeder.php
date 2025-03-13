@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SourcesSeeder::class,
             StatusesSeeder::class,
-            GroupsSeeder::class,
+            LeadUnitsSeeder::class,
             CurrenciesSeeder::class,
             CountriesSeeder::class,
-            LeadsSeeder::class,
+            LeadTypeSeeder::class,
             CallReasonSeeder::class,
             CallResponseSeeder::class,
         ]);

@@ -9,11 +9,14 @@ use App\Interfaces\LeadRepositoryInterface;
 #[Title('Lead Operations Form')]
 class LeadOperationsForm extends Form
 {
-    public $id, $status_id,
-        $source_id, $team_id, $assigned_id, $tags, $name, $address,
-        $position, $city, $email, $company,
-        $group_id, $website, $country_id, $phone,
-        $zipCode, $leadValue, $description;
+    public $id;
+    public $name, $company, $parent_account, $contractor, $developer,
+        $consultant, $investor, $architect, $industry, $address,
+        $city, $country_id, $person_name, $person_phone, $person_email,
+        $person_position, $next_step, $next_step_date, $step_description,
+        $decision_makers, $section, $status_id, $source_id, $team_id,
+        $lead_type_id, $lead_unit_id, $assigned_id, $priority,
+        $date_acquired, $lead_value, $project_brief;
 
     public $currentStatus;
 
@@ -59,23 +62,37 @@ class LeadOperationsForm extends Form
     {
         $lead = $this->leadRepository->get($id);
         $this->id = $lead->id;
+        $this->name = $lead->name;
+        $this->company = $lead->company;
+        $this->parent_account = $lead->parent_account;
+        $this->contractor = $lead->contractor;
+        $this->developer = $lead->developer;
+        $this->consultant = $lead->consultant;
+        $this->investor = $lead->investor;
+        $this->architect = $lead->architect;
+        $this->industry = $lead->industry;
+        $this->address = $lead->address;
+        $this->city = $lead->city;
+        $this->country_id = $lead->country_id;
+        $this->person_name = $lead->person_name;
+        $this->person_phone = $lead->person_phone;
+        $this->person_email = $lead->person_email;
+        $this->person_position = $lead->person_position;
+        $this->next_step = $lead->next_step;
+        $this->next_step_date = $lead->next_step_date;
+        $this->step_description = $lead->step_description;
+        $this->decision_makers = $lead->decision_makers;
+        $this->section = $lead->section;
         $this->status_id = $lead->status_id;
         $this->source_id = $lead->source_id;
+        $this->lead_type_id = $lead->lead_type_id;
+        $this->lead_unit_id = $lead->lead_unit_id;
+        $this->team_id = $lead->team_id;
         $this->assigned_id = $lead->assigned_id;
-        $this->tags = $lead->tags;
-        $this->name = $lead->name;
-        $this->address = $lead->address;
-        $this->position = $lead->position;
-        $this->city = $lead->city;
-        $this->email = $lead->email;
-        $this->company = $lead->company;
-        $this->group_id = $lead->group_id;
-        $this->website = $lead->website;
-        $this->country_id = $lead->country_id;
-        $this->phone = $lead->phone;
-        $this->zipCode = $lead->zip_code;
-        $this->leadValue = $lead->lead_value;
-        $this->description = $lead->description;
+        $this->priority = $lead->priority;
+        $this->date_acquired = $lead->date_acquired;
+        $this->lead_value = $lead->lead_value;
+        $this->project_brief = $lead->project_brief;
     }
 
     /**

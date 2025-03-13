@@ -35,15 +35,18 @@
                         <th scope="col">S.No</th>
                         <th scope="col">Name</th>
                         <th scope="col">Company</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Value</th>
-                        <th scope="col">Tags</th>
+                        <th scope="col">Parent Account</th>
+                        <th scope="col">Contact Name</th>
+                        <th scope="col">Contact Phone</th>
+                        <th scope="col">Decision Makers</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Section</th>
                         <th scope="col">Assigned</th>
-                        <th scope="col">Source</th>
-                        <th scope="col">Last Activity</th>
-                        <th scope="col">Created</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Date Acquired</th>
+                        <th scope="col">Lead Value</th>
+                        <th scope="col">Last Activity</th>
+                        <th scope="col">Created At</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -52,34 +55,35 @@
                         <tr>
                             <td>{{ $lead->id }}</td>
                             <td>
-                                <span>{{ str($lead->name)->limit(10) ?? 'N/A' }}</span>
+                                <span title="{{ $lead->name }}">{{ str($lead->name)->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <span>{{ str($lead?->company)->limit(10) ?? 'N/A' }}</span>
+                                <span title="{{ $lead->company }}">{{ str($lead->company)->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <span>{{ str($lead?->phone)->limit(10) ?? 'N/A' }}</span>
+                                <span
+                                    title="{{ $lead->parent_account }}">{{ str($lead->parent_account)->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <span>{{ str($lead?->email)->limit(10) ?? 'N/A' }}</span>
+                                <span
+                                    title="{{ $lead->person_name }}">{{ str($lead->person_name)->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <span>${{ $lead?->lead_value ?? 'N/A' }}</span>
+                                <span
+                                    title="{{ $lead->person_phone }}">{{ str($lead->person_phone)->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <span>{{ isset($lead->tags) ? str($lead?->tags)->limit(10) : 'N/A' }}</span>
+                                <span
+                                    title="{{ $lead->decision_makers }}">{{ str($lead->decision_makers)->limit(10) ?? 'N/A' }}</span>
+                            </td>
+                            <td>
+                                <span>{{ str($lead->priority)->limit(10) ?? 'N/A' }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $lead->section ?? 'N/A' }}</span>
                             </td>
                             <td>
                                 <span>{{ isset($lead->assigned) ? str($lead->assigned?->name)->limit(10) : 'N/A' }}</span>
-                            </td>
-                            <td>
-                                <span>{{ isset($lead->source) ? str($lead->source?->name)->limit(10) : 'N/A' }}</span>
-                            </td>
-                            <td>
-                                <span>{{ $lead->activities()->latest()->first()?->created_at?->format('Y-m-d') ?? 'N/A' }}</span>
-                            </td>
-                            <td>
-                                <span>{{ $lead->created_at?->format('Y-m-d') ?? 'N/A' }}</span>
                             </td>
                             <td>
                                 <span class="badge bg-success text-white"
@@ -87,6 +91,19 @@
                                     {{ $lead->status?->name }}
                                 </span>
                             </td>
+                            <td>
+                                <span>{{ $lead->date_acquired?->format('Y-m-d') ?? 'N/A' }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $lead->lead_value ?? 'N/A' }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $lead->activities()->latest()->first()?->created_at?->format('Y-m-d') ?? 'N/A' }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $lead->created_at->format('Y-m-d') ?? 'N/A' }}</span>
+                            </td>
+
                             <td>
                                 <div>
                                     @can(App\Enums\PermissionEnum::CRM_LEAD_OPERATION->value)

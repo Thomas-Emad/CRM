@@ -69,7 +69,7 @@
                                     class="side-menu__item" wire:current="active" wire:navigate>Meetings</a></li>
                         @endcan
                         @canany([\App\Enums\PermissionEnum::CRM_STATUS, \App\Enums\PermissionEnum::CRM_SOURCE,
-                            \App\Enums\PermissionEnum::CRM_GROUP, \App\Enums\PermissionEnum::CRM_TEAM])
+                            \App\Enums\PermissionEnum::CRM_LEAD_UNIT, \App\Enums\PermissionEnum::CRM_TEAM])
                             <li class="slide has-sub"><a href="javascript:void(0);" class="side-menu__item">Control Menu<i
                                         class="ri ri-arrow-right-s-line side-menu__angle"></i></a>
                                 <ul class="slide-menu child2">
@@ -84,9 +84,14 @@
                                                 wire:current="active" wire:navigate>Source</a>
                                         </li>
                                     @endcan
-                                    @can(\App\Enums\PermissionEnum::CRM_GROUP)
-                                        <li class="slide"><a href="{{ route('groups.index') }}" class="side-menu__item"
-                                                wire:current="active" wire:navigate>Group</a>
+                                    @can(\App\Enums\PermissionEnum::CRM_LEAD_UNIT)
+                                        <li class="slide"><a href="{{ route('lead-units.index') }}" class="side-menu__item"
+                                                wire:current="active" wire:navigate>Lead Units</a>
+                                        </li>
+                                    @endcan
+                                    @can(\App\Enums\PermissionEnum::CRM_LEAD_TYPE)
+                                        <li class="slide"><a href="{{ route('lead-types.index') }}" class="side-menu__item"
+                                                wire:current="active" wire:navigate>Lead Types</a>
                                         </li>
                                     @endcan
                                     @can(\App\Enums\PermissionEnum::CRM_TEAM)

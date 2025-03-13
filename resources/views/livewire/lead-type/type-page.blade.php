@@ -1,5 +1,5 @@
 <div x-data="{ id: null, title: null }">
-    <x-page-header title="Groups">
+    <x-page-header title="Types">
         <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
     </x-page-header>
@@ -10,9 +10,9 @@
                 <input type="text" class="form-control " wire:model.live="search" placeholder="Saerch...">
             </div>
             <a class="btn btn-primary btn-wave d-inline-flex align-items-center gap-2 ms-auto text-nowrap"
-                href="{{ route('groups.create') }}" wire:navigate>
+                href="{{ route('lead-types.create') }}" wire:navigate>
                 <i class="ti ti-plus fs-5"></i>
-                <span>New group</span>
+                <span>New type</span>
             </a>
         </div>
         <div class="table-responsive">
@@ -21,31 +21,25 @@
                     <tr>
                         <th scope="col">S.No</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Description</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($groups as $group)
+                    @forelse ($types as $type)
                         <tr>
-                            <th scope="row">{{ $group->id }}</th>
+                            <th scope="row">{{ $type->id }}</th>
                             <td>
-                                <span>{{ str($group->name)->limit(10) }}</span>
-                            </td>
-                            <td>
-                                <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary"
-                                    data-bs-placement="top"
-                                    title="{{ $group->description }}">{{ str($group->description)->limit(10) ?? 'N/A' }}</span>
+                                <span>{{ str($type->name)->limit(10) }}</span>
                             </td>
                             <td>
                                 <div>
-                                    <a class="btn " href="{{ route('groups.edit', ['group' => $group->id]) }}"
+                                    <a class="btn " href="{{ route('lead-types.edit', ['lead_type' => $type->id]) }}"
                                         wire:navigate>
                                         <i class="ti ti-pencil fs-4 text-primary"></i>
                                     </a>
                                     <button type="button" class="btn " data-bs-toggle="modal"
                                         data-bs-target="#DeleteGroupModal"
-                                        x-on:click="id = {{ $group->id }}; title = '{{ $group->name }}' ">
+                                        x-on:click="id = {{ $type->id }}; title = '{{ $type->name }}' ">
                                         <i class="ti ti-trash fs-4 text-danger"></i>
                                     </button>
                                 </div>
@@ -54,31 +48,31 @@
 
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center">No group Found</td>
+                            <td colspan="3" class="text-center">No type Found</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
 
             <div class="d-flex justify-content-end mt-3">
-                {{ $groups->links() }}
+                {{ $types->links() }}
             </div>
         </div>
     </div>
 
-    <!-- Start::delete-group -->
+    <!-- Start::delete-type -->
     <x-modal id="DeleteGroupModal">
         <x-slot:title>
             <i class="ti ti-trash text-danger me-1"></i>
             <span>
-                Are you sure you want to delete this group?!
+                Are you sure you want to delete this type?!
             </span>
         </x-slot:title>
         <x-slot:content>
             <div>
-                <label for="group-name" class="form-label">Name group</label>
-                <input type="text" id="group-title" class="form-control disabled" x-model="title" disabled
-                    placeholder="Enter group Name">
+                <label for="type-name" class="form-label">Name type</label>
+                <input type="text" id="type-title" class="form-control disabled" x-model="title" disabled
+                    placeholder="Enter type Name">
             </div>
         </x-slot:content>
         <x-slot:footer>
@@ -86,5 +80,5 @@
             <button type="button" class="btn btn-danger" wire:click="delete(id)">Delete</button>
         </x-slot:footer>
     </x-modal>
-    <!-- End::delete-group -->
+    <!-- End::delete-type -->
 </div>

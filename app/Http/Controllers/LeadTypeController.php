@@ -6,12 +6,12 @@ use App\Enums\PermissionEnum;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class GroupController extends Controller  implements HasMiddleware
+class LeadTypeController extends Controller  implements HasMiddleware
 {
     public static function middleware(): array
     {
         return [
-            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using(PermissionEnum::CRM_GROUP->value)),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using(PermissionEnum::CRM_LEAD_TYPE->value)),
         ];
     }
 
@@ -20,7 +20,7 @@ class GroupController extends Controller  implements HasMiddleware
      */
     public function index()
     {
-        return view('pages.group.index');
+        return view('pages.lead-type.index');
     }
 
     /**
@@ -28,7 +28,7 @@ class GroupController extends Controller  implements HasMiddleware
      */
     public function create($type = 'create')
     {
-        return view('pages.group.operation', compact('type'));
+        return view('pages.lead-type.operation', compact('type'));
     }
 
     /**
@@ -36,6 +36,6 @@ class GroupController extends Controller  implements HasMiddleware
      */
     public function edit(string $id, $type = 'edit')
     {
-        return view('pages.group.operation', compact('id', 'type'));
+        return view('pages.lead-type.operation', compact('id', 'type'));
     }
 }

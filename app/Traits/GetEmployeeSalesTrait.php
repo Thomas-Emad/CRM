@@ -15,7 +15,7 @@ trait GetEmployeeSalesTrait
      * @param int|null $team_id The ID of the team to filter users by.
      * @return \Illuminate\Database\Eloquent\Collection A collection of users with 'id' and 'name' attributes.
      */
-    public function employees(?int $team_id)
+    public function employees($team_id)
     {
         return User::whereHas('roles', function ($query) {
             $query->where('name', 'sales');

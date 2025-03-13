@@ -10,7 +10,8 @@ class PermissionsSeeder extends Seeder
 {
     protected $premissions = [
         PermissionEnum::CRM_STATUS->value,
-        PermissionEnum::CRM_GROUP->value,
+        PermissionEnum::CRM_LEAD_UNIT->value,
+        PermissionEnum::CRM_LEAD_TYPE->value,
         PermissionEnum::CRM_SOURCE->value,
         PermissionEnum::CRM_LEAD_SHOW->value,
         PermissionEnum::CRM_LEAD_OPERATION->value,

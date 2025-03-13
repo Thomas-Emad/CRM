@@ -13,34 +13,52 @@ class Lead extends Model
 
     protected $fillable = [
         'name',
-        'tags',
-        'address',
-        'position',
-        'city',
-        'email',
         'company',
-        'group_id',
-        'website',
-        'phone',
-        'zip_code',
-        'lead_value',
-        'description',
+        'parent_account',
+        'contractor',
+        'developer',
+        'consultant',
+        'investor',
+        'architect',
+        'industry',
+        'address',
+        'city',
+        'person_name',
+        'person_phone',
+        'person_email',
+        'person_position',
+        'next_step',
+        'next_step_date',
+        'step_description',
+        'decision_makers',
+        'section',
         'status_id',
-        'assigned_id',
-        'currency_id',
-        'source_id',
         'country_id',
+        'currency_id',
+        'team_id',
+        'source_id',
+        'lead_type_id',
+        'lead_unit_id',
+        'assigned_id',
+        'priority',
+        'date_acquired',
+        'lead_value',
+        'project_brief',
         'is_customer',
     ];
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(LeadType::class);
+    }
+    public function unit(): BelongsTo
+    {
+        return $this->belongsTo(LeadUnit::class);
+    }
 
     public function activities(): HasMany
     {
         return $this->hasMany(Activity::class);
-    }
-
-    public function group(): BelongsTo
-    {
-        return $this->belongsTo(Group::class);
     }
 
     public function status(): BelongsTo
@@ -82,4 +100,11 @@ class Lead extends Model
     {
         return $this->hasMany(Note::class, 'lead_id',  'id');
     }
+
+    protected $casts = [
+        'next_step_date' => 'date',
+        'date_acquired' => 'date',
+        'lead_value' => 'double',
+        'is_customer' => 'boolean',
+    ];
 }

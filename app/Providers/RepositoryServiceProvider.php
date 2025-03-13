@@ -5,8 +5,9 @@ namespace App\Providers;
 use App\Repositories\{
     StatusRepository,
     SourceRepository,
-    GroupRepository,
     LeadRepository,
+    LeadUnitRepository,
+    LeadTypeRepository,
     CustomerRepository,
     TeamRepository,
     Activities\CallRepository,
@@ -16,8 +17,9 @@ use App\Repositories\{
 use App\Interfaces\{
     StatusRepositoryInterface,
     SourceRepositoryInterface,
-    GroupRepositoryInterface,
     LeadRepositoryInterface,
+    LeadUnitRepositoryInterface,
+    LeadTypeRepositoryInterface,
     CustomerRepositoryInterface,
     TeamRepositoryInterface,
     Activities\CallRepositoryInterface,
@@ -35,7 +37,8 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(StatusRepositoryInterface::class, StatusRepository::class);
         $this->app->bind(SourceRepositoryInterface::class, SourceRepository::class);
-        $this->app->bind(GroupRepositoryInterface::class, GroupRepository::class);
+        $this->app->bind(LeadUnitRepositoryInterface::class, LeadUnitRepository::class);
+        $this->app->bind(LeadTypeRepositoryInterface::class, LeadTypeRepository::class);
         $this->app->bind(LeadRepositoryInterface::class, LeadRepository::class);
         $this->app->bind(CustomerRepositoryInterface::class, CustomerRepository::class);
         $this->app->bind(TeamRepositoryInterface::class, TeamRepository::class);

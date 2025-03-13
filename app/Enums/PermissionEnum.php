@@ -5,7 +5,8 @@ namespace App\Enums;
 enum PermissionEnum: string
 {
     case CRM_STATUS  = 'crm_status';
-    case CRM_GROUP  = 'crm_group';
+    case CRM_LEAD_UNIT  = 'crm_lead_unit';
+    case CRM_LEAD_TYPE  = 'crm_lead_type';
     case CRM_SOURCE  = 'crm_source';
     case CRM_LEAD_SHOW  = 'crm_lead_show';
     case CRM_LEAD_OPERATION  = 'crm_lead__operation';
@@ -23,7 +24,8 @@ enum PermissionEnum: string
     {
         return match ($this) {
             static::CRM_STATUS =>   'CRM/Status',
-            static::CRM_GROUP =>     'CRM/Group',
+            static::CRM_LEAD_UNIT =>     'CRM/Lead/Unit',
+            static::CRM_LEAD_TYPE =>     'CRM/Lead/Type',
             static::CRM_SOURCE =>   'CRM/Source',
             static::CRM_LEAD_SHOW =>     'CRM/Lead/Show',
             static::CRM_LEAD_SHOW =>     'CRM/Lead/Operation',

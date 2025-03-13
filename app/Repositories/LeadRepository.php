@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Lead;
+use Illuminate\Validation\Rule;
+use App\Enums\PriorityLeadEnum;
 use App\Interfaces\LeadRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -39,8 +41,9 @@ class LeadRepository implements LeadRepositoryInterface
     {
         return Lead::with([
             'status:id,name',
-            'group:id,name',
             'assigned:id,name',
+            'type:id,name',
+            'unit:id,name',
             'source:id,name',
             'country:id,name',
             'activities',
@@ -98,23 +101,37 @@ class LeadRepository implements LeadRepositoryInterface
     public function rules(): array
     {
         return [
-            'status_id' => 'required|exists:statuses,id',
-            'source_id' => 'required|exists:sources,id',
-            'assigned_id' => 'required|exists:users,id',
-            'tags' => 'nullable|string',
             'name' => 'required|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'position' => 'nullable|string|max:255',
-            'city' => 'nullable|string|max:255',
-            'email' => 'required|email|max:255',
             'company' => 'nullable|string|max:255',
-            'group_id' => 'nullable|exists:groups,id',
-            'website' => 'nullable|string|url',
+            'parent_account' => 'nullable|string|max:255',
+            'contractor' => 'nullable|string|max:255',
+            'developer' => 'nullable|string|max:255',
+            'consultant' => 'nullable|string|max:255',
+            'investor' => 'nullable|string|max:255',
+            'architect' => 'nullable|string|max:255',
+            'industry' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
             'country_id' => 'required|exists:countries,id',
-            'phone' => 'required|string|max:255',
-            'zipCode' => 'nullable|string|max:255',
-            'leadValue' => 'nullable|numeric',
-            'description' => 'nullable|string|max:2000',
+            'person_name' => 'nullable|string|max:255',
+            'person_phone' => 'nullable|string|max:100',
+            'person_email' => 'nullable|email|max:255',
+            'person_position' => 'nullable|string|max:255',
+            'next_step' => 'nullable|string|max:255',
+            'next_step_date' => 'nullable|date',
+            'step_description' => 'nullable|string',
+            'decision_makers' => 'nullable|string|max:255',
+            'section' => 'nullable|string|max:255',
+            'status_id' => 'required|exists:statuses,id',
+            'source_id' => 'nullable|exists:sources,id',
+            'team_id' => 'nullable|exists:teams,id',
+            'lead_type_id' => 'nullable|exists:lead_types,id',
+            'lead_unit_id' => 'nullable|exists:lead_units,id',
+            'assigned_id' => 'nullable|exists:users,id',
+            'priority' => ['nullable', Rule::enum(PriorityLeadEnum::class)],
+            'date_acquired' => 'nullable|date',
+            'lead_value' => 'nullable|numeric',
+            'project_brief' => 'nullable|string',
         ];
     }
 
@@ -132,8 +149,9 @@ class LeadRepository implements LeadRepositoryInterface
             'status_id' => 'status',
             'source_id' => 'source',
             'assigned_id' => 'assigned',
-            'group_id' => 'group',
             'country_id' => 'country',
+            'lead_type_id' => 'Lead Type',
+            'lead_unit_id' => 'Lead Unit',
         ];
     }
 

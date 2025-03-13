@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\DashboardPage;
-use App\Http\Controllers\{CustomerController, StatusController, SourceController, GroupController, LeadController, TeamController};
+use App\Http\Controllers\{CustomerController, StatusController, SourceController, LeadUnitController, LeadTypeController, LeadController, TeamController};
 use App\Http\Controllers\Activities\{CallController, MeetingController};
 
 Route::group(['middleware' => 'auth'], function () {
@@ -10,7 +10,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('statuses', StatusController::class)->only(['index', 'create', 'edit']);
     Route::resource('sources', SourceController::class)->only(['index', 'create', 'edit']);
-    Route::resource('groups', GroupController::class)->only(['index', 'create', 'edit']);
     Route::resource('leads', LeadController::class)->only(['index', 'create', 'edit', 'show']);
 
     // All Calls / Activities
@@ -28,6 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('{activity}/edit', 'edit')->name('edit');
         Route::get('{activity}/show', 'show')->name('show');
     });
+    Route::resource('lead-units', LeadUnitController::class)->only(['index', 'create', 'edit']);
+    Route::resource('lead-types', LeadTypeController::class)->only(['index', 'create', 'edit']);
+
 
     Route::resource('customers', CustomerController::class)->only(['index', 'create', 'edit', 'show']);
     Route::resource('teams', TeamController::class);

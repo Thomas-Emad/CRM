@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Group>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LeadUnit>
  */
-class GroupFactory extends Factory
+class LeadUnitFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class GroupFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->bloodGroup(),
-            'description' => $this->faker->text(200),
+            'name' => $this->faker->name(),
         ];
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Lead;
 
+use App\Enums\PriorityLeadEnum;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use App\Livewire\Forms\LeadOperationsForm;
-use App\Models\{User, Country, Group, Source, Status, Team};
+use App\Models\{Country, LeadType, LeadUnit, Source, Status, Team};
 use App\Traits\GetEmployeeSalesTrait;
 
 #[Title('Lead Operation')]
@@ -44,12 +45,51 @@ class LeadOperation extends Component
         }
         return view('livewire.lead.lead-operation', [
             'type' => $this->type,
-            'groups' => Group::get(['id', 'name']),
+            'sections' => $this->sections(),
+            'priorities' => $this->priorities(),
+            'types' => LeadType::get(['id', 'name']),
+            'units' => LeadUnit::get(['id', 'name']),
             'countries' => Country::get(['id', 'name']),
             'statuses' => Status::get(['id', 'name']),
             'sources' => Source::get(['id', 'name']),
             'teams' => Team::get(['id', 'name']),
             'employees' => $this->employees($this->lead->team_id),
         ]);
+    }
+
+    private function sections()
+    {
+        return collect([
+            [
+                'id' => 'private',
+                'name' => 'Private'
+            ],
+            [
+                'id' => 'military',
+                'name' => 'Military'
+            ],
+        ])->map(function ($item) {
+            return (object) $item;
+        });
+    }
+
+    private function priorities()
+    {
+        return collect([
+            [
+                'id' => PriorityLeadEnum::Low->value,
+                'name' => PriorityLeadEnum::Low->label()
+            ],
+            [
+                'id' => PriorityLeadEnum::Medium->value,
+                'name' => PriorityLeadEnum::Medium->label()
+            ],
+            [
+                'id' => PriorityLeadEnum::High->value,
+                'name' => PriorityLeadEnum::High->label()
+            ],
+        ])->map(function ($item) {
+            return (object) $item;
+        });
     }
 }
