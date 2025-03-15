@@ -22,8 +22,12 @@ class LeadRepository implements LeadRepositoryInterface
                 'status:id,name,color',
                 'assigned:id,name',
                 'source:id,name',
+                'type:id,name',
+                'unit:id,name',
+                'team:id,name',
                 'country:id,name',
-                'activities:id,created_at'
+                'activities:id,created_at',
+                'billings'
             ])
             ->where('name', 'like', "%$title%")
             ->orderBy('is_customer', 'desc')
@@ -146,12 +150,22 @@ class LeadRepository implements LeadRepositoryInterface
     public function attributes(): array
     {
         return [
+            'person_name' => 'Person name',
+            'person_phone' => 'Person phone',
+            'person_email' => 'Person email',
+            'person_position' => 'Person position',
+            'team_id' => 'Team',
+            'lead_type_id' => 'Lead type',
+            'lead_unit_id' => 'Lead unit',
             'status_id' => 'status',
             'source_id' => 'source',
             'assigned_id' => 'assigned',
             'country_id' => 'country',
             'lead_type_id' => 'Lead Type',
             'lead_unit_id' => 'Lead Unit',
+            'date_acquired' => 'Date Acquired',
+            'lead_value' => 'Estimated Budget Range',
+            'project_brief' => 'Project Brief',
         ];
     }
 
@@ -169,7 +183,8 @@ class LeadRepository implements LeadRepositoryInterface
         $lead = Lead::findOrFail($id);
         $lead->update([
             'is_customer' => true,
-            'status_id' => $status
+            'status_id' => $status,
+            'customer_since' => now(),
         ]);
     }
 }

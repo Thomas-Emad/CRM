@@ -12,7 +12,8 @@ use App\Models\Lead;
 #[Title('Show Lead')]
 class ShowLead extends Component
 {
-    public $id, $lead;
+    private $route;
+    public $id, $lead, $sourcePage;
     public LeadOperationsForm $leadForm;
     public NotesOperationform $noteForm;
     protected $leadRepository;
@@ -20,6 +21,7 @@ class ShowLead extends Component
     public function boot(LeadRepositoryInterface $leadRepository)
     {
         $this->leadRepository = $leadRepository;
+        $this->route = $this->sourcePage == 'lead' ? 'leads' : 'customers';
     }
 
     public function mount()
@@ -37,7 +39,7 @@ class ShowLead extends Component
     {
         $this->noteForm->lead_id = $this->id;
         $this->noteForm->store(Lead::class, $this->id);
-        $this->redirect(route('leads.show', ['lead' => $this->lead->id]), navigate: true);
+        $this->redirectBack();
     }
 
     /**
@@ -51,7 +53,7 @@ class ShowLead extends Component
     public function deleteNote($id)
     {
         $this->noteForm->destory($id);
-        $this->redirect(route('leads.show', ['lead' => $this->lead->id]), navigate: true);
+        $this->redirectBack();
     }
 
     /**
@@ -65,9 +67,14 @@ class ShowLead extends Component
     public function convertToCustomer($id)
     {
         $this->leadForm->convertToCustomer($id);
-        $this->redirect(route('leads.index'), navigate: true);
+        $this->redirect(route($this->route . '.index'), navigate: true);
     }
 
+    /**
+     * Renders the show lead component.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function render()
     {
         return view('livewire.lead.show-lead', [
@@ -75,5 +82,14 @@ class ShowLead extends Component
             'lead' => $this->lead,
             'statuses' => Status::get(),
         ]);
+    }
+
+    private function redirectBack()
+    {
+        if ($this->sourcePage == 'lead') {
+            $this->redirect(route('leads.show', ['lead' => $this->lead->id]), navigate: true);
+        } else {
+            $this->redirect(route('customers.show', ['customer' => $this->lead->id]), navigate: true);
+        }
     }
 }

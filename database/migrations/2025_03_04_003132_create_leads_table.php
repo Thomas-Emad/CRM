@@ -52,6 +52,7 @@ return new class extends Migration
             $table->text('project_brief')->nullable();
 
             $table->boolean('is_customer')->default(false);
+            $table->timestamp('customer_since')->nullable();
             $table->timestamps();
         });
     }

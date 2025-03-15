@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PriorityLeadEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,6 +46,7 @@ class Lead extends Model
         'lead_value',
         'project_brief',
         'is_customer',
+        'customer_since'
     ];
 
     public function type(): BelongsTo
@@ -66,6 +68,10 @@ class Lead extends Model
         return $this->belongsTo(Status::class);
     }
 
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
+    }
     public function assigned(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -101,10 +107,14 @@ class Lead extends Model
         return $this->hasMany(Note::class, 'lead_id',  'id');
     }
 
-    protected $casts = [
-        'next_step_date' => 'date',
-        'date_acquired' => 'date',
-        'lead_value' => 'double',
-        'is_customer' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'next_step_date' => 'date',
+            'date_acquired' => 'date',
+            'lead_value' => 'double',
+            'is_customer' => 'boolean',
+            'priority' => PriorityLeadEnum::class,
+        ];
+    }
 }

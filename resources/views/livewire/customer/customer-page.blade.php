@@ -25,13 +25,18 @@
                 <thead>
                     <tr>
                         <th scope="col">S.No</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Title</th>
                         <th scope="col">Company</th>
-                        <th scope="col">Primary Phone</th>
-                        <th scope="col">Primary Email</th>
-                        <th scope="col">Group</th>
-                        <th scope="col">Date Created</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Person Name</th>
+                        <th scope="col">Person Phone</th>
+                        <th scope="col">Person Email</th>
+                        <th scope="col">Source</th>
+                        <th scope="col">Date Acquired</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Date Created</th>
+                        <th scope="col">Customer Since</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -40,28 +45,50 @@
                         <tr>
                             <td>{{ $customer->id }}</td>
                             <td>
-                                <span>{{ str($customer->name)->limit(10) }}</span>
+                                <span
+                                    title="{{ $customer->name }}">{{ strLimitWithCheckOrDefault($customer, $customer->name) }}</span>
                             </td>
                             <td>
-                                <span>{{ str($customer->company)->limit(10) }}</span>
+                                <span
+                                    title="{{ $customer->company }}">{{ strLimitWithCheckOrDefault($customer, $customer->company) }}</span>
                             </td>
                             <td>
-                                <span>{{ str($customer->phone)->limit(10) }}</span>
+                                <span
+                                    title="{{ $customer->country?->name }}">{{ strLimitWithCheckOrDefault($customer->country, $customer->country?->name) }}</span>
                             </td>
                             <td>
-                                <span>{{ str($customer->email)->limit(10) }}</span>
+                                <span
+                                    title="{{ $customer->person_name }}">{{ strLimitWithCheckOrDefault($customer, $customer->person_name) }}</span>
                             </td>
                             <td>
-                                <span>{{ $customer->group?->name }}</span>
+                                <span
+                                    title="{{ $customer->person_email }}">{{ strLimitWithCheckOrDefault($customer, $customer->person_email) }}</span>
                             </td>
                             <td>
-                                <span>{{ $customer->created_at->format('Y-m-d') }}</span>
+                                <span
+                                    title="{{ $customer->person_phone }}">{{ strLimitWithCheckOrDefault($customer, $customer->person_phone) }}</span>
+                            </td>
+                            <td>
+                                <span
+                                    title="{{ $customer->source?->name }}">{{ strLimitWithCheckOrDefault($customer->source, $customer->source?->name) }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $customer->date_acquired?->format('Y-m-d') ?? 'N/A' }}</span>
                             </td>
                             <td>
                                 <span class="badge bg-success text-white"
                                     style="background-color: {{ $customer->status?->color }} !important;">
-                                    {{ $customer->status?->name }}
+                                    {{ strLimitWithCheckOrDefault($customer->status, $customer->status?->name) }}
                                 </span>
+                            </td>
+                            <td>
+                                <span>{{ $customer->priority?->label() ?? 'N/A' }}</span>
+                            </td>
+                            <td>
+                                <span>{{ $customer->created_at?->format('Y-m-d') ?? 'N/A' }}</span>
+                            </td>
+                            <td>
+                                {{-- <span>{{ $customer->customer_since?->format('Y-m-d') ?? 'N/A' }}</span> --}}
                             </td>
                             <td>
                                 <div>

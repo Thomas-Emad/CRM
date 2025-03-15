@@ -21,54 +21,97 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="details-justified" role="tabpanel">
                     <div class="row">
+                        <h5>- Main Information</h5>
                         <div class="col-12 p-2">
                             <x-input-form type="text" id="name-input" name="Name" wireModel="customer.name"
                                 placeholder="Please Write name" />
                         </div>
-                        <div class="col-12 col-md-4 p-2">
-                            <x-input-form type="text" id="phone-input" name="Phone" wireModel="customer.phone"
-                                placeholder="Please Write phone" />
-                        </div>
-                        <div class="col-12 col-md-4  p-2">
-                            <x-input-form type="email" id="email-input" name="Email" wireModel="customer.email"
-                                placeholder="Please Write email" />
-                        </div>
                         <div class=" col-12 col-md-4 p-2">
-                            <x-input-form type="text" id="company-input" name="Company" wireModel="customer.company"
+                            <x-input-form type="text" id="company" name="Company" wireModel="customer.company"
                                 placeholder="Please Write company" />
                         </div>
-                        <div class="col-12 col-md-4 p-2">
-                            <x-input-form type="text" id="vat-number-input" name="VAT Number"
-                                wireModel="customer.vat_number" placeholder="Please Write VAT Number" />
-                        </div>
                         <div class=" col-12 col-md-4 p-2">
-                            <x-input-form type="text" id="website" name="Website" wireModel="customer.website"
-                                placeholder="Please Write website" />
-                        </div>
-                        <div class=" col-12 col-md-4 p-2">
-                            <x-select-form id="group" name="Group" wireModel="customer.group_id" :items="$groups"
-                                placeholder="Please Select Group" />
-                        </div>
-                        <div class=" col-12 col-md-4 p-2">
-                            <x-select-form id="currency" name="Currency" wireModel="customer.currency_id"
-                                :items="$currencies" placeholder="Please Select Currency" />
-                        </div>
-                        <div class="col-12 col-md-4 p-2">
                             <x-input-form type="text" id="address" name="Address" wireModel="customer.address"
-                                placeholder="Please Write address" />
-                        </div>
-                        <div class=" col-12 col-md-4 p-2">
-                            <x-select-form id="country" name="Country" wireModel="customer.country_id"
-                                :items="$countries" placeholder="Please Select Country" />
+                                placeholder="Please Write Address" />
                         </div>
                         <div class=" col-12 col-md-4 p-2">
                             <x-input-form type="text" id="city" name="City" wireModel="customer.city"
                                 placeholder="Please Write city" />
                         </div>
                         <div class=" col-12 col-md-4 p-2">
-                            <x-input-form type="text" id="zip_code" name="Zip Code" wireModel="customer.zip_code"
-                                placeholder="Please Write Zip Code" />
+                            <x-select-form id="country" name="Country" :items="$countries"
+                                wireModel="customer.country_id" placeholder="Please Select Country" />
                         </div>
+
+                        <hr>
+                        <h5>- Person Contact</h5>
+
+                        <div class=" col-12 col-md-4 p-2">
+                            <x-input-form type="text" id="person_name" name="Person Name"
+                                wireModel="customer.person_name" placeholder="Please Write Person Name" />
+                        </div>
+                        <div class=" col-12 col-md-4 p-2">
+                            <x-input-form type="text" id="person_phone" name="Person Phone"
+                                wireModel="customer.person_phone" placeholder="Please Write Person Phone" />
+                        </div>
+                        <div class=" col-12 col-md-4 p-2">
+                            <x-input-form type="email" id="person_email" name="Person Email"
+                                wireModel="customer.person_email" placeholder="Please Write Person Email" />
+                        </div>
+                        <div class=" col-12 col-md-4 p-2">
+                            <x-input-form type="text" id="person_position" name="Person Position"
+                                wireModel="customer.person_position" placeholder="Please Write Person Position" />
+                        </div>
+
+                        <hr>
+                        <h5>- Customer Source</h5>
+                        <div class=" col-12 col-md-4 p-2">
+                            <x-select-form id="source" name="Source" :items="$sources"
+                                wireModel="customer.source_id" placeholder="Please Select Source" />
+                        </div>
+                        <div class=" col-12 col-md-4 p-2">
+                            <x-input-form type="date" id="date_acquired" name="Date Acquired"
+                                wireModel="customer.date_acquired" placeholder="Please Write Date Acquired" />
+                        </div>
+                        <div class="col-12 col-md-4 p-2">
+                            <x-select-form id="type" name="Customer Type" :items="$types"
+                                wireModel="customer.lead_type_id" placeholder="Please Select Customer Type" />
+                        </div>
+                        <hr>
+                        <h5>- Deal Type</h5>
+
+                        <div class=" col-12 col-md-4 p-2">
+                            <x-select-form id="status" name="Status" :items="$statuses"
+                                wireModel="customer.status_id" placeholder="Please Select Status" />
+                        </div>
+                        <div class=" col-12 col-md-4 p-2">
+                            <x-select-form id="section" name="Section" :items="$sections"
+                                wireModel="customer.section" placeholder="Please Select Section" />
+                        </div>
+                        <div class="col-12 col-md-4 p-2">
+                            <x-select-form id="unit" name="Lead Unit" :items="$units"
+                                wireModel="customer.lead_unit_id" placeholder="Please Select Lead Unit" />
+                        </div>
+                        <div class="col-12 col-md-6 p-2">
+                            <x-select-form id="assigned" name="Team" :items="$teams"
+                                wireModel="customer.team_id" :live="true" placeholder="Please Select Team" />
+                        </div>
+                        <div class="col-12 col-md-6 p-2">
+                            <x-select-form id="assigned" name="Assigned" :items="$employees"
+                                wireModel="customer.assigned_id" placeholder="Please Select Assigned" />
+                        </div>
+
+                        <hr>
+                        <h5>- Internal Notes</h5>
+                        <div class="col-12 col-md-4 p-2">
+                            <x-select-form id="priority" name="Priority" :items="$priorities"
+                                wireModel="customer.priority" placeholder="Please Select Priority" />
+                        </div>
+                        <div class="col-12 p-2">
+                            <x-textarea-form id="project_brief" name="Project Brief"
+                                wireModel="customer.project_brief" placeholder="Please Write Project Brief" />
+                        </div>
+
                     </div>
                 </div>
                 <div class="tab-pane" id="billing-justified" role="tabpanel">

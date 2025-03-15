@@ -77,7 +77,7 @@
                                     title="{{ $lead->decision_makers }}">{{ str($lead->decision_makers)->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
-                                <span>{{ str($lead->priority)->limit(10) ?? 'N/A' }}</span>
+                                <span>{{ str($lead->priority->label())->limit(10) ?? 'N/A' }}</span>
                             </td>
                             <td>
                                 <span>{{ $lead->section ?? 'N/A' }}</span>

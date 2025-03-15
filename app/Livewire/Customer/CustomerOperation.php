@@ -3,11 +3,14 @@
 namespace App\Livewire\Customer;
 
 use Livewire\Component;
-use App\Models\{Group, Country, Currency};
+use App\Models\{Country, LeadType, LeadUnit, Source, Status, Team};
 use App\Livewire\Forms\CustomerOperationsForm;
+use App\Traits\{GetEmployeeSalesTrait, LeadHelperMethodsTrait};
+
 
 class CustomerOperation extends Component
 {
+    use GetEmployeeSalesTrait, LeadHelperMethodsTrait;
     public CustomerOperationsForm $customer;
     public $id, $type;
 
@@ -38,9 +41,16 @@ class CustomerOperation extends Component
         }
         return view('livewire.customer.customer-operation', [
             'types' => $this->type,
-            'groups' => Group::get(['id', 'name']),
             'countries' => Country::get(['id', 'name']),
-            'currencies' => Currency::get(['id', 'name', 'code']),
+            'types' => LeadType::get(['id', 'name']),
+            'units' => LeadUnit::get(['id', 'name']),
+            'statuses' => Status::get(['id', 'name']),
+            'sources' => Source::get(['id', 'name']),
+            'teams' => Team::get(['id', 'name']),
+            'sections' => $this->sections(),
+            'priorities' => $this->priorities(),
+            'employees' => $this->employees($this->customer->team_id),
+
         ]);
     }
 }

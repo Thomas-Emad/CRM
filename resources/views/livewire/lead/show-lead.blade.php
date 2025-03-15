@@ -1,14 +1,28 @@
 <div x-data="{ id: null, title: null, idNote: null, contentNote: null }">
-    <x-page-header title="Show Lead">
+    <x-page-header title="{{ $sourcePage == 'lead' ? 'Show Lead' : 'Show Customer' }}">
         <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('home') }}" wire:navigate>CRM</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('leads.index') }}" wire:navigate>Lead</a></li>
+        @if ($sourcePage == 'lead')
+            <li class="breadcrumb-item"><a href="{{ route('leads.index') }}" wire:navigate>Leads</a></li>
+        @else
+            <li class="breadcrumb-item"><a href="{{ route('customers.index') }}" wire:navigate>Customers</a></li>
+        @endif
     </x-page-header>
 
     <div class="border p-2 row">
         <div class="col-12 col-md-7 p-2">
-            <div class="p-2 shadow-sm border">
+            <div class="shadow-sm border">
                 <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center p-4">
+                        <h2 class="fs-4"
+                            x-text="$wire.sourcePage == 'lead' ? 'Details About Lead' : 'Details About Customer'"></h2>
+                        @if ($sourcePage == 'lead')
+                            <button type="button" class="btn bg-primary-transparent" data-bs-toggle="modal"
+                                data-bs-target="#ConvertToCustomer">
+                                <i class="ti ti-exchange  text-text-primary-emphasis"></i>
+                            </button>
+                        @endif
+                    </div>
                     <ul class="nav nav-tabs tab-style-2 nav-justified mb-3 d-sm-flex d-block" id="myTab1"
                         role="tablist">
                         <li class="nav-item" role="presentation">
@@ -44,7 +58,7 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade text-muted" id="information-tab-pane" role="tabpanel"
                             aria-labelledby="home-tab" tabindex="0">
-                            <ul class="ps-3 mb-0">
+                            <ul class="row">
                                 <div class="col-12 col-md-6 p-2">
                                     <label for="name" class="form-label">Lead Name</label>
                                     <input type="text" id="name" class="form-control read-only"
@@ -120,34 +134,60 @@
                         </div>
                         <div class="tab-pane fade show active text-muted" id="contact-tab-pane" role="tabpanel"
                             aria-labelledby="profile-tab" tabindex="0">
-                            <div class="col-12 col-md-6 p-2">
-                                <label for="person_name" class="form-label">Person Name</label>
-                                <input type="text" id="person_name" class="form-control read-only"
-                                    value="{{ $lead->person_name ?? 'N/A' }}" disabled
-                                    placeholder="Please select country">
-                            </div>
-                            <div class="col-12 col-md-6 p-2">
-                                <label for="person_phone" class="form-label">Person Phone</label>
-                                <input type="text" id="person_phone" class="form-control read-only"
-                                    value="{{ $lead->person_phone ?? 'N/A' }}" disabled
-                                    placeholder="Please select country">
-                            </div>
-                            <div class="col-12 col-md-6 p-2">
-                                <label for="person_email" class="form-label">Person Email</label>
-                                <input type="text" id="person_email" class="form-control read-only"
-                                    value="{{ $lead->person_email ?? 'N/A' }}" disabled
-                                    placeholder="Please select country">
-                            </div>
-                            <div class="col-12 col-md-6 p-2">
-                                <label for="person_position" class="form-label">Person Position</label>
-                                <input type="text" id="person_position" class="form-control read-only"
-                                    value="{{ $lead->person_position ?? 'N/A' }}" disabled
-                                    placeholder="Please select country">
-                            </div>
+                            <ul class="row">
+
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="person_name" class="form-label">Person Name</label>
+                                    <input type="text" id="person_name" class="form-control read-only"
+                                        value="{{ $lead->person_name ?? 'N/A' }}" disabled
+                                        placeholder="Please select country">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="person_phone" class="form-label">Person Phone</label>
+                                    <input type="text" id="person_phone" class="form-control read-only"
+                                        value="{{ $lead->person_phone ?? 'N/A' }}" disabled
+                                        placeholder="Please select country">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="person_email" class="form-label">Person Email</label>
+                                    <input type="text" id="person_email" class="form-control read-only"
+                                        value="{{ $lead->person_email ?? 'N/A' }}" disabled
+                                        placeholder="Please select country">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="person_position" class="form-label">Person Position</label>
+                                    <input type="text" id="person_position" class="form-control read-only"
+                                        value="{{ $lead->person_position ?? 'N/A' }}" disabled
+                                        placeholder="Please select country">
+                                </div>
+                            </ul>
                         </div>
                         <div class="tab-pane fade text-muted" id="lead-source-tab-pane" role="tabpanel"
                             aria-labelledby="contact-tab" tabindex="0">
-                            <ul class="ps-3 mb-0">
+                            <ul class="row">
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="Source" class="form-label">Source</label>
+                                    <input type="text" id="Source" class="form-control read-only"
+                                        value="{{ $lead->source->name ?? 'N/A' }}" disabled
+                                        placeholder="Please select Source">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="date_acquired" class="form-label">Date Acquired</label>
+                                    <input type="text" id="date_acquired" class="form-control read-only"
+                                        value="{{ $lead->date_acquired->format('Y-m-d') ?? 'N/A' }}" disabled
+                                        placeholder="Please select Date Acquired">
+                                </div>
+                                <div class="col-12 col-md-6 p-2">
+                                    <label for="lead_type" class="form-label">Lead Type</label>
+                                    <input type="text" id="lead_type" class="form-control read-only"
+                                        value="{{ $lead->type->name ?? 'N/A' }}" disabled
+                                        placeholder="Please select Lead Type">
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade text-muted" id="deal-type-tab-pane" role="tabpanel"
+                            tabindex="0">
+                            <ul class="row">
                                 <div class="col-12 col-md-6 p-2">
                                     <label for="status" class="form-label">Status</label>
                                     <input type="text" id="status" class="form-control read-only"
@@ -186,13 +226,13 @@
                                 </div>
                             </ul>
                         </div>
-                        <div class="tab-pane fade text-muted" id="deal-type-tab-pane" role="tabpanel"
+                        <div class="tab-pane fade text-muted" id="internal-note-tab-pane" role="tabpanel"
                             tabindex="0">
-                            <ul class="list-unstyled mb-0">
+                            <ul class="row">
                                 <div class="col-12 col-md-6 p-2">
                                     <label for="priority" class="form-label">Priority</label>
                                     <input type="text" id="priority" class="form-control read-only"
-                                        value="{{ $lead->priority ?? 'N/A' }}" disabled
+                                        value="{{ $lead->priority->label() ?? 'N/A' }}" disabled
                                         placeholder="Please select priority">
                                 </div>
                                 <div class="col-12 col-md-6 p-2">
@@ -210,8 +250,8 @@
                                 <div class="col-12 col-md-6 p-2">
                                     <label for="next_step_date" class="form-label">Next Step Date</label>
                                     <input type="text" id="next_step_date" class="form-control read-only"
-                                        value="{{ $lead->next_step_date ?? 'N/A' }}" disabled
-                                        placeholder="Please select next_step">
+                                        value="{{ $lead->next_step_date?->format('Y-m-d') ?? 'N/A' }}" disabled
+                                        placeholder="Please select Next Step Date">
                                 </div>
 
                                 <div class="col-12">
@@ -220,128 +260,12 @@
                                 </div>
                             </ul>
                         </div>
-                        <div class="tab-pane fade text-muted" id="internal-note-tab-pane" role="tabpanel"
-                            tabindex="0">
-                            <ul class="list-unstyled mb-0">
-                                <li>A Latin professor at Hampden-Sydney College in Virginia, looked up one
-                                    of the more obscure Latin words, consectetur, from a Lorem Ipsum
-                                    passage, and going through the cites of the word in classical
-                                    literature.</li>
-                            </ul>
-                        </div>
                     </div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <h2 class="fs-4">Details About Lead</h2>
-                    <button type="button" class="btn bg-primary-transparent" data-bs-toggle="modal"
-                        data-bs-target="#ConvertToCustomer">
-                        <i class="ti ti-exchange  text-text-primary-emphasis"></i>
-                    </button>
-                </div>
-                <div class="row">
-
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="status_id" class="form-label">Status</label>
-                        <input type="text" id="status_id" class="form-control read-only"
-                            value="{{ $lead->status->name ?? 'N/A' }}" disabled placeholder="Please select status">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="source_id" class="form-label">Source</label>
-                        <input type="text" id="source_id" class="form-control read-only"
-                            value="{{ $lead->source->name ?? 'N/A' }}" disabled placeholder="Please select source">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="assigned_id" class="form-label">Assigned</label>
-                        <input type="text" id="assigned_id" class="form-control read-only"
-                            value="{{ $lead->assigned->name ?? 'N/A' }}" disabled placeholder="Please assign user">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="tags" class="form-label">Tags</label>
-                        <input type="text" id="tags" class="form-control read-only"
-                            value="{{ $lead->tags ?? 'N/A' }}" disabled placeholder="Please enter tags">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" id="address" class="form-control read-only"
-                            value="{{ $lead->address ?? 'N/A' }}" disabled placeholder="Please enter address">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="position" class="form-label">Position</label>
-                        <input type="text" id="position" class="form-control read-only"
-                            value="{{ $lead->position }}" disabled placeholder="Please enter position">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="city" class="form-label">City</label>
-                        <input type="text" id="city" class="form-control read-only"
-                            value="{{ $lead->city ?? 'N/A' }}" disabled placeholder="Please enter city">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-control read-only"
-                            value="{{ $lead->email ?? 'N/A' }}" disabled placeholder="Please enter email">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="company" class="form-label">Company</label>
-                        <input type="text" id="company" class="form-control read-only"
-                            value="{{ $lead->company ?? 'N/A' }}" disabled placeholder="Please enter company">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="group_id" class="form-label">Group</label>
-                        <input type="text" id="group_id" class="form-control read-only"
-                            value="{{ $lead->group->name ?? 'N/A' }}" disabled placeholder="Please select group">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="website" class="form-label">Website</label>
-                        <input type="url" id="website" class="form-control read-only"
-                            value="{{ $lead->website ?? 'N/A' }}" disabled placeholder="Please enter website URL">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="country_id" class="form-label">Country</label>
-                        <input type="text" id="country_id" class="form-control read-only"
-                            value="{{ $lead->country->name ?? 'N/A' }}" disabled placeholder="Please select country">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="text" id="phone" class="form-control read-only"
-                            value="{{ $lead->phone ?? 'N/A' }}" disabled placeholder="Please enter phone number">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="zipCode" class="form-label">Zip Code</label>
-                        <input type="text" id="zipCode" class="form-control read-only"
-                            value="{{ $lead->zip_code ?? 'N/A' }}" disabled placeholder="Please enter zip code">
-                    </div>
-
-                    <div class="col-12 col-md-6 p-2">
-                        <label for="leadValue" class="form-label">Lead Value</label>
-                        <input type="text" id="leadValue" class="form-control read-only"
-                            value="{{ $lead->lead_value ?? 'N/A' }}" disabled placeholder="Please enter lead value">
-                    </div>
-
-                    <div class="col-12">
-                        <label for="description" class="form-label">Description</label>
-
-                        <textarea class="form-control" id="text-area3" rows="3" disabled placeholder="Please Write Description">{{ $lead->description ?? 'N/A' }}</textarea>
-                    </div>
-
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-5 p-2">
-            <div class="p-2 shadow-sm border">
+            <div class="p-4 shadow-sm border">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="fs-5">Notes</h3>
                     @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_NOTE->value)
@@ -390,8 +314,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 p-2">
-            <div class="card custom-card">
+        <div class="col-12 mt-4">
+            <div class="card p-2 custom-card">
                 <div class="card-header justify-content-between">
                     <div class="card-title">
                         Activities
@@ -559,32 +483,76 @@
                 </div>
             </div>
         </div>
+        @if ($sourcePage == 'customer')
+            <div class="col-12 mt-4">
+                <div class="card p-2 custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Billing Address
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <x-table>
+                            <x-slot:thead>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Street</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">zip_code</th>
+                            </x-slot:thead>
+
+                            <x-slot:tbody>
+                                @forelse ($lead->billings as $key => $item)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->street ?? 'N/A' }}</td>
+                                        <td>{{ $item->city ?? 'N/A' }}</td>
+                                        <td>{{ strLimitWithCheckOrDefault($item->country, $item->country?->name) ?? 'N/A' }}
+                                        </td>
+                                        <td>{{ $item->zip_code ?? 'N/A' }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5">
+                                            <p class="text-center">No Billing Address found for this lead</p>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </x-slot:tbody>
+                        </x-table>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 
-    <!-- Start::ConvertToCustomer -->
-    <x-modal id="ConvertToCustomer">
-        <x-slot:title>
-            <i class="ti ti-exchange  text-text-primary-emphasis"></i>
-            <span>
-                Are your sure want convert this Lead to Customers?!
-            </span>
-        </x-slot:title>
-        <x-slot:content>
-            <div>
-                <label for="lead-title" class="form-label">Lead Title</label>
-                <input type="text" id="lead-title" class="form-control disabled"
-                    value="{{ $lead?->name ?? 'N/A' }}" disabled placeholder="Enter Lead Title">
-            </div>
-            <x-select-form id="lead-title" name="Status" :items="$statuses" wireModel="leadForm.currentStatus"
-                placeholder="Please Select" />
-        </x-slot:content>
-        <x-slot:footer>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success"
-                wire:click="convertToCustomer({{ $lead->id }})">Convert</button>
-        </x-slot:footer>
-    </x-modal>
-    <!-- End::ConvertToCustomer -->
+    @if ($sourcePage == 'lead')
+        <!-- Start::ConvertToCustomer -->
+        <x-modal id="ConvertToCustomer">
+            <x-slot:title>
+                <i class="ti ti-exchange  text-text-primary-emphasis"></i>
+                <span>
+                    Are your sure want convert this Lead to Customers?!
+                </span>
+            </x-slot:title>
+            <x-slot:content>
+                <div>
+                    <label for="lead-title" class="form-label">Lead Title</label>
+                    <input type="text" id="lead-title" class="form-control disabled"
+                        value="{{ $lead?->name ?? 'N/A' }}" disabled placeholder="Enter Lead Title">
+                </div>
+                <x-select-form id="lead-title" name="Status" :items="$statuses" wireModel="leadForm.currentStatus"
+                    placeholder="Please Select" />
+            </x-slot:content>
+            <x-slot:footer>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success"
+                    wire:click="convertToCustomer({{ $lead->id }})">Convert</button>
+            </x-slot:footer>
+        </x-modal>
+        <!-- End::ConvertToCustomer -->
+    @endif
+
 
     @can(\App\Enums\PermissionEnum::CRM_ACTIVIY_NOTE->value)
         <!-- Start::add-note -->

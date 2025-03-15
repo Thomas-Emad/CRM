@@ -7,12 +7,12 @@ use Livewire\Component;
 use Livewire\Attributes\Title;
 use App\Livewire\Forms\LeadOperationsForm;
 use App\Models\{Country, LeadType, LeadUnit, Source, Status, Team};
-use App\Traits\GetEmployeeSalesTrait;
+use App\Traits\{GetEmployeeSalesTrait, LeadHelperMethodsTrait};
 
 #[Title('Lead Operation')]
 class LeadOperation extends Component
 {
-    use GetEmployeeSalesTrait;
+    use GetEmployeeSalesTrait, LeadHelperMethodsTrait;
     public $id, $type;
     public LeadOperationsForm $lead;
 
@@ -55,41 +55,5 @@ class LeadOperation extends Component
             'teams' => Team::get(['id', 'name']),
             'employees' => $this->employees($this->lead->team_id),
         ]);
-    }
-
-    private function sections()
-    {
-        return collect([
-            [
-                'id' => 'private',
-                'name' => 'Private'
-            ],
-            [
-                'id' => 'military',
-                'name' => 'Military'
-            ],
-        ])->map(function ($item) {
-            return (object) $item;
-        });
-    }
-
-    private function priorities()
-    {
-        return collect([
-            [
-                'id' => PriorityLeadEnum::Low->value,
-                'name' => PriorityLeadEnum::Low->label()
-            ],
-            [
-                'id' => PriorityLeadEnum::Medium->value,
-                'name' => PriorityLeadEnum::Medium->label()
-            ],
-            [
-                'id' => PriorityLeadEnum::High->value,
-                'name' => PriorityLeadEnum::High->label()
-            ],
-        ])->map(function ($item) {
-            return (object) $item;
-        });
     }
 }

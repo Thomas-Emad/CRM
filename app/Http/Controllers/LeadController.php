@@ -48,6 +48,7 @@ class LeadController extends Controller  implements HasMiddleware
      */
     public function show(string $id)
     {
-        return view('pages.lead.show', compact('id'));
+        $sourcePage = 'lead';
+        return view('pages.lead.show', compact('id', 'sourcePage'));
     }
 }

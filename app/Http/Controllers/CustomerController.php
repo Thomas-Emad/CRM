@@ -44,6 +44,7 @@ class CustomerController extends Controller implements HasMiddleware
      */
     public function show(string $id)
     {
-        return view('pages.customer.show', compact('id'));
+        $sourcePage = 'customer';
+        return view('pages.lead.show', compact('id', 'sourcePage'));
     }
 }

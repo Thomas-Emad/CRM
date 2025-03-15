@@ -7,9 +7,11 @@ use App\Services\CustomerService;
 
 class CustomerOperationsForm extends Form
 {
-    public $id, $name, $email, $phone, $company,
-        $vat_number, $website, $group_id, $currency_id,
-        $city, $address, $country_id, $zip_code;
+    public $id, $name, $company, $address, $city, $country_id,
+    $person_name, $person_phone, $person_email, $person_position,
+    $source_id, $date_acquired, $lead_type_id,
+    $status_id, $section, $lead_unit_id, $team_id, $assigned_id,
+    $priority, $project_brief;
 
     public $billing_id, $billing_country_id, $billing_city, $billing_street,
         $billing_zip_code;
@@ -55,17 +57,24 @@ class CustomerOperationsForm extends Form
         $billing = $lead->billings()->first();
         $this->id = $lead->id;
         $this->name = $lead->name;
-        $this->email = $lead->email;
-        $this->phone = $lead->phone;
         $this->company = $lead->company;
-        $this->vat_number = $lead->vat_number;
-        $this->website = $lead->website;
-        $this->group_id = $lead->group_id;
-        $this->currency_id = $lead->currency_id;
-        $this->city = $lead->city;
         $this->address = $lead->address;
+        $this->city = $lead->city;
         $this->country_id = $lead->country_id;
-        $this->zip_code = $lead->zip_code;
+        $this->person_name = $lead->person_name;
+        $this->person_phone = $lead->person_phone;
+        $this->person_email = $lead->person_email;
+        $this->person_position = $lead->person_position;
+        $this->source_id = $lead->source_id;
+        $this->date_acquired = $lead->date_acquired;
+        $this->lead_type_id = $lead->lead_type_id;
+        $this->status_id = $lead->status_id;
+        $this->section = $lead->section;
+        $this->lead_unit_id = $lead->lead_unit_id;
+        $this->team_id = $lead->team_id;
+        $this->assigned_id = $lead->assigned_id;
+        $this->priority = $lead->priority;
+        $this->project_brief = $lead->project_brief;
 
         $this->billing_id = $billing?->id;
         $this->billing_country_id = $billing?->country_id;

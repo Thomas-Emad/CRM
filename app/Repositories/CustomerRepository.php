@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Enums\PriorityLeadEnum;
 use App\Models\Lead;
 use App\Interfaces\CustomerRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Validation\Rule;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
@@ -18,7 +20,11 @@ class CustomerRepository implements CustomerRepositoryInterface
         return Lead::query()
             ->with([
                 'status:id,name,color',
-                'group:id,name',
+                'assigned:id,name',
+                'source:id,name',
+                'type:id,name',
+                'unit:id,name',
+
             ])
             ->where('name', 'like', "%$title%")
             ->where('is_customer', true)
@@ -38,8 +44,9 @@ class CustomerRepository implements CustomerRepositoryInterface
             'assigned:id,name',
             'source:id,name',
             'status:id,name',
-            'group:id,name',
-            'currency:id,name',
+            'country:id,name',
+            'type:id,name',
+            'unit:id,name',
             'country:id,name',
             'billings',
             'billings.country:id,name',
@@ -56,8 +63,8 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function store(array $attributes): Lead
     {
         return  Lead::create(array_merge($attributes, [
-            'status_id' => 1,
             'is_customer' => true,
+            'customer_since' => now()
         ]));
     }
 
@@ -97,20 +104,31 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3',
-            'email' => 'required|email|min:3',
-            'phone' => 'required|string|min:3',
-            'company' => 'required|string|min:3',
-            'vat_number' => 'nullable|string|min:3',
-            'website' => 'nullable|url|min:3',
-            'group_id' => 'required|integer|exists:groups,id',
-            'currency_id' => 'required|integer|exists:currencies,id',
-            'city' => 'required|string|min:3',
-            'address' => 'required|string|min:3',
+            'name' => 'required|string|min:3|max:255',
+            'company' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
             'country_id' => 'required|integer|exists:countries,id',
-            'zip_code' => 'required|string|min:3',
 
-            'billing_country_id' => 'nullable|integer|exists:countries,id',
+            'person_name' => 'required|string|max:255',
+            'person_phone' => 'required|string|max:100',
+            'person_email' => 'nullable|email|max:255',
+            'person_position' => 'nullable|string|max:255',
+
+            'source_id' => 'required|exists:sources,id',
+            'date_acquired' => 'nullable|date',
+            'lead_type_id' => 'nullable|exists:lead_types,id',
+
+            'status_id' => 'required|exists:statuses,id',
+            'section' => 'required|string|max:255',
+            'lead_unit_id' => 'nullable|exists:lead_units,id',
+            'team_id' => 'nullable|exists:teams,id',
+            'assigned_id' => 'nullable|exists:users,id',
+
+            'priority' => ['nullable', 'string', Rule::enum(PriorityLeadEnum::class)],
+            'project_brief' => 'nullable|string|max:2000',
+
+            'billing_country_id' => 'nullable|exists:countries,id',
             'billing_city' => 'nullable|string|min:3',
             'billing_street' => 'nullable|string|min:3',
             'billing_zip_code' => 'nullable|string|min:3',
@@ -128,11 +146,26 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function attributes(): array
     {
         return [
-            'vat_number' => 'VAT number',
-            'currency_id' => 'currency',
-            'group_id' => 'group',
+            'person_name' => 'Person name',
+            'person_phone' => 'Person phone',
+            'person_email' => 'Person email',
+            'person_position' => 'Person position',
+            'team_id' => 'Team',
+            'lead_type_id' => 'Lead type',
+            'lead_unit_id' => 'Lead unit',
+            'status_id' => 'status',
+            'source_id' => 'source',
+            'assigned_id' => 'assigned',
             'country_id' => 'country',
+            'lead_type_id' => 'Lead Type',
+            'lead_unit_id' => 'Lead Unit',
+            'date_acquired' => 'Date Acquired',
+            'project_brief' => 'Project Brief',
+
             'billing_country_id' => 'billing country',
+            'billing_city' => 'billing city',
+            'billing_street' => 'billing street',
+            'billing_zip_code' => 'billing zip code',
         ];
     }
 }
